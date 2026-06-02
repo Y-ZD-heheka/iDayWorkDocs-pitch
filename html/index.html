@@ -7,7 +7,7 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   min-height: 100vh;
   display: flex;
@@ -59,6 +59,16 @@ body {
 .form-group input:focus {
   border-color: #1a73e8;
 }
+.form-group input:focus-visible {
+  border-color: #1a73e8;
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+.btn-login:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(26,115,232,0.3);
+}
 .btn-login {
   width: 100%;
   padding: 14px;
@@ -92,9 +102,40 @@ body {
   border-top: 1px solid #eee;
 }
 .security-note p {
-  color: #999;
+  color: #767676;
   font-size: 0.75em;
   line-height: 1.6;
+}
+
+/* ═══ 响应式：超小屏幕（手机竖屏） ═══ */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 28px 20px;
+    border-radius: 12px;
+    margin: 12px;
+  }
+  .logo h1 { font-size: 1.6em; letter-spacing: 1px; }
+  .logo p { font-size: 0.85em; }
+  .form-group input { padding: 12px 14px; font-size: 0.95em; }
+  .btn-login { padding: 12px; font-size: 0.95em; }
+  .security-note { margin-top: 18px; padding-top: 16px; }
+}
+
+/* ═══ 响应式：横屏模式（矮视口） ═══ */
+@media (orientation: landscape) and (max-height: 500px) {
+  body { align-items: flex-start; padding-top: 20px; }
+  .login-container { padding: 24px 30px; }
+  .logo { margin-bottom: 16px; }
+  .logo h1 { font-size: 1.5em; }
+  .form-group { margin-bottom: 12px; }
+  .security-note { margin-top: 12px; padding-top: 12px; }
+}
+
+/* ═══ 响应式：减弱动态效果 ═══ */
+@media (prefers-reduced-motion: reduce) {
+  .form-group input { transition: none; }
+  .btn-login { transition: none; }
+  .btn-login:hover { transform: none; }
 }
 </style>
 </head>
@@ -106,23 +147,114 @@ body {
     <p>人力资源灵活用工平台</p>
   </div>
   
-  <form id="loginForm" onsubmit="return handleLogin(event)">
+  <form id="loginForm" role="form" aria-label="登录认证表单" onsubmit="return handleLogin(event)">
     <div class="form-group">
       <label for="password">访问密码</label>
-      <input type="password" id="password" placeholder="请输入访问密码" autocomplete="off" required>
+      <input type="password" id="password" placeholder="请输入访问密码" autocomplete="off" required aria-describedby="errorMsg" aria-required="true">
     </div>
-    <button type="submit" class="btn-login">进入演示</button>
+    <button type="submit" class="btn-login" aria-label="提交密码进入演示">进入演示</button>
   </form>
   
-  <div class="error-msg" id="errorMsg"></div>
+  <div class="error-msg" id="errorMsg" role="alert" aria-live="polite"></div>
   
   <div class="security-note">
-    <p>🔒 内容已加密保护</p>
+    <p><span aria-hidden="true">🔒</span> 内容已加密保护</p>
     <p>请联系管理员获取访问密码</p>
   </div>
 </div>
 
 <script>
+// 纯JavaScript SHA-256 实现（不依赖 crypto.subtle）
+function sha256pure(message) {
+  function rightRotate(value, amount) {
+    return (value >>> amount) | (value << (32 - amount));
+  }
+  
+  const mathPow = Math.pow;
+  const maxWord = mathPow(2, 32);
+  const lengthProperty = 'length';
+  let i, j;
+  let result = '';
+  
+  const words = [];
+  const asciiBitLength = message[lengthProperty] * 8;
+  
+  let hash = sha256pure.h = sha256pure.h || [];
+  let k = sha256pure.k = sha256pure.k || [];
+  let primeCounter = k[lengthProperty];
+  
+  const isComposite = {};
+  for (let candidate = 2; primeCounter < 64; candidate++) {
+    if (!isComposite[candidate]) {
+      for (i = 0; i < 313; i += candidate) {
+        isComposite[i] = candidate;
+      }
+      hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+      k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+    }
+  }
+  
+  message += '\x80';
+  while (message[lengthProperty] % 64 - 56) message += '\x00';
+  for (i = 0; i < message[lengthProperty]; i++) {
+    j = message.charCodeAt(i);
+    if (j >> 8) return;
+    words[i >> 2] |= j << ((3 - i) % 4) * 8;
+  }
+  words[words[lengthProperty]] = ((asciiBitLength / maxWord) | 0);
+  words[words[lengthProperty]] = asciiBitLength;
+  
+  for (j = 0; j < words[lengthProperty];) {
+    const w = words.slice(j, j += 16);
+    const oldHash = hash;
+    hash = hash.slice(0, 8);
+    
+    for (i = 0; i < 64; i++) {
+      const w2 = w[i - 15], w7 = w[i - 2], w15 = w[i - 7], w16 = w[i - 16];
+      const a = hash[0], e = hash[4];
+      const temp1 = hash[7] +
+        (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) +
+        ((e & hash[5]) ^ ((~e) & hash[6])) +
+        k[i] +
+        (w[i] = (i < 16) ? w[i] : (
+          w[i - 16] +
+          (rightRotate(w2, 7) ^ rightRotate(w2, 18) ^ (w2 >>> 3)) +
+          w[i - 7] +
+          (rightRotate(w15, 17) ^ rightRotate(w15, 19) ^ (w15 >>> 10))
+        ) | 0);
+      const temp2 =
+        (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) +
+        ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+      
+      hash = [(temp1 + temp2) | 0].concat(hash);
+      hash[4] = (hash[4] + temp1) | 0;
+    }
+    
+    for (i = 0; i < 8; i++) {
+      hash[i] = (hash[i] + oldHash[i]) | 0;
+    }
+  }
+  
+  for (i = 0; i < 8; i++) {
+    for (j = 3; j + 1; j--) {
+      const b = (hash[i] >> (j * 8)) & 255;
+      result += ((b < 16) ? 0 : '') + b.toString(16);
+    }
+  }
+  return result;
+}
+
+// 检查 Web Crypto API 是否可用
+function ensureCryptoAvailable() {
+  if (!crypto || !crypto.subtle) {
+    throw new Error(
+      'Web Crypto API 不可用（' + window.location.protocol + '//' + window.location.host + '）。' +
+      '局域网 IP 访问时 crypto.subtle 受浏览器安全策略限制。' +
+      '请使用 localhost 访问，或配置 HTTPS 后重试。'
+    );
+  }
+}
+
 // 加密配置
 const CONFIG = {
   salt: '2a6c72289c014ea9364b272247751d25',
@@ -163,6 +295,7 @@ function bufferToBase64(buffer) {
 
 // PBKDF2 派生密钥
 async function deriveKey(password, salt) {
+  ensureCryptoAvailable();
   const encoder = new TextEncoder();
   const passwordBuffer = encoder.encode(password);
   
@@ -192,6 +325,7 @@ async function deriveKey(password, salt) {
 
 // 解密内容
 async function decrypt(encryptedBase64, key, iv, authTag) {
+  ensureCryptoAvailable();
   const encryptedBuffer = base64ToBuffer(encryptedBase64);
   const ivBuffer = hexToBuffer(iv);
   const authTagBuffer = hexToBuffer(authTag);
@@ -221,11 +355,20 @@ async function decrypt(encryptedBase64, key, iv, authTag) {
 
 // SHA-256 哈希
 async function sha256(message) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  // 优先使用 Web Crypto API
+  if (crypto && crypto.subtle) {
+    try {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    } catch (e) {
+      console.warn('Web Crypto API 失败，使用 JavaScript 实现:', e);
+    }
+  }
+  // 备用方案：使用纯 JavaScript 实现
+  return sha256pure(message);
 }
 
 // 处理登录
