@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Crypto API 测试</title>
+</head>
+<body>
+<h1>Web Crypto API 诊断</h1>
+<div id="output"></div>
+<script>
+const output = document.getElementById('output');
+function log(msg, type = 'info') {
+  const p = document.createElement('p');
+  p.style.color = type === 'error' ? 'red' : type === 'success' ? 'green' : '#333';
+  p.textContent = msg;
+  output.appendChild(p);
+}
+
+log('1. 检查 crypto 对象...');
+log('typeof crypto: ' + typeof crypto);
+log('crypto: ' + (crypto ? '存在' : '不存在'));
+
+if (crypto) {
+  log('2. 检查 crypto.subtle...');
+  log('typeof crypto.subtle: ' + typeof crypto.subtle);
+  log('crypto.subtle: ' + (crypto.subtle ? '存在' : '不存在'));
+  
+  if (crypto.subtle) {
+    log('3. 测试 crypto.subtle.digest...');
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode('test'))
+      .then(hash => {
+        log('✅ crypto.subtle.digest 工作正常!', 'success');
+        log('协议: ' + window.location.protocol);
+        log('主机: ' + window.location.host);
+      })
+      .catch(err => {
+        log('❌ crypto.subtle.digest 失败: ' + err.message, 'error');
+      });
+  } else {
+    log('❌ crypto.subtle 不存在', 'error');
+    log('当前协议: ' + window.location.protocol);
+    log('当前主机: ' + window.location.host);
+    log('');
+    log('可能原因:', 'error');
+    log('1. 使用 file:// 协议（需要 http:// 或 https://）', 'error');
+    log('2. 浏览器不支持 Web Crypto API', 'error');
+    log('3. 页面不是安全上下文', 'error');
+  }
+} else {
+  log('❌ crypto 对象不存在', 'error');
+}
+</script>
+</body>
+</html>

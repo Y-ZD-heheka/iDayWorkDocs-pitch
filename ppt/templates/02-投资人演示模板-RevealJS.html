@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[公司名称] - 投资人演示</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-color: #1f2937;
+            --light-bg: #f8fafc;
+        }
+        
+        .reveal {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .reveal h1 { font-size: 2.5em; }
+        .reveal h2 { font-size: 1.8em; margin-bottom: 0.5em; }
+        .reveal h3 { font-size: 1.4em; color: var(--secondary-color); }
+        
+        .reveal p, .reveal li {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        
+        .reveal .subtitle {
+            font-size: 1.2em;
+            color: #6b7280;
+            margin-top: 0.5em;
+        }
+        
+        .reveal .highlight {
+            background: linear-gradient(120deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .reveal .stat-box {
+            background: var(--light-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .reveal .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        .reveal .stat-label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin: 5px 0 0 0;
+        }
+        
+        .reveal table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85em;
+        }
+        
+        .reveal th {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        
+        .reveal td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .reveal tr:nth-child(even) {
+            background: var(--light-bg);
+        }
+        
+        .reveal .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .reveal .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .reveal .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .reveal .card-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .reveal .card h4 {
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+        }
+        
+        .reveal .card p {
+            font-size: 0.85em;
+            color: #6b7280;
+            margin: 0;
+        }
+        
+        .reveal .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .reveal .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-color);
+        }
+        
+        .reveal .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+        
+        .reveal .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+        
+        .reveal .timeline-date {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .reveal .quote {
+            font-style: italic;
+            font-size: 1.1em;
+            color: #4b5563;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            margin: 20px 0;
+            background: var(--light-bg);
+        }
+        
+        .reveal .cta-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        
+        .reveal .small-text {
+            font-size: 0.75em;
+            color: #9ca3af;
+        }
+        
+        .reveal .logo-placeholder {
+            width: 150px;
+            height: 150px;
+            background: var(--light-bg);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 3em;
+        }
+        
+        .reveal .problem-icon { color: #ef4444; }
+        .reveal .solution-icon { color: #10b981; }
+        .reveal .market-icon { color: #f59e0b; }
+        .reveal .product-icon { color: #8b5cf6; }
+        .reveal .team-icon { color: #06b6d4; }
+        .reveal .financial-icon { color: #ec4899; }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- 封面 -->
+            <section>
+                <div class="logo-placeholder">🚀</div>
+                <h1>[公司名称]</h1>
+                <p class="subtitle">[一句话描述公司核心价值]</p>
+                <p style="margin-top: 50px; color: #9ca3af;">
+                    [融资轮次] · [日期]<br>
+                    联系人：[姓名] · [邮箱] · [电话]
+                </p>
+            </section>
+
+            <!-- 目录 -->
+            <section>
+                <h2>目录</h2>
+                <div class="two-column">
+                    <div>
+                        <p>1️⃣ 问题与机会</p>
+                        <p>2️⃣ 解决方案</p>
+                        <p>3️⃣ 市场规模</p>
+                        <p>4️⃣ 产品展示</p>
+                    </div>
+                    <div>
+                        <p>5️⃣ 商业模式</p>
+                        <p>6️⃣ 竞争优势</p>
+                        <p>7️⃣ 团队介绍</p>
+                        <p>8️⃣ 财务与融资</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 问题 -->
+            <section>
+                <h2><span class="problem-icon">❌</span> 我们解决的问题</h2>
+                <div class="stat-box">
+                    <p style="font-size: 1.1em; margin: 0;">
+                        [用具体数据描述目标用户的痛点]
+                    </p>
+                </div>
+                <div class="two-column" style="margin-top: 30px;">
+                    <div>
+                        <h3>当前痛点</h3>
+                        <ul>
+                            <li>痛点1：[描述]</li>
+                            <li>痛点2：[描述]</li>
+                            <li>痛点3：[描述]</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>影响范围</h3>
+                        <div class="stat-box">
+                            <p class="stat-number">X亿</p>
+                            <p class="stat-label">受影响用户数</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 解决方案 -->
+            <section>
+                <h2><span class="solution-icon">✅</span> 我们的解决方案</h2>
+                <div class="three-column">
+                    <div class="card">
+                        <div class="card-icon">🎯</div>
+                        <h4>核心功能1</h4>
+                        <p>[简要描述]</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <h4>核心功能2</h4>
+                        <p>[简要描述]</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h4>核心功能3</h4>
+                        <p>[简要描述]</p>
+                    </div>
+                </div>
+                <div class="quote" style="margin-top: 30px;">
+                    "[一句话总结产品价值主张]"
+                </div>
+            </section>
+
+            <!-- 市场规模 -->
+            <section>
+                <h2><span class="market-icon">📊</span> 市场机会</h2>
+                <div class="three-column">
+                    <div class="stat-box">
+                        <p class="stat-number">¥X万亿</p>
+                        <p class="stat-label">TAM - 总可触达市场</p>
+                    </div>
+                    <div class="stat-box">
+                        <p class="stat-number">¥X千亿</p>
+                        <p class="stat-label">SAM - 可服务市场</p>
+                    </div>
+                    <div class="stat-box">
+                        <p class="stat-number">¥X百亿</p>
+                        <p class="stat-label">SOM - 可获得市场</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h3>市场趋势</h3>
+                    <ul>
+                        <li>📈 趋势1：[描述]</li>
+                        <li>📈 趋势2：[描述]</li>
+                        <li>📈 趋势3：[描述]</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 产品展示 -->
+            <section>
+                <h2><span class="product-icon">💻</span> 产品展示</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>产品截图</h3>
+                        <div style="background: var(--light-bg); height: 300px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9ca3af;">
+                            [产品截图]
+                        </div>
+                    </div>
+                    <div>
+                        <h3>核心指标</h3>
+                        <div class="stat-box">
+                            <p class="stat-number">XX万</p>
+                            <p class="stat-label">注册用户</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-number">XX%</p>
+                            <p class="stat-label">月增长率</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-number">XX分钟</p>
+                            <p class="stat-label">日均使用时长</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 商业模式 -->
+            <section>
+                <h2><span class="financial-icon">💰</span> 商业模式</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>收入来源</th>
+                            <th>描述</th>
+                            <th>定价</th>
+                            <th>占比</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>SaaS订阅</strong></td>
+                            <td>月度/年度付费</td>
+                            <td>¥___/月</td>
+                            <td>__%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>交易佣金</strong></td>
+                            <td>每笔交易抽成</td>
+                            <td>__%</td>
+                            <td>__%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>增值服务</strong></td>
+                            <td>高级功能/定制</td>
+                            <td>按需</td>
+                            <td>__%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="stat-box" style="margin-top: 20px;">
+                    <p><strong>单位经济模型：</strong> LTV ¥___ / CAC ¥___ = <span class="highlight">__x</span></p>
+                </div>
+            </section>
+
+            <!-- 竞争优势 -->
+            <section>
+                <h2>🏆 竞争优势</h2>
+                <div class="three-column">
+                    <div class="card">
+                        <div class="card-icon">🔬</div>
+                        <h4>技术壁垒</h4>
+                        <p>[专利/算法/数据优势]</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🚀</div>
+                        <h4>先发优势</h4>
+                        <p>[用户规模/品牌认知]</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🔗</div>
+                        <h4>网络效应</h4>
+                        <p>[双边市场/社区壁垒]</p>
+                    </div>
+                </div>
+                <table style="margin-top: 30px;">
+                    <thead>
+                        <tr>
+                            <th>对比维度</th>
+                            <th>我们</th>
+                            <th>竞品A</th>
+                            <th>竞品B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>功能完整性</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>用户体验</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>价格竞争力</td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 团队介绍 -->
+            <section>
+                <h2><span class="team-icon">👥</span> 核心团队</h2>
+                <div class="three-column">
+                    <div class="card">
+                        <div class="card-icon">👤</div>
+                        <h4>[姓名] - CEO</h4>
+                        <p>[教育背景]<br>[工作经历]<br>[核心能力]</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">👤</div>
+                        <h4>[姓名] - CTO</h4>
+                        <p>[教育背景]<br>[工作经历]<br>[核心能力]</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">👤</div>
+                        <h4>[姓名] - COO</h4>
+                        <p>[教育背景]<br>[工作经历]<br>[核心能力]</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <h3>顾问团队</h3>
+                    <p>[顾问姓名] - [背景介绍]</p>
+                </div>
+            </section>
+
+            <!-- 发展路线图 -->
+            <section>
+                <h2>🗺️ 发展路线图</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026 Q1</div>
+                        <p>MVP上线，获取种子用户</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026 Q2</div>
+                        <p>产品迭代，用户增长</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026 Q3</div>
+                        <p>商业化验证，收入增长</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026 Q4</div>
+                        <p>规模化扩张，市场领先</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2027</div>
+                        <p>行业领导者，准备下一轮融资</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 财务预测 -->
+            <section>
+                <h2><span class="financial-icon">📈</span> 财务预测</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>年份</th>
+                            <th>收入</th>
+                            <th>增长率</th>
+                            <th>毛利率</th>
+                            <th>净利润</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2026</strong></td>
+                            <td>¥___万</td>
+                            <td>-</td>
+                            <td>__%</td>
+                            <td>-¥___万</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2027</strong></td>
+                            <td>¥___万</td>
+                            <td>__%</td>
+                            <td>__%</td>
+                            <td>-¥___万</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2028</strong></td>
+                            <td>¥___万</td>
+                            <td>__%</td>
+                            <td>__%</td>
+                            <td>¥___万</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="stat-box" style="margin-top: 20px;">
+                    <p><strong>盈亏平衡点：</strong> 预计____年，需要资金¥___万</p>
+                </div>
+            </section>
+
+            <!-- 融资需求 -->
+            <section>
+                <h2>💼 融资需求</h2>
+                <div class="two-column">
+                    <div>
+                        <div class="stat-box">
+                            <p class="stat-number">¥___万</p>
+                            <p class="stat-label">本轮融资额</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-number">__%</p>
+                            <p class="stat-label">出让股权</p>
+                        </div>
+                        <div class="stat-box">
+                            <p class="stat-number">¥___万</p>
+                            <p class="stat-label">投前估值</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>资金用途</h3>
+                        <div style="background: var(--light-bg); padding: 20px; border-radius: 8px;">
+                            <p>🔧 <strong>研发投入</strong>：__%</p>
+                            <p>📢 <strong>市场推广</strong>：__%</p>
+                            <p>👥 <strong>团队扩张</strong>：__%</p>
+                            <p>💼 <strong>运营储备</strong>：__%</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 联系方式 -->
+            <section>
+                <div class="logo-placeholder">🤝</div>
+                <h2>期待与您合作</h2>
+                <p class="subtitle">[公司名称]</p>
+                <div style="margin-top: 40px;">
+                    <p>📧 [邮箱]</p>
+                    <p>📱 [电话]</p>
+                    <p>🌐 [官网]</p>
+                    <p>📍 [地址]</p>
+                </div>
+                <div class="cta-button" style="margin-top: 40px;">
+                    开始对话 →
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            width: 1200,
+            height: 700,
+            margin: 0.1,
+            minScale: 0.2,
+            maxScale: 1.5,
+            controls: true,
+            progress: true,
+            center: true,
+            touch: true,
+            loop: false,
+            rtl: false,
+            shuffle: false,
+            fragments: true,
+            fragmentInURL: false,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+            autoSlide: 0,
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            defaultTiming: 120,
+            mouseWheel: false,
+            hideInactiveCursor: true,
+            hideCursorTime: 5000,
+            previewLinks: false,
+            postMessage: true,
+            postMessageEvents: false,
+            focusBodyOnPageVisibilityChange: true,
+            viewDistance: 3,
+            mobileViewDistance: 2,
+            display: 'block',
+            hideAddressBar: true,
+            preloadIframes: true,
+            autoAnimateEasing: 'ease',
+            autoAnimateDuration: 1.0,
+            autoAnimateUnmatched: true,
+            autoAnimateStyles: [
+                'opacity',
+                'color',
+                'background-color',
+                'padding',
+                'font-size',
+                'line-height',
+                'letter-spacing',
+                'border-width',
+                'border-color',
+                'border-radius',
+                'outline',
+                'outline-offset'
+            ],
+            pdfMaxPagesPerSlide: 1,
+            pdfSeparateFragments: true,
+            pdfPageHeightOffset: -1,
+            keyboard: {
+                13: 'next', // Enter
+                27: () => { // Escape
+                    if (Reveal.isOverview()) {
+                        Reveal.toggleOverview();
+                    }
+                },
+                37: 'prev', // Left
+                38: 'prev', // Up
+                39: 'next', // Right
+                40: 'next', // Down
+                79: () => { Reveal.toggleOverview(); }, // O
+                83: () => { // S
+                    if (Reveal.isSpeakerNotes()) {
+                        Reveal.toggleSpeakerNotes();
+                    }
+                },
+                87: () => { Reveal.toggleOverview(); }, // W
+                144: () => { Reveal.toggleHelp(); }, // Num Lock
+                189: () => { Reveal.toggleHelp(); }, // -
+                190: () => { Reveal.toggleHelp(); }, // .
+                191: () => { Reveal.toggleHelp(); }, // /
+            }
+        });
+    </script>
+</body>
+</html>

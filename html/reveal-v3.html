@@ -11,8 +11,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
 <style>
-  /* ═══════════ Design Tokens (Linear-inspired) ═══════════ */
+  /* ═══════════ Design Tokens (Linear-inspired, refined) ═══════════ */
   :root {
+    --vw: 1vw;
+    --vh: 1vh;
+    --vmin: 1vmin;
     --bg-deep: #08090a;
     --bg-panel: #0f1011;
     --bg-surface: #191a1b;
@@ -25,6 +28,7 @@
     --accent-bright: #7170ff;
     --accent-hover: #828fff;
     --accent-glow: rgba(113, 112, 255, 0.15);
+    --secondary-accent: #ff6b6b;
     --green: #10b981;
     --green-dim: rgba(16, 185, 129, 0.15);
     --orange: #f59e0b;
@@ -40,9 +44,27 @@
     --radius-xl: 16px;
     --shadow-card: 0 0 0 1px rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.4);
     --shadow-glow: 0 0 40px rgba(113, 112, 255, 0.08);
+    --shadow-chart: 0 0 0 1px rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.5);
     --font-sans: 'Inter', 'Noto Sans SC', -apple-system, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    --bg-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   }
+
+  /* ═══════════ SVG Icon Helper ═══════════ */
+  .icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .icon-lg { width: 20px; height: 20px; }
+  .icon-xl { width: 24px; height: 24px; }
 
   /* ═══════════ Base ═══════════ */
   .reveal,
@@ -58,34 +80,46 @@
   }
   .reveal .slides { text-align: left; }
   .reveal .slides section {
-    padding: 40px 60px;
+    padding: clamp(16px, 3vh, 40px) clamp(20px, 4vw, 60px);
     box-sizing: border-box;
     background: transparent !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    max-height: 100% !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
   }
+  .reveal .slides section::-webkit-scrollbar { width: 4px; }
+  .reveal .slides section::-webkit-scrollbar-track { background: transparent; }
+  .reveal .slides section::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .reveal .slides { overflow: visible !important; }
   .reveal .slide-background { background: var(--bg-deep) !important; }
 
   .reveal h1, .reveal h2, .reveal h3 {
     color: var(--text-primary);
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
     text-transform: none;
     text-shadow: none;
   }
-  .reveal h1 { font-size: 2.4em; letter-spacing: -0.04em; }
+  .reveal h1 { font-size: clamp(1.8em, 4.5vmin, 3.5em); letter-spacing: -0.04em; }
   .reveal h2 {
-    font-size: 1.6em;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
-    padding-bottom: 12px;
+    font-size: clamp(1em, 2.5vmin, 1.8em);
+    letter-spacing: -0.04em;
+    margin-bottom: clamp(10px, 2vh, 28px);
+    padding-bottom: clamp(6px, 1.5vh, 14px);
     border-bottom: 1px solid var(--border-standard);
+    font-weight: 600;
   }
-  .reveal h3 { font-size: 1.1em; color: var(--accent-bright); font-weight: 500; }
+  .reveal h3 { font-size: clamp(0.8em, 1.6vmin, 1.2em); color: var(--accent-bright); font-weight: 600; }
   .reveal p, .reveal li {
-    font-size: 0.72em;
+    font-size: clamp(0.5em, 1vmin, 0.75em);
     line-height: 1.65;
     color: var(--text-secondary);
+    font-weight: 400;
+    letter-spacing: 0;
   }
-  .reveal .small { font-size: 0.6em; color: var(--text-tertiary); }
+  .reveal .small { font-size: clamp(0.4em, 0.8vmin, 0.6em); color: var(--text-tertiary); }
   .reveal .highlight { color: var(--accent-bright); font-weight: 600; }
   .reveal .highlight2 { color: var(--orange); font-weight: 600; }
   .reveal .source { font-size: 0.5em; color: var(--text-muted); margin-top: 12px; text-align: right; }
@@ -104,44 +138,75 @@
   .text-muted { color: var(--text-muted); }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
-  /* ═══════════ Glass Card ═══════════ */
-  .glass-card {
-    background: rgba(255,255,255,0.03);
+  /* ═══════════ Card (clean, no glass) ═══════════ */
+  .card {
+    background: var(--bg-surface);
     border: 1px solid var(--border-standard);
     border-radius: var(--radius-lg);
     padding: 20px;
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
   }
-  .glass-card:hover {
-    background: rgba(255,255,255,0.05);
+  .card:hover {
     border-color: var(--border-accent);
-    box-shadow: var(--shadow-glow);
   }
-  .glass-card-accent {
+  .card-accent {
     border-left: 3px solid var(--accent-bright);
   }
-  .glass-card-green {
+  .card-green {
     border-left: 3px solid var(--green);
   }
-  .glass-card-orange {
+  .card-orange {
     border-left: 3px solid var(--orange);
   }
-  .glass-card-red {
+  .card-red {
     border-left: 3px solid var(--red);
   }
 
   /* ═══════════ Cover Slide ═══════════ */
   .cover-slide {
     text-align: center !important;
-    background: radial-gradient(ellipse at 50% 30%, rgba(94,106,210,0.12) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 80%, rgba(113,112,255,0.06) 0%, transparent 40%),
-                var(--bg-deep) !important;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-slide::before,
+  .cover-slide::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: orbFloat 8s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .cover-slide::before {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(94,106,210,0.2), transparent 70%);
+    top: -100px;
+    left: 10%;
+    animation-delay: 0s;
+  }
+  .cover-slide::after {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(113,112,255,0.15), transparent 70%);
+    bottom: -80px;
+    right: 15%;
+    animation-delay: -4s;
+  }
+  @keyframes orbFloat {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, -20px) scale(1.1); }
+  }
+  .cover-content {
+    position: relative;
+    z-index: 1;
+    margin-top: 60px;
   }
   .cover-title {
-    font-size: 3.2em !important;
+    font-size: clamp(2em, 5vmin, 3.5em) !important;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
     background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-bright) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -158,6 +223,7 @@
   .cover-meta {
     font-size: 0.85em;
     color: var(--text-tertiary);
+    font-weight: 400;
   }
   .cover-tags {
     display: flex;
@@ -176,25 +242,24 @@
     font-size: 0.75em;
     color: var(--text-secondary);
   }
-  .cover-tag svg { width: 14px; height: 14px; }
+  .cover-tag .icon { width: 14px; height: 14px; }
 
   /* ═══════════ Stat Grid ═══════════ */
-  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0; }
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 1.2vw, 16px); margin: clamp(8px, 1.5vh, 16px) 0; }
   .stat-grid--2col { grid-template-columns: 1fr 1fr; }
   .stat-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid var(--border-standard);
     border-radius: var(--radius-lg);
-    padding: 18px;
+    padding: clamp(10px, 1.5vw, 18px);
     text-align: center;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
   }
   .stat-card:hover {
-    background: rgba(255,255,255,0.05);
     border-color: var(--border-accent);
   }
   .stat-card .num {
-    font-size: 1.8em;
+    font-size: clamp(1.2em, 2.5vmin, 1.8em);
     font-weight: 700;
     color: var(--accent-bright);
     letter-spacing: -0.03em;
@@ -213,10 +278,19 @@
   .card-orange .num { color: var(--orange); }
   .card-green .num { color: var(--green); }
 
+  /* Number counter pulse */
+  .stat-card.pulse .num {
+    animation: subtlePulse 2s ease-in-out infinite;
+  }
+  @keyframes subtlePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
   /* ═══════════ Business Flow ═══════════ */
   .biz-flow { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
   .biz-node {
-    background: linear-gradient(135deg, rgba(94,106,210,0.2), rgba(113,112,255,0.1));
+    background: rgba(94,106,210,0.1);
     border: 1px solid var(--border-accent);
     color: var(--text-primary);
     padding: 14px 20px;
@@ -225,11 +299,11 @@
     min-width: 100px;
   }
   .biz-node.orange {
-    background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.1));
+    background: rgba(245,158,11,0.1);
     border-color: rgba(245,158,11,0.3);
   }
   .biz-node.green {
-    background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.1));
+    background: rgba(16,185,129,0.1);
     border-color: rgba(16,185,129,0.3);
   }
   .biz-arrow { font-size: 1.4em; color: var(--text-muted); }
@@ -239,9 +313,9 @@
   .biz-profit-val { font-size: 1.1em; font-weight: 600; color: var(--accent-bright); }
   .biz-profit-note { font-size: 0.48em; color: var(--text-muted); margin-top: 4px; }
 
-  /* ═══════════ Tables ═══════════ */
+  /* ═══════════ Tables (cleaner) ═══════════ */
   .reveal table {
-    font-size: 0.58em;
+    font-size: clamp(0.4em, 0.8vmin, 0.58em);
     margin: 0 auto;
     border-collapse: separate;
     border-spacing: 0;
@@ -250,25 +324,33 @@
     width: 100%;
   }
   .reveal table th {
-    background: rgba(94,106,210,0.15);
+    background: rgba(94,106,210,0.1);
     color: var(--accent-bright);
     padding: 10px 14px;
     font-weight: 500;
-    border-bottom: 1px solid var(--border-standard);
+    border-bottom: 1px solid var(--border-subtle);
   }
   .reveal table td {
     padding: 8px 14px;
     border-bottom: 1px solid var(--border-subtle);
     color: var(--text-secondary);
   }
-  .reveal table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-  .reveal table tr:hover { background: rgba(255,255,255,0.04); }
-  .th-highlight { background: rgba(113,112,255,0.2) !important; color: var(--text-primary) !important; }
+  .reveal table tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+  .reveal table tr:hover { background: rgba(255,255,255,0.03); }
+  .th-highlight { background: rgba(113,112,255,0.15) !important; color: var(--text-primary) !important; }
 
   /* ═══════════ Chart Container ═══════════ */
-  .chart-container { max-width: 650px; margin: 0 auto; }
-  .chart-container--sm { max-width: 480px; }
-  .chart-container--md { max-width: 520px; }
+  .chart-container {
+    max-width: 650px;
+    margin: 0 auto;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    box-shadow: var(--shadow-chart);
+  .chart-container { max-width: min(650px, 55vw); margin: 0 auto; }
+  .chart-container--sm { max-width: min(480px, 42vw); }
+  .chart-container--md { max-width: min(520px, 45vw); }
 
   /* ═══════════ Split Layout ═══════════ */
   .split-layout { display: flex; gap: 20px; align-items: flex-start; }
@@ -280,8 +362,8 @@
 
   /* ═══════════ Finance Section ═══════════ */
   .reveal .slides section.finance-section { padding: 20px 40px; }
-  .reveal .slides section.finance-section h2 { margin: 0 0 12px; font-size: 1.4em; }
-  .finance-body { display: flex; gap: 16px; height: 82%; }
+  .reveal .slides section.finance-section h2 { margin: 0 0 12px; font-size: 1.4em; flex-shrink: 0; }
+  .finance-body { display: flex; gap: 16px; flex: 1; min-height: 0; }
   .finance-body .chart-col { flex: 0 0 42%; display: flex; flex-direction: column; }
   .finance-body .chart-col canvas { flex: 1; }
   .finance-body .table-col { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -314,34 +396,63 @@
   .funding-val { font-size: 2.2em; font-weight: 700; letter-spacing: -0.03em; }
   .funding-label { color: var(--text-tertiary); font-size: 0.65em; margin-top: 4px; }
 
-  /* ═══════════ Timeline ═══════════ */
-  .timeline { position: relative; padding-left: 28px; }
-  .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent-bright), var(--accent), transparent); }
-  .timeline-item { position: relative; margin-bottom: 18px; }
-  .timeline-item::before {
+  /* ═══════════ Timeline (cleaner) ═══════════ */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
     content: '';
     position: absolute;
-    left: -25px;
-    top: 5px;
-    width: 10px;
-    height: 10px;
+    left: 10px;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--border-standard);
+    border-radius: 1px;
+  }
+  .timeline-item { position: relative; margin-bottom: 20px; }
+  .timeline-item::before {
+    content: attr(data-step);
+    position: absolute;
+    left: -28px;
+    top: 2px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background: var(--accent-bright);
-    border: 2px solid var(--bg-deep);
-    box-shadow: 0 0 0 2px var(--accent), 0 0 8px rgba(113,112,255,0.3);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
   .timeline-item h4 { font-size: 0.95rem; color: var(--accent-bright); margin: 0; font-weight: 600; }
   .timeline-item p { font-size: 0.62em; color: var(--text-secondary); margin: 4px 0 0; line-height: 1.6; }
 
   /* ═══════════ Team ═══════════ */
   .team-grid { display: flex; gap: 24px; justify-content: center; }
-  .team-icon { font-size: 2em; }
+  .team-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0;
+  }
+  .team-avatar.team-avatar--red {
+    background: linear-gradient(135deg, #dc2626, var(--red));
+  }
   .team-title { font-weight: 600; font-size: 0.8em; margin: 8px 0; color: var(--text-primary); }
   .team-desc { font-size: 0.55em; color: var(--text-tertiary); line-height: 1.6; }
 
   /* ═══════════ Callout ═══════════ */
   .callout-box {
-    background: rgba(94,106,210,0.08);
+    background: rgba(94,106,210,0.06);
     border: 1px solid var(--border-accent);
     border-radius: var(--radius-lg);
     padding: 14px 22px;
@@ -350,7 +461,7 @@
   }
   .callout-box p { color: var(--text-secondary); font-size: 0.58em; line-height: 1.6; }
   .callout-gradient {
-    background: linear-gradient(135deg, rgba(94,106,210,0.08) 0%, rgba(113,112,255,0.04) 100%);
+    background: rgba(94,106,210,0.05);
     border: 1px solid var(--border-accent);
     border-radius: var(--radius-lg);
     padding: 10px 18px;
@@ -369,17 +480,59 @@
   /* ═══════════ Slide Footer ═══════════ */
   .slide-footer { position: absolute; bottom: 16px; right: 24px; font-size: 0.32em; color: var(--text-muted); }
 
-  /* ═══════════ Animations ═══════════ */
-  .reveal .fade-up { opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
-  .reveal .fade-up.visible { opacity: 1; transform: translateY(0); }
+  /* ═══════════ Animations (staggered fade-in + counter) ═══════════ */
+  .reveal .fade-up {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
   .reveal .fade-up.delay-1 { transition-delay: 0.1s; }
   .reveal .fade-up.delay-2 { transition-delay: 0.2s; }
   .reveal .fade-up.delay-3 { transition-delay: 0.3s; }
+  .reveal .fade-up.delay-4 { transition-delay: 0.4s; }
+  .reveal .fade-up.delay-5 { transition-delay: 0.5s; }
+
+  /* Slide transition with slight scale */
+  .reveal .slides > section {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  /* Checkmark SVG icon */
+  .check-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    color: var(--green);
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+
+  /* List with icons */
+  .icon-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .icon-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .icon-list li .icon {
+    margin-top: 3px;
+    color: var(--red);
+  }
+  .icon-list li .icon-orange { color: var(--orange); }
 
   /* ═══════════ Responsive ═══════════ */
   @media (max-width: 1024px) {
-    .reveal h1 { font-size: 1.8rem; }
-    .reveal h2 { font-size: 1.3rem; }
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.4em; }
     .reveal p, .reveal li { font-size: 0.65em; }
     .stat-grid { gap: 10px; }
     .stat-card { padding: 14px; }
@@ -387,12 +540,12 @@
     .biz-flow { gap: 8px; }
     .finance-body { gap: 10px; }
     .finance-body .table-col table { font-size: 9px; }
-    .timeline { padding-left: 22px; }
+    .timeline { padding-left: 26px; }
   }
   @media (max-width: 600px) {
-    .reveal h1 { font-size: 1.3rem; }
-    .reveal h2 { font-size: 1rem; }
-    .reveal h3 { font-size: 0.85rem; }
+    .reveal h1 { font-size: 1.6em; }
+    .reveal h2 { font-size: 1.1em; }
+    .reveal h3 { font-size: 0.9em; }
     .reveal p, .reveal li { font-size: 0.55em; }
     .stat-grid { grid-template-columns: 1fr; gap: 8px; }
     .stat-card .num { font-size: 1.3em; }
@@ -415,11 +568,17 @@
     .reveal h1, .reveal h2, .reveal h3 { color: #1a1a1a !important; }
     .reveal p, .reveal li, .reveal td { color: #333 !important; }
     .reveal .controls, .reveal .progress, .reveal .slide-number, .reveal .pause-overlay { display: none !important; }
-    .stat-card, .glass-card { background: #f8f9fa !important; border-color: #ddd !important; }
+    .stat-card, .card { background: #f8f9fa !important; border-color: #ddd !important; }
     canvas { max-width: 100%; height: auto !important; }
+    .cover-slide::before, .cover-slide::after { display: none !important; }
   }
+
+  /* ═══════════ Reduced Motion ═══════════ */
   @media (prefers-reduced-motion: reduce) {
     .reveal .fade-up { opacity: 1; transform: none; transition: none; }
+    .cover-slide::before, .cover-slide::after { animation: none !important; }
+    .stat-card.pulse .num { animation: none !important; }
+    .reveal .slides > section { transition: none !important; }
   }
 </style>
 </head>
@@ -427,122 +586,131 @@
 <div class="reveal">
 <div class="slides">
 
-<!-- ═══════════ Slide 01: 封面 ═══════════ -->
+<!-- ═══════════ Slide 01: Cover ═══════════ -->
 <section class="cover-slide">
-  <div style="margin-top: 60px;">
+  <div class="cover-content">
     <h1 class="cover-title">捷派优选</h1>
     <p class="cover-subtitle">人力资源灵活用工平台</p>
     <p class="cover-meta">天使轮融资商业计划书 · 深圳</p>
     <div class="cover-tags">
       <span class="cover-tag">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
         深圳
       </span>
       <span class="cover-tag">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg></span>
         工厂日结
       </span>
       <span class="cover-tag">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
         融资 ¥120万
       </span>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ Slide 02: 行业痛点 ═══════════ -->
+<!-- ═══════════ Slide 02: Pain Points ═══════════ -->
 <section>
   <h2>行业痛点</h2>
   <div class="stat-grid stat-grid--2col">
-    <div class="stat-card card-red" style="text-align:left;">
+    <div class="stat-card card-red fade-up" style="text-align:left;">
       <div class="num" style="font-size:1.2em;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/><path d="M12 12v4"/></svg>
+        <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/><path d="M12 12v4"/></svg></span>
         工厂端
       </div>
-      <p class="stat-body">
-        ❌ 招工难、留人难<br>
-        ❌ 旺季临时用工找不到人<br>
-        ❌ 传统中介费高、效率低<br>
-        ❌ 工人质量参差不齐
-      </p>
+      <ul class="icon-list stat-body" style="margin-top:10px;">
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>招工难、留人难</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>旺季临时用工找不到人</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>传统中介费高、效率低</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>工人质量参差不齐</li>
+      </ul>
     </div>
-    <div class="stat-card card-orange" style="text-align:left;">
+    <div class="stat-card card-orange fade-up delay-1" style="text-align:left;">
       <div class="num" style="font-size:1.2em;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" style="vertical-align:middle;margin-right:6px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
         工人端
       </div>
-      <p class="stat-body">
-        ❌ 找日结工作靠熟人、靠蹲点<br>
-        ❌ 被黑中介克扣工资<br>
-        ❌ 工作不稳定、收入没保障<br>
-        ❌ 工伤维权难
-      </p>
+      <ul class="icon-list stat-body" style="margin-top:10px;">
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>找日结工作靠熟人、靠蹲点</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>被黑中介克扣工资</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>工作不稳定、收入没保障</li>
+        <li><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>工伤维权难</li>
+      </ul>
     </div>
   </div>
-  <div class="callout-box mt-12">
-    <p>💡 核心矛盾：<span class="highlight">工厂需要弹性用工，工人需要稳定收入</span>，但中间缺乏高效、可信的连接平台</p>
+  <div class="callout-box mt-12 fade-up delay-2">
+    <p>
+      <span class="icon icon-lg" style="color:var(--accent-bright);vertical-align:middle;margin-right:6px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+      核心矛盾：<span class="highlight">工厂需要弹性用工，工人需要稳定收入</span>，但中间缺乏高效、可信的连接平台
+    </p>
   </div>
 </section>
 
-<!-- ═══════════ Slide 03: 市场规模 ═══════════ -->
+<!-- ═══════════ Slide 03: Market Size ═══════════ -->
 <section>
   <h2>万亿级市场</h2>
   <div class="stat-grid">
-    <div class="stat-card">
-      <div class="num">3.2<span class="num-unit">万亿</span></div>
+    <div class="stat-card pulse fade-up">
+      <div class="num" data-counter="3.2">3.2<span class="num-unit">万亿</span></div>
       <div class="label">2023年人力资源服务市场</div>
     </div>
-    <div class="stat-card">
-      <div class="num">1.24<span class="num-unit">万亿</span></div>
+    <div class="stat-card pulse fade-up delay-1">
+      <div class="num" data-counter="1.24">1.24<span class="num-unit">万亿</span></div>
       <div class="label">灵活用工细分市场</div>
     </div>
-    <div class="stat-card">
-      <div class="num">4.25<span class="num-unit">亿</span></div>
+    <div class="stat-card pulse fade-up delay-2">
+      <div class="num" data-counter="4.25">4.25<span class="num-unit">亿</span></div>
       <div class="label">蓝领群体规模（2024）</div>
     </div>
   </div>
-  <div class="chart-container chart-container--md">
+  <div class="chart-container chart-container--md fade-up delay-3">
     <canvas id="marketChart" role="img" aria-label="中国人力资源服务市场规模柱状图"></canvas>
   </div>
   <p class="source">人社部统计公报 2023；亿欧智库 2025.12；《2024中国蓝领就业调研报告》</p>
 </section>
 
-<!-- ═══════════ Slide 04: 灵活就业人群 ═══════════ -->
+<!-- ═══════════ Slide 04: Flexible Workforce ═══════════ -->
 <section>
   <h2>2亿灵活就业大军</h2>
   <div class="stat-grid">
-    <div class="stat-card">
-      <div class="num">2<span class="num-unit">亿人</span></div>
+    <div class="stat-card fade-up">
+      <div class="num" data-counter="2">2<span class="num-unit">亿人</span></div>
       <div class="label">灵活就业人员（人社部 2024.10）</div>
     </div>
-    <div class="stat-card">
-      <div class="num">27<span class="num-unit">%</span></div>
+    <div class="stat-card fade-up delay-1">
+      <div class="num" data-counter="27">27<span class="num-unit">%</span></div>
       <div class="label">占全国就业比例</div>
     </div>
-    <div class="stat-card">
-      <div class="num">1.5<span class="num-unit">倍</span></div>
+    <div class="stat-card fade-up delay-2">
+      <div class="num" data-counter="1.5">1.5<span class="num-unit">倍</span></div>
       <div class="label">蓝领求人倍率<br><span style="font-size:0.8em;color:var(--text-muted);">（150岗位:100求职者）</span></div>
     </div>
   </div>
-  <div class="chart-container chart-container--sm">
+  <div class="chart-container chart-container--sm fade-up delay-3">
     <canvas id="workerChart" role="img" aria-label="灵活就业招聘职位占比折线图"></canvas>
   </div>
   <p class="source">人社部 2024.10 via 新华社；吴晓波频道 2025.9.17</p>
 </section>
 
-<!-- ═══════════ Slide 05: AI冲击 ═══════════ -->
+<!-- ═══════════ Slide 05: AI Impact ═══════════ -->
 <section>
   <h2>AI 时代的就业变局</h2>
   <div class="split-layout">
     <div class="col-main">
-      <h3 class="compact-heading">🤖 机器换人加速</h3>
+      <h3 class="compact-heading">
+        <span class="icon icon-lg" style="color:var(--accent-bright);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></span>
+        机器换人加速
+      </h3>
       <ul class="compact-list">
         <li>2024年中国新增工业机器人 <span class="highlight">41.1万台</span>，占全球76%</li>
         <li>制造业就业从1.15亿峰值降至 <span class="highlight">&lt;8,500万</span>，流失超3000万岗</li>
         <li>中国运行机器人存量突破 <span class="highlight">200万台</span>，全球第一</li>
         <li>每年减少约 <span class="highlight">1,000万</span>适龄劳动人口</li>
       </ul>
-      <h3 class="compact-heading mt-16">📈 日结需求反向增长</h3>
+      <h3 class="compact-heading mt-16">
+        <span class="icon icon-lg" style="color:var(--orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
+        日结需求反向增长
+      </h3>
       <ul class="compact-list">
         <li>蓝领求人倍率 <span class="highlight2">&gt;1.5</span>，高级技工求人倍率 <span class="highlight2">&gt;3</span></li>
         <li>蓝领日结均薪 <span class="highlight2">200-250元/天</span></li>
@@ -550,7 +718,7 @@
       </ul>
     </div>
     <div class="col-side">
-      <div class="glass-card glass-card-orange">
+      <div class="card card-orange">
         <div class="num" style="font-size:1em;color:var(--orange);font-weight:600;">AI ≠ 消灭日结</div>
         <p style="font-size:0.52em;color:var(--text-secondary);text-align:left;line-height:1.7;margin-top:8px;">
           <strong style="color:var(--text-primary);">短期：</strong>AI导致失业潮 → 更多人涌入日结市场<br>
@@ -563,7 +731,7 @@
   <p class="source">IFR《World Robotics 2025》2025.9；Metaintro 2026.3；高盛研究部 2025.9</p>
 </section>
 
-<!-- ═══════════ Slide 06: 核心业务 ═══════════ -->
+<!-- ═══════════ Slide 06: Core Business ═══════════ -->
 <section>
   <h2>核心业务：日结招工</h2>
   <div class="split-layout">
@@ -571,17 +739,26 @@
       <h3 style="font-size:0.85em;">业务流程</h3>
       <div class="biz-flow" style="margin:10px 0;">
         <div class="biz-node" style="padding:10px 14px;">
-          <div class="val" style="font-size:0.9em;">🏭 工厂</div>
+          <div class="val" style="font-size:0.9em;">
+            <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg></span>
+            工厂
+          </div>
           <div class="desc" style="font-size:0.55em;">发布用工需求</div>
         </div>
         <div class="biz-arrow">→</div>
         <div class="biz-node orange" style="padding:10px 14px;">
-          <div class="val" style="font-size:0.9em;">📋 平台</div>
+          <div class="val" style="font-size:0.9em;">
+            <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+            平台
+          </div>
           <div class="desc" style="font-size:0.55em;">智能匹配</div>
         </div>
         <div class="biz-arrow">→</div>
         <div class="biz-node green" style="padding:10px 14px;">
-          <div class="val" style="font-size:0.9em;">👷 工人</div>
+          <div class="val" style="font-size:0.9em;">
+            <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            工人
+          </div>
           <div class="desc" style="font-size:0.55em;">接单上工</div>
         </div>
       </div>
@@ -597,31 +774,37 @@
       </table>
     </div>
     <div class="col-side">
-      <div class="glass-card glass-card-green">
-        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">📊 关键数据</div>
+      <div class="card card-green">
+        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">
+          <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+          关键数据
+        </div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          ✅ 毛利率：<strong style="color:var(--text-primary);">28%</strong><br>
-          ✅ 净利率：<strong style="color:var(--text-primary);">85.5%</strong>（500人时）<br>
-          ✅ 盈亏平衡：<strong style="color:var(--text-primary);">15人</strong><br>
-          ✅ 回本周期：<strong style="color:var(--text-primary);">6个月</strong><br>
-          ✅ 月净利（500人）：<strong style="color:var(--text-primary);">¥87.5万</strong>
+          <span class="check-icon" style="display:inline-block;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> 毛利率：<strong style="color:var(--text-primary);">28%</strong><br>
+          <span class="check-icon" style="display:inline-block;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> 净利率：<strong style="color:var(--text-primary);">85.5%</strong>（500人时）<br>
+          <span class="check-icon" style="display:inline-block;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> 盈亏平衡：<strong style="color:var(--text-primary);">15人</strong><br>
+          <span class="check-icon" style="display:inline-block;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> 回本周期：<strong style="color:var(--text-primary);">6个月</strong><br>
+          <span class="check-icon" style="display:inline-block;vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span> 月净利（500人）：<strong style="color:var(--text-primary);">¥87.5万</strong>
         </div>
       </div>
-      <div class="glass-card glass-card-accent mt-12">
-        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">🔒 核心壁垒</div>
+      <div class="card card-accent mt-12">
+        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">
+          <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          核心壁垒
+        </div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          • 工资公司统一发放<br>
-          • 防止工厂跑单<br>
-          • 掌握现金流<br>
-          • 深耕工厂关系<br>
-          • 线下资源护城河
+          工资公司统一发放<br>
+          防止工厂跑单<br>
+          掌握现金流<br>
+          深耕工厂关系<br>
+          线下资源护城河
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ Slide 07: 增长引擎 ═══════════ -->
+<!-- ═══════════ Slide 07: Growth Engine ═══════════ -->
 <section>
   <h2>增长引擎：工厂商城</h2>
   <div class="split-layout">
@@ -640,7 +823,7 @@
         <tr><td style="color:var(--text-primary);font-weight:500;">广告推广</td><td>CPC/CPM</td><td>-</td><td>工厂品牌曝光</td></tr>
       </table>
       <h3 style="font-size:0.85em;margin-top:14px;">商业逻辑</h3>
-      <div style="font-size:0.55em;background:rgba(255,255,255,0.03);border:1px solid var(--border-standard);padding:12px;border-radius:var(--radius-md);line-height:2;color:var(--text-secondary);">
+      <div style="font-size:0.55em;background:var(--bg-surface);border:1px solid var(--border-standard);padding:12px;border-radius:var(--radius-md);line-height:2;color:var(--text-secondary);">
         <strong style="color:var(--text-primary);">第一步：</strong>通过招工建立工厂信任关系<br>
         <strong style="color:var(--text-primary);">第二步：</strong>了解工厂采购和销售需求<br>
         <strong style="color:var(--text-primary);">第三步：</strong>搭建商城撮合交易<br>
@@ -648,44 +831,53 @@
       </div>
     </div>
     <div class="col-side">
-      <div class="glass-card glass-card-accent">
-        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">📈 增长空间</div>
+      <div class="card card-accent">
+        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">
+          <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
+          增长空间
+        </div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          🎯 目标市场：<strong style="color:var(--text-primary);">万亿级</strong><br>
-          📊 佣金比例：<strong style="color:var(--text-primary);">3-5%</strong><br>
-          💰 潜在收入：<strong style="color:var(--text-primary);">¥数亿/年</strong><br>
-          🔄 复购率：<strong style="color:var(--text-primary);">高频刚需</strong><br>
-          🌐 网络效应：<strong style="color:var(--text-primary);">强</strong>
+          目标市场：<strong style="color:var(--text-primary);">万亿级</strong><br>
+          佣金比例：<strong style="color:var(--text-primary);">3-5%</strong><br>
+          潜在收入：<strong style="color:var(--text-primary);">¥数亿/年</strong><br>
+          复购率：<strong style="color:var(--text-primary);">高频刚需</strong><br>
+          网络效应：<strong style="color:var(--text-primary);">强</strong>
         </div>
       </div>
-      <div class="glass-card glass-card-green mt-12">
-        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">🎯 竞争优势</div>
+      <div class="card card-green mt-12">
+        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">
+          <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+          竞争优势
+        </div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          • 已有工厂信任基础<br>
-          • 了解工厂真实需求<br>
-          • 低成本获客<br>
-          • 数据驱动匹配<br>
-          • 从服务→交易闭环
+          已有工厂信任基础<br>
+          了解工厂真实需求<br>
+          低成本获客<br>
+          数据驱动匹配<br>
+          从服务→交易闭环
         </div>
       </div>
-      <div class="glass-card glass-card-orange mt-12">
-        <div class="num" style="font-size:1em;color:var(--orange);font-weight:600;">⏰ 时间规划</div>
+      <div class="card card-orange mt-12">
+        <div class="num" style="font-size:1em;color:var(--orange);font-weight:600;">
+          <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+          时间规划
+        </div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          • 第12个月：MVP上线<br>
-          • 第18个月：规模化<br>
-          • 第24个月：生态成型<br>
-          • 第36个月：贡献30%+收入
+          第12个月：MVP上线<br>
+          第18个月：规模化<br>
+          第24个月：生态成型<br>
+          第36个月：贡献30%+收入
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ Slide 08: 双轮驱动 ═══════════ -->
+<!-- ═══════════ Slide 08: Dual-Wheel Strategy ═══════════ -->
 <section>
   <h2>双轮驱动战略</h2>
   <div class="stat-grid" style="margin:10px 0;gap:12px;">
-    <div class="glass-card glass-card-accent" style="padding:14px;">
+    <div class="card card-accent fade-up" style="padding:14px;">
       <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">第一轮：招工</div>
       <div class="label" style="font-size:0.7rem;">现金流业务</div>
       <div style="font-size:0.5em;text-align:left;margin-top:8px;line-height:1.8;color:var(--text-secondary);">
@@ -694,7 +886,7 @@
         <strong style="color:var(--text-primary);">作用：</strong>建立工厂关系，积累用户
       </div>
     </div>
-    <div class="glass-card glass-card-orange" style="padding:14px;">
+    <div class="card card-orange fade-up delay-1" style="padding:14px;">
       <div class="num" style="font-size:1em;color:var(--orange);font-weight:600;">第二轮：商城</div>
       <div class="label" style="font-size:0.7rem;">增长引擎</div>
       <div style="font-size:0.5em;text-align:left;margin-top:8px;line-height:1.8;color:var(--text-secondary);">
@@ -703,7 +895,7 @@
         <strong style="color:var(--text-primary);">作用：</strong>打开增长天花板
       </div>
     </div>
-    <div class="glass-card glass-card-green" style="padding:14px;">
+    <div class="card card-green fade-up delay-2" style="padding:14px;">
       <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">协同效应</div>
       <div class="label" style="font-size:0.7rem;">1+1>2</div>
       <div style="font-size:0.5em;text-align:left;margin-top:8px;line-height:1.8;color:var(--text-secondary);">
@@ -713,49 +905,62 @@
       </div>
     </div>
   </div>
-  <div class="callout-gradient mt-8">
+  <div class="callout-gradient mt-8 fade-up delay-3">
     <p style="font-size:0.6em;color:var(--text-secondary);line-height:1.5;text-align:center;">
-      🚀 <strong style="color:var(--text-primary);">飞轮效应：</strong><strong style="color:var(--accent-bright);">招工</strong> → 建立工厂关系 → 了解需求 → <strong style="color:var(--orange);">商城</strong> → 佣金收入 → 更多资源 → <strong style="color:var(--accent-bright);">招工扩张</strong> → ...　每一圈都让壁垒更深、增长更快
+      <strong style="color:var(--text-primary);">飞轮效应：</strong><strong style="color:var(--accent-bright);">招工</strong> → 建立工厂关系 → 了解需求 → <strong style="color:var(--orange);">商城</strong> → 佣金收入 → 更多资源 → <strong style="color:var(--accent-bright);">招工扩张</strong> → ...　每一圈都让壁垒更深、增长更快
     </p>
   </div>
 </section>
 
-<!-- ═══════════ Slide 09: 盈利模式 ═══════════ -->
+<!-- ═══════════ Slide 09: Profit Model ═══════════ -->
 <section>
   <h2>盈利模式</h2>
   <div class="biz-flow">
     <div class="biz-node">
-      <div class="val">🏭 工厂</div>
+      <div class="val">
+        <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a4 4 0 0 0-8 0v2"/></svg></span>
+        工厂
+      </div>
       <div class="desc">支付 ¥25/小时/人</div>
     </div>
     <div class="biz-arrow">→</div>
     <div class="biz-node orange">
-      <div class="val">📋 平台</div>
+      <div class="val">
+        <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+        平台
+      </div>
       <div class="desc">捷派优选撮合</div>
     </div>
     <div class="biz-arrow">→</div>
     <div class="biz-node green">
-      <div class="val">👷 工人</div>
+      <div class="val">
+        <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+        工人
+      </div>
       <div class="desc">获得 ¥18/小时/人</div>
     </div>
   </div>
   <div class="biz-profit">
-    <span class="biz-profit-val">💰 每人每小时赚 ¥7 · 早班¥77/天 · 晚班¥80.5/天</span>
+    <span class="biz-profit-val">
+      <span class="icon icon-lg" style="color:var(--accent-bright);vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+      每人每小时赚 ¥7 · 早班¥77/天 · 晚班¥80.5/天
+    </span>
     <div class="biz-profit-note">早班11h / 晚班11.5h（均为实际工时，不含吃饭休息）</div>
   </div>
   <table>
     <caption class="sr-only">收入来源明细表</caption>
     <tr><th scope="col">收入来源</th><th scope="col">模式</th><th scope="col">说明</th></tr>
-    <tr><td style="color:var(--text-primary);">🥇 劳务差价</td><td>25-18= ¥7/小时</td><td>核心收入，月结由工厂支付</td></tr>
-    <tr><td style="color:var(--text-primary);">🥈 商城佣金</td><td>3%-5%</td><td>后期：工厂原材料/产品交易撮合</td></tr>
-    <tr><td style="color:var(--text-primary);">🥉 广告位</td><td>按位收费</td><td>后期：工厂推广、岗位置顶</td></tr>
+    <tr><td style="color:var(--text-primary);">1 劳务差价</td><td>25-18= ¥7/小时</td><td>核心收入，月结由工厂支付</td></tr>
+    <tr><td style="color:var(--text-primary);">2 商城佣金</td><td>3%-5%</td><td>后期：工厂原材料/产品交易撮合</td></tr>
+    <tr><td style="color:var(--text-primary);">3 广告位</td><td>按位收费</td><td>后期：工厂推广、岗位置顶</td></tr>
   </table>
   <p class="small text-center mt-8">
-    🔒 工资由公司统一发放 → 防止跑单 → 掌握现金流
+    <span class="icon icon-lg" style="vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+    工资由公司统一发放 → 防止跑单 → 掌握现金流
   </p>
 </section>
 
-<!-- ═══════════ Slide 10: 财务模型 ═══════════ -->
+<!-- ═══════════ Slide 10: Finance Model ═══════════ -->
 <section class="finance-section">
   <h2>财务模型</h2>
   <div class="finance-body">
@@ -766,11 +971,11 @@
       <h3>500人满载 · 月度收支明细</h3>
       <table>
         <caption class="sr-only">500人满载月度收支明细</caption>
-        <tr><th colspan="2" class="bg-green-row" scope="colgroup" style="color:var(--green);background:rgba(16,185,129,0.1);">📈 收入</th><th></th></tr>
+        <tr><th colspan="2" class="bg-green-row" scope="colgroup" style="color:var(--green);background:rgba(16,185,129,0.1);">收入</th><th></th></tr>
         <tr><td>早班差价收入</td><td>250人×11h×26天×¥7</td><td class="text-green">¥500,500</td></tr>
         <tr><td>晚班差价收入</td><td>250人×11.5h×26天×¥7</td><td class="text-green">¥523,250</td></tr>
         <tr><td class="fw-600">差价收入合计</td><td></td><td class="fw-600 text-green">¥1,023,750</td></tr>
-        <tr><th colspan="2" class="bg-red-row" scope="colgroup" style="color:var(--red);background:rgba(239,68,68,0.08);">📉 成本支出</th><th></th></tr>
+        <tr><th colspan="2" class="bg-red-row" scope="colgroup" style="color:var(--red);background:rgba(239,68,68,0.08);">成本支出</th><th></th></tr>
         <tr><td>管理+对接+招募</td><td>底薪+提成·4人×¥15k封顶</td><td>¥60,000</td></tr>
         <tr><td>办公+行政</td><td>场地¥5k+杂费¥1.2k</td><td>¥11,200</td></tr>
         <tr><td>资金垫付成本</td><td>垫资¥263万×6%÷12月</td><td>¥13,150</td></tr>
@@ -779,16 +984,16 @@
         <tr><td>技术成本分摊</td><td>小程序+服务器+维护</td><td>¥15,000</td></tr>
         <tr><td>其他运营</td><td>交通/差旅/招待等</td><td>¥10,000</td></tr>
         <tr><td class="fw-600">成本合计</td><td></td><td class="fw-600 text-red">¥148,395</td></tr>
-        <tr><th colspan="2" class="bg-accent-row" scope="colgroup" style="color:var(--accent-bright);background:rgba(94,106,210,0.1);">💰 利润</th><th></th></tr>
+        <tr><th colspan="2" class="bg-accent-row" scope="colgroup" style="color:var(--accent-bright);background:rgba(94,106,210,0.1);">利润</th><th></th></tr>
         <tr><td class="fw-600" style="color:var(--text-primary);">月净利润</td><td></td><td class="fw-600 text-green" style="font-size:1.1em;">¥875,355</td></tr>
         <tr><td class="text-muted">毛利率 28%</td><td class="text-muted">净利率 85.5%</td><td></td></tr>
       </table>
-      <p class="note">📌 工资工厂月结，公司垫资约30天 · 意外险¥3/人/天工人自担</p>
+      <p class="note">工资工厂月结，公司垫资约30天 · 意外险¥3/人/天工人自担</p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ Slide 11: 竞争优势 ═══════════ -->
+<!-- ═══════════ Slide 11: Competitive Advantage ═══════════ -->
 <section>
   <h2>竞争优势</h2>
   <table>
@@ -802,16 +1007,19 @@
     <tr><th scope="row">AI能力</th><td>无</td><td>基础匹配</td><td style="color:var(--text-primary);font-weight:500;">AI推荐岗位+需求预测</td></tr>
   </table>
   <div class="callout-box mt-12">
-    <p>💡 <strong style="color:var(--text-primary);">核心壁垒：</strong>线下工厂资源是护城河，线上平台是放大器</p>
+    <p>
+      <span class="icon icon-lg" style="color:var(--accent-bright);vertical-align:middle;margin-right:4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+      <strong style="color:var(--text-primary);">核心壁垒：</strong>线下工厂资源是护城河，线上平台是放大器
+    </p>
   </div>
 </section>
 
-<!-- ═══════════ Slide 12: 团队 ═══════════ -->
+<!-- ═══════════ Slide 12: Team ═══════════ -->
 <section>
   <h2>团队</h2>
   <div class="team-grid">
-    <div class="stat-card" style="border-left:3px solid var(--accent-bright);">
-      <div class="team-icon">👤</div>
+    <div class="stat-card fade-up" style="border-left:3px solid var(--accent-bright);">
+      <div class="team-avatar">CEO</div>
       <div class="team-title">创始人 / CEO</div>
       <p class="team-desc">
         深圳本地 · 深耕工厂资源<br>
@@ -819,8 +1027,8 @@
         掌握核心工厂客户关系
       </p>
     </div>
-    <div class="stat-card" style="border-left:3px solid var(--accent-bright);">
-      <div class="team-icon">👤</div>
+    <div class="stat-card fade-up delay-1" style="border-left:3px solid var(--accent-bright);">
+      <div class="team-avatar">CTO</div>
       <div class="team-title">联合创始人 / CTO</div>
       <p class="team-desc">
         小程序开发 · 后端架构<br>
@@ -828,8 +1036,10 @@
         技术选型与迭代
       </p>
     </div>
-    <div class="stat-card" style="border-left:3px solid var(--red);">
-      <div class="team-icon">👥</div>
+    <div class="stat-card fade-up delay-2" style="border-left:3px solid var(--red);">
+      <div class="team-avatar team-avatar--red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="24" height="24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
       <div class="team-title">执行团队</div>
       <p class="team-desc">
         招工专员 · 工厂对接<br>
@@ -839,11 +1049,12 @@
     </div>
   </div>
   <p class="small text-center mt-16">
-    🎯 两人核心 + 弹性执行团队，轻资产起步
+    <span class="icon icon-lg" style="vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+    两人核心 + 弹性执行团队，轻资产起步
   </p>
 </section>
 
-<!-- ═══════════ Slide 13: 融资需求 ═══════════ -->
+<!-- ═══════════ Slide 13: Funding ═══════════ -->
 <section>
   <h2 style="font-size:1.4em;">融资需求 · ¥120万</h2>
   <div class="funding-grid">
@@ -891,44 +1102,56 @@
   </div>
 </section>
 
-<!-- ═══════════ Slide 14: 发展路线图 ═══════════ -->
+<!-- ═══════════ Slide 14: Roadmap ═══════════ -->
 <section>
   <h2>发展路线图</h2>
   <div class="timeline">
-    <div class="timeline-item">
-      <h4>🔥 冷启动（0-3个月）</h4>
+    <div class="timeline-item" data-step="1">
+      <h4>
+        <span class="icon icon-lg" style="color:var(--secondary-accent);vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        冷启动（0-3个月）
+      </h4>
       <p>线下跑通已有工厂资源 · 招募首批 50-100 名日结工人 · 建立微信群管理 · 验证利润模型 · <span class="text-green fw-600">目标：月净利¥5-10万</span></p>
     </div>
-    <div class="timeline-item">
-      <h4>📱 小程序上线（3-6个月）</h4>
+    <div class="timeline-item" data-step="2">
+      <h4>
+        <span class="icon icon-lg" style="color:var(--accent-bright);vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+        小程序上线（3-6个月）
+      </h4>
       <p>微信小程序开发上线 · 工人自主接单 · AI 推荐岗位匹配 · 目标 300 名活跃工人 · 实现盈亏平衡 · <span class="text-green fw-600">目标：月净利¥10-30万</span></p>
     </div>
-    <div class="timeline-item">
-      <h4>🚀 规模化（6-12个月）</h4>
+    <div class="timeline-item" data-step="3">
+      <h4>
+        <span class="icon icon-lg" style="color:var(--accent-bright);vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+        规模化（6-12个月）
+      </h4>
       <p>拓展至 500+ 工人 · 覆盖深圳多个工业区 · 引入更多工厂客户 · 标准化运营体系 · <span class="text-accent fw-600">目标：月净利¥30-50万</span></p>
     </div>
-    <div class="timeline-item">
-      <h4>🛒 生态化（12-36个月）</h4>
+    <div class="timeline-item" data-step="4">
+      <h4>
+        <span class="icon icon-lg" style="color:var(--orange);vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+        生态化（12-36个月）
+      </h4>
       <p>上线工厂商城 · 原材料/产品交易撮合 · 拓展至东莞、惠州 · 工人突破1000人 · 准备A轮融资 · <span class="highlight2 fw-600">目标：月净利¥100万+，估值¥5,000万+</span></p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ Slide 15: 投资回报分析 ═══════════ -->
+<!-- ═══════════ Slide 15: ROI Analysis ═══════════ -->
 <section>
   <h2>投资回报分析</h2>
   <div class="stat-grid">
-    <div class="stat-card">
+    <div class="stat-card fade-up">
       <div class="num">¥120万</div>
       <div class="label">天使轮融资额 · 占股10%</div>
       <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">投前估值¥1,080万 · 投后¥1,200万</p>
     </div>
-    <div class="stat-card" style="border-left:3px solid var(--orange);">
+    <div class="stat-card fade-up delay-1" style="border-left:3px solid var(--orange);">
       <div class="num" style="color:var(--orange);">5-10x</div>
       <div class="label">预期回报倍数</div>
       <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">3年退出 · ¥600万-1,200万回报</p>
     </div>
-    <div class="stat-card" style="border-left:3px solid var(--green);">
+    <div class="stat-card fade-up delay-2" style="border-left:3px solid var(--green);">
       <div class="num" style="color:var(--green);">6个月</div>
       <div class="label">预计回本周期</div>
       <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">15人即达盈亏平衡</p>
@@ -953,7 +1176,7 @@
       <td class="text-green" style="font-weight:700;font-size:1.05em;">10x（¥1,200万）</td>
     </tr>
   </table>
-  <div style="background:rgba(245,158,11,0.08);border-left:3px solid var(--orange);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:10px 16px;margin:10px 0;">
+  <div style="background:rgba(245,158,11,0.06);border-left:3px solid var(--orange);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:10px 16px;margin:10px 0;">
     <ul style="font-size:0.5em;margin:0;padding-left:14px;color:var(--text-secondary);">
       <li><strong style="color:var(--text-primary);">估值逻辑：</strong>年净利 × 5倍PE + 成长溢价</li>
       <li><strong style="color:var(--text-primary);">投资人占股10%：</strong>对应估值¥200万→¥500万→¥1,200万</li>
@@ -961,43 +1184,46 @@
   </div>
 </section>
 
-<!-- ═══════════ Slide 16: 退出路径 ═══════════ -->
+<!-- ═══════════ Slide 16: Exit Paths ═══════════ -->
 <section>
   <h2>退出路径</h2>
   <div class="stat-grid">
-    <div class="glass-card glass-card-accent">
+    <div class="card card-accent fade-up">
       <div class="num" style="font-size:1.1em;color:var(--accent-bright);font-weight:600;">路径一</div>
       <div class="label">A轮融资退出</div>
       <div class="exit-card-body">
-        ⏱️ 时间：18-24个月后<br>
-        💰 估值：¥5,000万-1亿<br>
-        📈 投资人回报：4-8x<br>
-        🔄 方式：老股转让10-20%
+        <strong>时间：</strong>18-24个月后<br>
+        <strong>估值：</strong>¥5,000万-1亿<br>
+        <strong>投资人回报：</strong>4-8x<br>
+        <strong>方式：</strong>老股转让10-20%
       </div>
     </div>
-    <div class="glass-card glass-card-orange">
+    <div class="card card-orange fade-up delay-1">
       <div class="num" style="font-size:1.1em;color:var(--orange);font-weight:600;">路径二</div>
       <div class="label">并购退出</div>
       <div class="exit-card-body">
-        ⏱️ 时间：2-3年后<br>
-        🏢 买家：人力资源巨头/互联网平台<br>
-        💰 估值：¥1-3亿<br>
-        📈 投资人回报：8-25x
+        <strong>时间：</strong>2-3年后<br>
+        <strong>买家：</strong>人力资源巨头/互联网平台<br>
+        <strong>估值：</strong>¥1-3亿<br>
+        <strong>投资人回报：</strong>8-25x
       </div>
     </div>
-    <div class="glass-card glass-card-green">
+    <div class="card card-green fade-up delay-2">
       <div class="num" style="font-size:1.1em;color:var(--green);font-weight:600;">路径三</div>
       <div class="label">IPO上市</div>
       <div class="exit-card-body">
-        ⏱️ 时间：5年后<br>
-        🏛️ 市场：港股/科创板<br>
-        💰 估值：¥10亿+<br>
-        📈 投资人回报：80x+
+        <strong>时间：</strong>5年后<br>
+        <strong>市场：</strong>港股/科创板<br>
+        <strong>估值：</strong>¥10亿+<br>
+        <strong>投资人回报：</strong>80x+
       </div>
     </div>
   </div>
-  <div class="glass-card mt-12" style="padding:14px 20px;">
-    <h4 style="color:var(--accent-bright);margin:0 0 8px;font-size:0.85em;">🔒 退出保障条款</h4>
+  <div class="card mt-12 fade-up delay-3" style="padding:14px 20px;">
+    <h4 style="color:var(--accent-bright);margin:0 0 8px;font-size:0.85em;">
+      <span class="icon icon-lg" style="vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+      退出保障条款
+    </h4>
     <ul style="font-size:0.52em;margin:0;padding-left:14px;color:var(--text-secondary);line-height:1.8;">
       <li><strong style="color:var(--text-primary);">优先清算权：</strong>投资人优先于普通股股东获得回报</li>
       <li><strong style="color:var(--text-primary);">反稀释保护：</strong>后续融资估值下降时保护投资人权益</li>
@@ -1007,7 +1233,7 @@
   </div>
 </section>
 
-<!-- ═══════════ Slide 17: 股权结构 ═══════════ -->
+<!-- ═══════════ Slide 17: Equity Structure ═══════════ -->
 <section>
   <h2>股权结构</h2>
   <h3 style="font-size:0.85em;color:var(--text-tertiary);margin-bottom:14px;">天使轮后股权分布</h3>
@@ -1025,26 +1251,33 @@
     <tr style="background:rgba(94,106,210,0.06);font-weight:600;"><td style="color:var(--text-primary);">合计</td><td>100%</td><td>¥1,200万</td><td>投后估值</td></tr>
   </table>
   <p style="font-size:0.55em;color:var(--text-muted);text-align:center;margin-top:12px;">
-    💡 后续融资稀释：A轮预计稀释15-20%，投资人股权仍具高价值
+    <span class="icon icon-lg" style="vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+    后续融资稀释：A轮预计稀释15-20%，投资人股权仍具高价值
   </p>
 </section>
 
-<!-- ═══════════ Slide 18: 投资亮点 ═══════════ -->
+<!-- ═══════════ Slide 18: Investment Highlights ═══════════ -->
 <section>
   <h2>为什么值得投资？</h2>
   <div class="stat-grid">
-    <div class="glass-card glass-card-accent" style="text-align:center;">
-      <div style="font-size:1.6em;margin-bottom:6px;">✅</div>
+    <div class="card card-accent fade-up" style="text-align:center;">
+      <div style="margin-bottom:6px;">
+        <span class="icon" style="width:28px;height:28px;color:var(--green);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+      </div>
       <div class="label" style="color:var(--text-primary);font-weight:500;">已验证的需求</div>
       <p style="font-size:0.52em;color:var(--text-tertiary);margin-top:6px;">线下已跑通一家工厂<br>需求真实存在</p>
     </div>
-    <div class="glass-card glass-card-orange" style="text-align:center;">
-      <div style="font-size:1.6em;margin-bottom:6px;color:var(--orange);">✅</div>
+    <div class="card card-orange fade-up delay-1" style="text-align:center;">
+      <div style="margin-bottom:6px;">
+        <span class="icon" style="width:28px;height:28px;color:var(--orange);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+      </div>
       <div class="label" style="color:var(--text-primary);font-weight:500;">清晰的商业模式</div>
       <p style="font-size:0.52em;color:var(--text-tertiary);margin-top:6px;">¥7/h差价，毛利28%<br>单位经济健康</p>
     </div>
-    <div class="glass-card glass-card-green" style="text-align:center;">
-      <div style="font-size:1.6em;margin-bottom:6px;color:var(--green);">✅</div>
+    <div class="card card-green fade-up delay-2" style="text-align:center;">
+      <div style="margin-bottom:6px;">
+        <span class="icon" style="width:28px;height:28px;color:var(--green);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+      </div>
       <div class="label" style="color:var(--text-primary);font-weight:500;">巨大的市场空间</div>
       <p style="font-size:0.52em;color:var(--text-tertiary);margin-top:6px;">2亿灵活就业人口<br>万亿级市场规模</p>
     </div>
@@ -1059,7 +1292,7 @@
   </table>
 </section>
 
-<!-- ═══════════ Slide 19: 数据来源 ═══════════ -->
+<!-- ═══════════ Slide 19: Data Sources ═══════════ -->
 <section>
   <h2>数据来源</h2>
   <div class="sources-body">
@@ -1099,21 +1332,38 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
+// ── Dynamic viewport sizing ──
+function getViewportSize() {
+  return { w: window.innerWidth, h: window.innerHeight };
+}
+const vp = getViewportSize();
+
 Reveal.initialize({
   hash: true,
   transition: 'fade',
   transitionSpeed: 'default',
   backgroundTransition: 'fade',
-  width: 1200,
-  height: 700,
-  margin: 0.06,
+  width: vp.w,
+  height: vp.h,
+  margin: 0.03,
   center: true,
   slideNumber: 'c/t',
   controls: true,
   progress: true,
   pdfMaxPagesPerSlide: 1,
   minScale: 0.2,
-  maxScale: 1.5,
+  maxScale: 2.0,
+});
+
+// ── Resize handler: recalculate layout on zoom/resize ──
+let resizeTimer;
+window.addEventListener('resize', function() {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function() {
+    const newSize = getViewportSize();
+    Reveal.configure({ width: newSize.w, height: newSize.h });
+    Reveal.layout();
+  }, 150);
 });
 
 // ── Chart.js Dark Theme Defaults ──
@@ -1121,102 +1371,204 @@ Chart.defaults.color = '#8a8f98';
 Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
 Chart.defaults.font.family = "'Inter', 'Noto Sans SC', sans-serif";
 
-// ── 市场规模图表 ──
-new Chart(document.getElementById('marketChart'), {
-  type: 'bar',
-  data: {
-    labels: ['2020', '2022', '2023'],
-    datasets: [{
-      label: '人力资源服务市场（万亿元）',
-      data: [2.0, 2.7, 3.2],
-      backgroundColor: ['rgba(94,106,210,0.4)','rgba(94,106,210,0.6)','rgba(113,112,255,0.8)'],
-      borderColor: ['rgba(94,106,210,0.6)','rgba(94,106,210,0.8)','rgba(113,112,255,1)'],
-      borderWidth: 1,
-      borderRadius: 6,
-      barThickness: 44,
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      title: { display: true, text: '中国人力资源服务市场规模', font: { size: 13, weight: '500' }, color: '#d0d6e0' }
-    },
-    scales: {
-      y: { beginAtZero: true, ticks: { callback: v => v + '万亿' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-      x: { grid: { display: false } }
-    }
-  }
-});
+// Helper: create gradient
+function createGradient(ctx, color1, color2) {
+  const g = ctx.createLinearGradient(0, 0, 0, 400);
+  g.addColorStop(0, color1);
+  g.addColorStop(1, color2);
+  return g;
+}
 
-// ── 灵活就业增长图表 ──
-new Chart(document.getElementById('workerChart'), {
-  type: 'line',
-  data: {
-    labels: ['2019', '2021', '2023', '2024'],
-    datasets: [{
-      label: '灵活就业招聘职位占比',
-      data: [8.4, 10.5, 13.0, 15.2],
-      borderColor: '#7170ff',
-      backgroundColor: 'rgba(113,112,255,0.08)',
-      fill: true,
-      tension: 0.4,
-      pointRadius: 5,
-      pointBackgroundColor: '#7170ff',
-      pointBorderColor: '#08090a',
-      pointBorderWidth: 2,
-      borderWidth: 2,
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      title: { display: true, text: '灵活就业招聘职位数占比（%）', font: { size: 13, weight: '500' }, color: '#d0d6e0' }
-    },
-    scales: {
-      y: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-      x: { grid: { display: false } }
-    }
-  }
-});
-
-// ── 财务模型图表 ──
-new Chart(document.getElementById('financeChart'), {
-  type: 'bar',
-  data: {
-    labels: ['50人（起步）', '200人（增长）', '500人（满载）'],
-    datasets: [
-      {
-        label: '月毛利（万元）',
-        data: [10.2, 41.0, 102.5],
-        backgroundColor: 'rgba(94,106,210,0.6)',
-        borderColor: 'rgba(113,112,255,0.8)',
+// ── 市场规模 Chart (gradient fills, borderRadius 8) ──
+(function() {
+  const ctx = document.getElementById('marketChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['2020', '2022', '2023'],
+      datasets: [{
+        label: '人力资源服务市场（万亿元）',
+        data: [2.0, 2.7, 3.2],
+        backgroundColor: [
+          createGradient(ctx, 'rgba(94,106,210,0.5)', 'rgba(94,106,210,0.2)'),
+          createGradient(ctx, 'rgba(94,106,210,0.65)', 'rgba(94,106,210,0.3)'),
+          createGradient(ctx, 'rgba(113,112,255,0.85)', 'rgba(113,112,255,0.4)')
+        ],
+        borderColor: ['rgba(94,106,210,0.6)','rgba(94,106,210,0.8)','rgba(113,112,255,1)'],
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 8,
+        barThickness: 44,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: '中国人力资源服务市场规模', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
+        tooltip: {
+          backgroundColor: 'rgba(15,16,17,0.95)',
+          titleColor: '#f7f8f8',
+          bodyColor: '#d0d6e0',
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
+        }
       },
-      {
-        label: '月净利（万元）',
-        data: [5.8, 32.8, 87.5],
-        backgroundColor: 'rgba(16,185,129,0.6)',
-        borderColor: 'rgba(16,185,129,0.8)',
-        borderWidth: 1,
-        borderRadius: 4,
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '万亿' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        x: { grid: { display: false } }
       }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      title: { display: true, text: '不同工人数下的月度利润（含全部成本）', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
-      legend: { labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 16 } }
-    },
-    scales: {
-      y: { beginAtZero: true, ticks: { callback: v => '¥' + v + '万' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-      x: { grid: { display: false } }
     }
-  }
+  });
+})();
+
+// ── 灵活就业增长 Chart (gradient fill) ──
+(function() {
+  const ctx = document.getElementById('workerChart').getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+  gradient.addColorStop(0, 'rgba(113,112,255,0.2)');
+  gradient.addColorStop(1, 'rgba(113,112,255,0.01)');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['2019', '2021', '2023', '2024'],
+      datasets: [{
+        label: '灵活就业招聘职位占比',
+        data: [8.4, 10.5, 13.0, 15.2],
+        borderColor: '#7170ff',
+        backgroundColor: gradient,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 5,
+        pointBackgroundColor: '#7170ff',
+        pointBorderColor: '#08090a',
+        pointBorderWidth: 2,
+        borderWidth: 2.5,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: '灵活就业招聘职位数占比（%）', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
+        tooltip: {
+          backgroundColor: 'rgba(15,16,17,0.95)',
+          titleColor: '#f7f8f8',
+          bodyColor: '#d0d6e0',
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
+        }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── 财务模型 Chart (gradient fills, borderRadius 8) ──
+(function() {
+  const ctx = document.getElementById('financeChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['50人（起步）', '200人（增长）', '500人（满载）'],
+      datasets: [
+        {
+          label: '月毛利（万元）',
+          data: [10.2, 41.0, 102.5],
+          backgroundColor: createGradient(ctx, 'rgba(94,106,210,0.7)', 'rgba(94,106,210,0.3)'),
+          borderColor: 'rgba(113,112,255,0.8)',
+          borderWidth: 1,
+          borderRadius: 8,
+        },
+        {
+          label: '月净利（万元）',
+          data: [5.8, 32.8, 87.5],
+          backgroundColor: createGradient(ctx, 'rgba(16,185,129,0.7)', 'rgba(16,185,129,0.3)'),
+          borderColor: 'rgba(16,185,129,0.8)',
+          borderWidth: 1,
+          borderRadius: 8,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: { display: true, text: '不同工人数下的月度利润（含全部成本）', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
+        legend: { labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 16 } },
+        tooltip: {
+          backgroundColor: 'rgba(15,16,17,0.95)',
+          titleColor: '#f7f8f8',
+          bodyColor: '#d0d6e0',
+          borderColor: 'rgba(255,255,255,0.1)',
+          borderWidth: 1,
+          cornerRadius: 8,
+          padding: 12,
+        }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { callback: v => '¥' + v + '万' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+})();
+
+// ── Staggered fade-in on slide change ──
+Reveal.on('slidechanged', function(event) {
+  var elements = event.currentSlide.querySelectorAll('.fade-up');
+  elements.forEach(function(el) {
+    el.classList.remove('visible');
+    // Force reflow to restart animation
+    void el.offsetWidth;
+    el.classList.add('visible');
+  });
+});
+
+// Initial slide fade-in
+Reveal.on('ready', function() {
+  var elements = document.querySelector('.slides > section.present').querySelectorAll('.fade-up');
+  elements.forEach(function(el) { el.classList.add('visible'); });
+});
+
+// ── Number counter animation ──
+function animateCounters(slide) {
+  var counters = slide.querySelectorAll('[data-counter]');
+  counters.forEach(function(el) {
+    var target = parseFloat(el.getAttribute('data-counter'));
+    var unitSpan = el.querySelector('.num-unit');
+    var unit = unitSpan ? unitSpan.textContent : '';
+    var decimals = target % 1 !== 0 ? (target.toString().split('.')[1] || '').length : 0;
+    var duration = 1200;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      // Ease out cubic
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = (target * eased).toFixed(decimals);
+      el.innerHTML = current + (unitSpan ? '<span class="num-unit">' + unit + '</span>' : '');
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+Reveal.on('slidechanged', function(event) {
+  animateCounters(event.currentSlide);
+});
+Reveal.on('ready', function() {
+  var firstSlide = document.querySelector('.slides > section.present');
+  if (firstSlide) animateCounters(firstSlide);
 });
 </script>
 </body>

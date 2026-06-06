@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>融资路演PPT模板</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --secondary: #34a853;
+            --accent: #fbbc04;
+            --dark: #202124;
+            --light: #f8f9fa;
+        }
+        
+        .reveal {
+            font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+        }
+        
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .reveal h1 { font-size: 2.2em; }
+        .reveal h2 { font-size: 1.6em; margin-bottom: 0.5em; }
+        
+        .reveal p, .reveal li {
+            font-size: 0.85em;
+            color: #5f6368;
+        }
+        
+        .reveal .accent { color: var(--primary); }
+        .reveal .green { color: var(--secondary); }
+        .reveal .yellow { color: var(--accent); }
+        
+        .reveal .stat {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .reveal .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .reveal .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .reveal .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .reveal .card h4 {
+            color: var(--primary);
+            margin: 0 0 10px;
+        }
+        
+        .reveal table {
+            width: 100%;
+            font-size: 0.8em;
+        }
+        
+        .reveal th {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+        }
+        
+        .reveal td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .reveal .progress-bar {
+            background: #eee;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+        
+        .reveal .progress-bar .fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- 封面 -->
+            <section>
+                <div style="margin-bottom: 30px;">
+                    <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 2em;">
+                        🚀
+                    </div>
+                </div>
+                <h1 style="margin-bottom: 10px;">[公司名称]</h1>
+                <p style="font-size: 1.1em; color: #5f6368;">[一句话定位]</p>
+                <div style="margin-top: 40px; font-size: 0.7em; color: #9aa0a6;">
+                    [融资轮次] · [日期]<br>
+                    [联系人] · [邮箱]
+                </div>
+            </section>
+
+            <!-- 问题 -->
+            <section>
+                <h2>❌ 我们解决的问题</h2>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div>
+                        <div class="card">
+                            <h4>痛点1</h4>
+                            <p>[描述]</p>
+                        </div>
+                        <div class="card" style="margin-top: 15px;">
+                            <h4>痛点2</h4>
+                            <p>[描述]</p>
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat">___亿</div>
+                        <p>受影响用户</p>
+                        <div style="margin-top: 30px;">
+                            <div class="stat">¥___亿</div>
+                            <p>市场规模</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 解决方案 -->
+            <section>
+                <h2>✅ 我们的解决方案</h2>
+                <div class="grid-3" style="margin-top: 30px;">
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🎯</div>
+                        <h4>功能1</h4>
+                        <p>[描述]</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">⚡</div>
+                        <h4>功能2</h4>
+                        <p>[描述]</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🛡️</div>
+                        <h4>功能3</h4>
+                        <p>[描述]</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 市场规模 -->
+            <section>
+                <h2>📊 市场机会</h2>
+                <div class="grid-3" style="margin-top: 30px;">
+                    <div style="text-align: center;">
+                        <div class="stat">¥___万亿</div>
+                        <p>TAM</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat" style="color: var(--secondary);">¥___千亿</div>
+                        <p>SAM</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="stat" style="color: var(--accent);">¥___百亿</div>
+                        <p>SOM</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <table>
+                        <tr><th>趋势</th><th>说明</th></tr>
+                        <tr><td>趋势1</td><td>[说明]</td></tr>
+                        <tr><td>趋势2</td><td>[说明]</td></tr>
+                        <tr><td>趋势3</td><td>[说明]</td></tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 产品 -->
+            <section>
+                <h2>💻 产品展示</h2>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div>
+                        <div style="background: var(--light); height: 250px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #9aa0a6;">
+                            [产品截图]
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card" style="margin-bottom: 15px;">
+                            <h4>核心指标</h4>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <div class="stat" style="font-size: 1.5em;">___万</div>
+                                    <p>用户数</p>
+                                </div>
+                                <div>
+                                    <div class="stat" style="font-size: 1.5em;">__%</div>
+                                    <p>增长率</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h4>用户评价</h4>
+                            <p style="font-style: italic;">"[用户评价]"</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 商业模式 -->
+            <section>
+                <h2>💰 商业模式</h2>
+                <table style="margin-top: 20px;">
+                    <tr><th>收入来源</th><th>描述</th><th>占比</th></tr>
+                    <tr><td>来源1</td><td>[描述]</td><td>__%</td></tr>
+                    <tr><td>来源2</td><td>[描述]</td><td>__%</td></tr>
+                    <tr><td>来源3</td><td>[描述]</td><td>__%</td></tr>
+                </table>
+                <div class="card" style="margin-top: 20px; text-align: center;">
+                    <p><strong>单位经济：</strong> LTV ¥___ / CAC ¥___ = <span class="accent">__x</span></p>
+                </div>
+            </section>
+
+            <!-- 竞争优势 -->
+            <section>
+                <h2>🏆 竞争优势</h2>
+                <div class="grid-3" style="margin-top: 20px;">
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🔬</div>
+                        <h4>技术壁垒</h4>
+                        <p>[描述]</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🚀</div>
+                        <h4>先发优势</h4>
+                        <p>[描述]</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🔗</div>
+                        <h4>网络效应</h4>
+                        <p>[描述]</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 团队 -->
+            <section>
+                <h2>👥 核心团队</h2>
+                <div class="grid-3" style="margin-top: 20px;">
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">👤</div>
+                        <h4>[姓名] - CEO</h4>
+                        <p>[背景]</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">👤</div>
+                        <h4>[姓名] - CTO</h4>
+                        <p>[背景]</p>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">👤</div>
+                        <h4>[姓名] - COO</h4>
+                        <p>[背景]</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 财务 -->
+            <section>
+                <h2>📈 财务预测</h2>
+                <table style="margin-top: 20px;">
+                    <tr><th>年份</th><th>收入</th><th>增长率</th><th>毛利率</th><th>净利</th></tr>
+                    <tr><td>2026</td><td>¥___</td><td>-</td><td>__%</td><td>-¥___</td></tr>
+                    <tr><td>2027</td><td>¥___</td><td>__%</td><td>__%</td><td>-¥___</td></tr>
+                    <tr><td>2028</td><td>¥___</td><td>__%</td><td>__%</td><td>¥___</td></tr>
+                </table>
+            </section>
+
+            <!-- 融资需求 -->
+            <section>
+                <h2>💼 融资需求</h2>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div>
+                        <div style="text-align: center;">
+                            <div class="stat">¥___万</div>
+                            <p>本轮融资</p>
+                        </div>
+                        <div style="text-align: center; margin-top: 20px;">
+                            <div class="stat" style="font-size: 1.5em;">__%</div>
+                            <p>出让股权</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card">
+                            <h4>资金用途</h4>
+                            <div>
+                                <p>🔧 研发 <span style="float: right;">__%</span></p>
+                                <div class="progress-bar"><div class="fill" style="width: __%"></div></div>
+                                <p>📢 市场 <span style="float: right;">__%</span></p>
+                                <div class="progress-bar"><div class="fill" style="width: __%"></div></div>
+                                <p>👥 团队 <span style="float: right;">__%</span></p>
+                                <div class="progress-bar"><div class="fill" style="width: __%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 联系方式 -->
+            <section>
+                <div style="text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 20px;">🤝</div>
+                    <h2>期待与您合作</h2>
+                    <div style="margin-top: 30px;">
+                        <p>📧 [邮箱]</p>
+                        <p>📱 [电话]</p>
+                        <p>🌐 [官网]</p>
+                    </div>
+                    <div style="margin-top: 30px; padding: 15px 40px; background: var(--primary); color: white; border-radius: 8px; display: inline-block;">
+                        开始对话 →
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide',
+            width: 1200,
+            height: 700,
+            margin: 0.1,
+            center: true,
+            progress: true,
+            controls: true
+        });
+    </script>
+</body>
+</html>
