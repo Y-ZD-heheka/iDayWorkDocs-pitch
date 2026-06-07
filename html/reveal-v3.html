@@ -1809,6 +1809,56 @@
     .stat-card.pulse .num { animation: none !important; }
     .reveal .slides > section { transition: none !important; }
   }
+
+  /* ═══════ 动态股权与回报 (暗色主题) ═══════ */
+  .dyn-panel { background: linear-gradient(135deg, rgba(94,106,210,0.10) 0%, rgba(40,40,44,0.5) 100%); border-radius: 10px; padding: 10px 14px; border-left: 3px solid var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,0.25); }
+  .dyn-panel h4 { font-size: 0.7em; margin: 0 0 6px; color: var(--accent-bright); font-weight: 700; }
+  .dyn-panel .row { display: flex; justify-content: space-between; align-items: center; font-size: 0.5em; padding: 3px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+  .dyn-panel .row:last-child { border-bottom: 0; }
+  .dyn-panel .row .k { color: var(--text-secondary); }
+  .dyn-panel .row .v { font-weight: 700; color: var(--text-primary); font-size: 1.1em; font-family: 'JetBrains Mono', 'Consolas', monospace; }
+  .dyn-panel .row .v.investor { color: var(--accent-bright); }
+  .dyn-panel .row .v.ceo { color: #b794f6; }
+  .dyn-panel .row .v.cto { color: #4fd1c5; }
+  .dyn-panel .row .v.option { color: #f6ad55; }
+  .dyn-panel .row .v.muted { color: var(--text-muted); }
+
+  .dyn-slider-block { background: rgba(15,16,17,0.6); border-radius: 10px; padding: 10px 16px; margin: 8px 0 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); border: 1px solid rgba(94,106,210,0.3); }
+  .dyn-slider-block .dyn-slider-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .dyn-slider-block .dyn-slider-head .label { font-size: 0.7em; color: var(--text-secondary); font-weight: 700; }
+  .dyn-slider-block .dyn-slider-head .value-badge { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%); color: #fff; padding: 3px 10px; border-radius: 999px; font-size: 0.75em; font-weight: 800; font-family: 'JetBrains Mono', monospace; min-width: 60px; text-align: center; box-shadow: 0 0 12px rgba(113,112,255,0.4); }
+  .dyn-slider-block input[type=range] { width: 100%; height: 6px; -webkit-appearance: none; appearance: none; background: linear-gradient(to right, #28282c 0%, var(--accent) 100%); border-radius: 4px; outline: none; cursor: pointer; }
+  .dyn-slider-block input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-bright); cursor: pointer; box-shadow: 0 0 8px rgba(113,112,255,0.6); transition: transform 0.15s; }
+  .dyn-slider-block input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  .dyn-slider-block input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 3px solid var(--accent-bright); cursor: pointer; box-shadow: 0 0 8px rgba(113,112,255,0.6); }
+  .dyn-slider-block .ticks { display: flex; justify-content: space-between; font-size: 0.45em; color: var(--text-muted); margin-top: 3px; }
+
+  .dyn-grid { display: grid; grid-template-columns: 1.1fr 1.1fr 1.5fr; gap: 10px; margin: 6px 0 8px; }
+
+  .dyn-equity-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.3); margin: 6px 0 4px; font-size: 0.5em; font-weight: 700; }
+  .dyn-equity-bar .seg { display: flex; align-items: center; justify-content: center; color: #fff; transition: width 0.3s ease; text-shadow: 0 1px 2px rgba(0,0,0,0.4); white-space: nowrap; }
+  .dyn-equity-bar .seg.ceo { background: linear-gradient(135deg, #7b5cb8 0%, #5b3e96 100%); }
+  .dyn-equity-bar .seg.cto { background: linear-gradient(135deg, #2aa884 0%, #0a8064 100%); }
+  .dyn-equity-bar .seg.investor { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-bright) 100%); }
+  .dyn-equity-bar .seg.option { background: linear-gradient(135deg, #e8a73a 0%, #c47600 100%); }
+
+  .return-mini { display: flex; align-items: center; justify-content: space-between; padding: 5px 8px; margin: 3px 0; border-radius: 5px; font-size: 0.5em; background: rgba(15,16,17,0.5); border-left: 3px solid var(--accent); transition: background 0.2s; gap: 6px; }
+  .return-mini.gold { border-left-color: var(--orange); background: rgba(245,158,11,0.08); }
+  .return-mini.green { border-left-color: var(--green); background: rgba(16,185,129,0.08); }
+  .return-mini .lbl { color: var(--text-secondary); flex: 1; }
+  .return-mini .val { font-weight: 700; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1em; white-space: nowrap; }
+  .return-mini .mult { font-size: 0.9em; padding: 2px 6px; border-radius: 4px; background: var(--accent); color: #fff; margin-left: 4px; white-space: nowrap; }
+  .return-mini.gold .mult { background: var(--orange); color: #000; }
+  .return-mini.green .mult { background: var(--green); }
+
+  .dyn-legend { display: flex; justify-content: center; gap: 12px; font-size: 0.45em; color: var(--text-tertiary); margin-top: 4px; }
+  .dyn-legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 3px; vertical-align: middle; }
+  .dyn-legend .dot.ceo { background: #5b3e96; }
+  .dyn-legend .dot.cto { background: #0a8064; }
+  .dyn-legend .dot.investor { background: var(--accent-bright); }
+  .dyn-legend .dot.option { background: #c47600; }
+
+  .formula-note { font-size: 0.5em; color: var(--text-muted); text-align: center; margin-top: 4px; font-style: italic; }
 </style>
 </head>
 <body>
@@ -2492,26 +2542,72 @@
   </div>
 </section>
 
-<!-- ═══════════ Slide 17: Equity Structure ═══════════ -->
-<section>
-  <h2>股权结构</h2>
-  <h3 style="font-size:0.85em;color:var(--text-tertiary);margin-bottom:14px;">天使轮后股权分布</h3>
-  <div style="display:flex;height:48px;border-radius:var(--radius-md);overflow:hidden;margin:12px 0;border:1px solid var(--border-standard);">
-    <div style="width:85%;background:linear-gradient(90deg, #3b82f6, #60a5fa);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.65em;font-weight:500;">创始团队 85%</div>
-    <div style="width:10%;background:linear-gradient(90deg, #f59e0b, #fbbf24);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.55em;font-weight:500;">10%</div>
-    <div style="width:5%;background:linear-gradient(90deg, #10b981, #34d399);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.45em;font-weight:500;">5%</div>
+<!-- ═══════════ Slide 17: 动态股权与回报模拟 ═══════════ -->
+<section id="dyn-equity">
+  <h2>动态股权与回报</h2>
+  <p style="font-size:0.5em;color:var(--text-tertiary); margin: -4px 0 8px;">拖动滑块调整投资人占股 — 股权结构、估值、回报同步刷新</p>
+
+  <div class="dyn-slider-block">
+    <div class="dyn-slider-head">
+      <span class="label">天使投资人占股</span>
+      <span class="value-badge" id="investor-pct-badge">10%</span>
+    </div>
+    <input type="range" id="investor-slider" min="10" max="20" step="0.5" value="10">
+    <div class="ticks">
+      <span>10%</span><span>12.5%</span><span>15%</span><span>17.5%</span><span>20%</span>
+    </div>
   </div>
-  <table>
-    <caption style="display:none;">股权结构</caption>
-    <tr><th>股东</th><th>持股比例</th><th>对应估值</th><th>说明</th></tr>
-    <tr><td style="color:var(--text-primary);font-weight:500;">创始团队</td><td>85%</td><td>¥1,020万</td><td>CEO 50% + CTO 35%</td></tr>
-    <tr><td style="color:var(--text-primary);font-weight:500;">天使投资人</td><td>10%</td><td>¥120万</td><td>¥120万投资</td></tr>
-    <tr><td style="color:var(--text-primary);font-weight:500;">期权池</td><td>5%</td><td>¥60万</td><td>预留核心员工激励</td></tr>
-    <tr style="background:rgba(94,106,210,0.06);font-weight:600;"><td style="color:var(--text-primary);">合计</td><td>100%</td><td>¥1,200万</td><td>投后估值</td></tr>
-  </table>
-  <p style="font-size:0.55em;color:var(--text-muted);text-align:center;margin-top:12px;">
-    <span class="icon icon-lg" style="vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
-    后续融资稀释：A轮预计稀释15-20%，投资人股权仍具高价值
+
+  <div class="dyn-equity-bar" id="equity-bar">
+    <div class="seg ceo" id="seg-ceo" style="width:59.5%">CEO 59.5%</div>
+    <div class="seg cto" id="seg-cto" style="width:25.5%">CTO 25.5%</div>
+    <div class="seg investor" id="seg-investor" style="width:10%">投资人 10%</div>
+    <div class="seg option" id="seg-option" style="width:5%">期权 5%</div>
+  </div>
+  <div class="dyn-legend">
+    <span><i class="dot ceo"></i>CEO</span>
+    <span><i class="dot cto"></i>CTO</span>
+    <span><i class="dot investor"></i>投资人</span>
+    <span><i class="dot option"></i>期权池</span>
+  </div>
+
+  <div class="dyn-grid">
+    <div class="dyn-panel">
+      <h4>股权结构</h4>
+      <div class="row"><span class="k">CEO</span><span class="v ceo" id="v-ceo">59.5%</span></div>
+      <div class="row"><span class="k">CTO</span><span class="v cto" id="v-cto">25.5%</span></div>
+      <div class="row"><span class="k">天使投资人</span><span class="v investor" id="v-inv">10.0%</span></div>
+      <div class="row"><span class="k">期权池</span><span class="v option" id="v-opt">5.0%</span></div>
+      <div class="row"><span class="k">合计</span><span class="v" id="v-sum">100.0%</span></div>
+    </div>
+
+    <div class="dyn-panel">
+      <h4>估值分析</h4>
+      <div class="row"><span class="k">投资金额</span><span class="v muted">¥120万</span></div>
+      <div class="row"><span class="k">投前估值</span><span class="v" id="v-pre">¥1,080万</span></div>
+      <div class="row"><span class="k">投后估值</span><span class="v investor" id="v-post">¥1,200万</span></div>
+      <div class="row"><span class="k">每股成本</span><span class="v" id="v-pps">¥10,800</span></div>
+    </div>
+
+    <div class="dyn-panel">
+      <h4>退出回报 (<span id="returns-pct-label">10%</span> 股东收益)</h4>
+      <div class="return-mini">
+        <span class="lbl">保守 · 1年 · 公司 ¥2,000万</span>
+        <span class="val" id="r-low">¥200万 <span class="mult" id="rm-low">1.67x</span></span>
+      </div>
+      <div class="return-mini gold">
+        <span class="lbl">基准 · 2年 · 公司 ¥5,000万</span>
+        <span class="val" id="r-mid">¥500万 <span class="mult" id="rm-mid">4.17x</span></span>
+      </div>
+      <div class="return-mini green">
+        <span class="lbl">乐观 · 3年 · 公司 ¥1.2亿</span>
+        <span class="val" id="r-high">¥1,200万 <span class="mult" id="rm-high">10.00x</span></span>
+      </div>
+    </div>
+  </div>
+
+  <p class="formula-note">
+    公式：投前 = ¥120万 ÷ 投资人占比 ｜ 创始人池 = 95% − 投资人占比 ｜ CEO : CTO = 7 : 3
   </p>
 </section>
 
@@ -2617,6 +2713,82 @@ Reveal.initialize({
   minScale: 0.2,
   maxScale: 2.0,
 });
+
+/* ═══════ 动态股权与回报计算器 (路演版 v3) ═══════ */
+(function () {
+  const INVESTMENT = 120;
+  const OPTION_POOL = 5;
+  const CEO_RATIO = 0.7;
+  const CTO_RATIO = 0.3;
+  const SCENARIOS = [
+    { key: 'low',  companyVal: 2000 },
+    { key: 'mid',  companyVal: 5000 },
+    { key: 'high', companyVal: 12000 },
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const slider = $('investor-slider');
+
+  function fmtPct(n) { return n.toFixed(1) + '%'; }
+  function fmtWan(n) {
+    if (n >= 10000) {
+      const yi = n / 10000;
+      return (Number.isInteger(yi) ? yi.toFixed(0) : yi.toFixed(2)) + '亿';
+    }
+    return Math.round(n) + '万';
+  }
+  function fmtMultiple(n) { return n.toFixed(2) + 'x'; }
+
+  function recalc() {
+    if (!slider) return;
+    const investorPct = parseFloat(slider.value);
+    const founderPool = 100 - OPTION_POOL - investorPct;
+    const ceoPct = founderPool * CEO_RATIO;
+    const ctoPct = founderPool * CTO_RATIO;
+    const preMoney  = INVESTMENT / (investorPct / 100);
+    const postMoney = preMoney + INVESTMENT;
+
+    $('seg-ceo').style.width = ceoPct + '%';
+    $('seg-cto').style.width = ctoPct + '%';
+    $('seg-investor').style.width = investorPct + '%';
+    $('seg-option').style.width = OPTION_POOL + '%';
+    $('seg-ceo').textContent = 'CEO ' + fmtPct(ceoPct);
+    $('seg-cto').textContent = 'CTO ' + fmtPct(ctoPct);
+    $('seg-investor').textContent = '投资人 ' + fmtPct(investorPct);
+    $('seg-option').textContent = '期权 ' + fmtPct(OPTION_POOL);
+
+    [['seg-ceo', ceoPct], ['seg-cto', ctoPct], ['seg-investor', investorPct], ['seg-option', OPTION_POOL]]
+      .forEach(([id, w]) => { const el = $(id); if (el) el.style.fontSize = w < 8 ? '0' : ''; });
+
+    $('investor-pct-badge').textContent = fmtPct(investorPct);
+    if ($('returns-pct-label')) $('returns-pct-label').textContent = fmtPct(investorPct);
+    $('v-ceo').textContent = fmtPct(ceoPct);
+    $('v-cto').textContent = fmtPct(ctoPct);
+    $('v-inv').textContent = fmtPct(investorPct);
+    $('v-opt').textContent = fmtPct(OPTION_POOL);
+    $('v-sum').textContent = fmtPct(ceoPct + ctoPct + investorPct + OPTION_POOL);
+
+    $('v-pre').textContent  = '¥' + fmtWan(preMoney);
+    $('v-post').textContent = '¥' + fmtWan(postMoney);
+    $('v-pps').textContent  = '¥' + Math.round(preMoney).toLocaleString() + '/万股';
+
+    SCENARIOS.forEach(s => {
+      const investorReturn = s.companyVal * (investorPct / 100);
+      const multiple = investorReturn / INVESTMENT;
+      $('r-' + s.key).innerHTML =
+        '¥' + fmtWan(investorReturn) +
+        ' <span class="mult">' + fmtMultiple(multiple) + '</span>';
+    });
+  }
+
+  recalc();
+  slider.addEventListener('input', recalc);
+  if (window.Reveal) {
+    Reveal.on('slidechanged', (e) => {
+      if (e.currentSlide && e.currentSlide.id === 'dyn-equity') recalc();
+    });
+  }
+})();
 
 // ── Chart.js Light Theme Defaults ──
 Chart.defaults.color = '#68756f';
