@@ -71,6 +71,119 @@
   .return-table td { padding: 10px 12px; border-bottom: 1px solid #eee; }
   .return-table tr:nth-child(even) { background: #f8f9fa; }
   .return-table .highlight-row { background: #e3f2fd; font-weight: 700; }
+  .return-slide h2 { margin: 0 0 12px; padding-bottom: 8px; font-size: 1.28em; }
+  .return-summary {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 12px;
+    margin: 6px 0 12px;
+  }
+  .return-panel {
+    background: #fff;
+    border: 1px solid #e7ebef;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+    text-align: left;
+  }
+  .return-panel .eyebrow {
+    color: #777;
+    font-size: 0.36em;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .return-panel .big {
+    margin-top: 5px;
+    color: var(--dark);
+    font-size: 1.25em;
+    font-weight: 800;
+    line-height: 1.05;
+  }
+  .return-panel .big.green { color: var(--green); }
+  .return-panel p {
+    margin: 7px 0 0;
+    color: #555;
+    font-size: 0.39em;
+    line-height: 1.45;
+  }
+  .return-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .return-tag {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #f3f6fa;
+    color: #4d5966;
+    font-size: 0.34em;
+    font-weight: 700;
+  }
+  .return-scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .scenario-card {
+    background: #fff;
+    border: 1px solid #e7ebef;
+    border-top: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+    text-align: left;
+  }
+  .scenario-card.base { border-top-color: var(--accent2); }
+  .scenario-card.upside { border-top-color: var(--green); }
+  .scenario-card .label {
+    color: #777;
+    font-size: 0.36em;
+    font-weight: 700;
+  }
+  .scenario-card h3 {
+    margin: 4px 0 7px;
+    color: var(--dark);
+    font-size: 0.62em;
+  }
+  .scenario-card .multiple {
+    color: var(--green);
+    font-size: 0.92em;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .scenario-card .multiple span {
+    color: #777;
+    font-size: 0.42em;
+    font-weight: 600;
+  }
+  .scenario-facts {
+    display: grid;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .scenario-facts div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: #555;
+    font-size: 0.36em;
+    line-height: 1.25;
+  }
+  .scenario-facts span { color: #888; }
+  .return-note {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-left: 4px solid var(--accent2);
+    border-radius: 0 10px 10px 0;
+    background: #fff7ed;
+    color: #555;
+    font-size: 0.36em;
+    line-height: 1.4;
+    text-align: left;
+  }
+  .return-note strong { color: var(--dark); }
 
   /* 占股图 */
   .equity-bar { display: flex; height: 60px; border-radius: 8px; overflow: hidden; margin: 15px 0; }
@@ -112,7 +225,7 @@
 </head>
 <body>
 <div class="reveal">
-<div class="slides>
+<div class="slides">
 
 <!-- ═══════════ Slide 1: 封面 ═══════════ -->
 <section>
@@ -218,55 +331,64 @@
 </section>
 
 <!-- ═══════════ Slide 4: 投资回报计算 ═══════════ -->
-<section>
+<section class="return-slide">
   <h2>投资回报分析</h2>
-  <table class="return-table">
-    <caption style="display:none;">投资回报分析表</caption>
-    <tr>
-      <th>场景</th>
-      <th>时间</th>
-      <th>工人数</th>
-      <th>月净利</th>
-      <th>年净利</th>
-      <th>公司估值</th>
-      <th>投资人回报</th>
-    </tr>
-    <tr>
-      <td>保守</td>
-      <td>1年后</td>
-      <td>200人</td>
-      <td>¥33.8万</td>
-      <td>¥405.6万</td>
-      <td>¥2,000万</td>
-      <td class="text-green fw-bold">1.67x（¥200万）</td>
-    </tr>
-    <tr>
-      <td>基准</td>
-      <td>2年后</td>
-      <td>500人</td>
-      <td>¥95.3万</td>
-      <td>¥1,143.6万</td>
-      <td>¥5,000万</td>
-      <td class="text-green fw-bold">4.17x（¥500万）</td>
-    </tr>
-    <tr class="highlight-row">
-      <td>乐观</td>
-      <td>3年后</td>
-      <td>1000人</td>
-      <td>¥200万</td>
-      <td>¥2,400万</td>
-      <td>¥1.2亿</td>
-      <td class="text-green fw-heavy">10x（¥1,200万）</td>
-    </tr>
-  </table>
-  <div class="risk-box">
-    <h4>📊 估值计算逻辑</h4>
-    <ul>
-      <li><strong>保守场景：</strong>年净利×5倍PE = ¥2,000万估值</li>
-      <li><strong>基准场景：</strong>年净利×5倍PE = ¥5,000万估值（含成长溢价）</li>
-      <li><strong>乐观场景：</strong>年净利×5倍PE = ¥1.2亿估值（含生态价值）</li>
-      <li><strong>投资人占股10%：</strong>对应估值¥200万→¥500万→¥1,200万</li>
-    </ul>
+  <div class="return-summary">
+    <div class="return-panel">
+      <div class="eyebrow">Round Structure</div>
+      <div class="big">¥120万</div>
+      <p>天使轮融资，对应投后估值 ¥1,200 万，投资人取得 10% 股权。</p>
+      <div class="return-tags">
+        <span class="return-tag">投前 ¥1,080万</span>
+        <span class="return-tag">投后 ¥1,200万</span>
+        <span class="return-tag">占股 10%</span>
+      </div>
+    </div>
+    <div class="return-panel">
+      <div class="eyebrow">Base Case Return</div>
+      <div class="big green">5-10x</div>
+      <p>核心路径是把深圳工厂日结履约做成 500-1000 人规模，再通过 A 轮、并购或老股转让实现退出。</p>
+      <div class="return-tags">
+        <span class="return-tag">回本 6个月</span>
+        <span class="return-tag">盈亏平衡 15人</span>
+        <span class="return-tag">年净利 x 5PE</span>
+      </div>
+    </div>
+  </div>
+  <div class="return-scenarios">
+    <div class="scenario-card">
+      <div class="label">保守 · 1年后</div>
+      <h3>先验证现金流</h3>
+      <div class="multiple">1.67x <span>¥200万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>200人</strong></div>
+        <div><span>月净利</span><strong>¥33.8万</strong></div>
+        <div><span>公司估值</span><strong>¥2,000万</strong></div>
+      </div>
+    </div>
+    <div class="scenario-card base">
+      <div class="label">基准 · 2年后</div>
+      <h3>500人稳定履约</h3>
+      <div class="multiple">4.17x <span>¥500万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>500人</strong></div>
+        <div><span>月净利</span><strong>¥95.3万</strong></div>
+        <div><span>公司估值</span><strong>¥5,000万</strong></div>
+      </div>
+    </div>
+    <div class="scenario-card upside">
+      <div class="label">乐观 · 3年后</div>
+      <h3>复制到周边城市</h3>
+      <div class="multiple">10x <span>¥1,200万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>1000人</strong></div>
+        <div><span>月净利</span><strong>¥200万</strong></div>
+        <div><span>公司估值</span><strong>¥1.2亿</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="return-note">
+    <strong>估值逻辑：</strong>年净利 x 5倍PE + 成长溢价；投资人 10% 股权对应退出价值约 ¥200万 / ¥500万 / ¥1,200万。
   </div>
 </section>
 
