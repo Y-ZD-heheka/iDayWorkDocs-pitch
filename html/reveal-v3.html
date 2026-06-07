@@ -983,6 +983,76 @@
   .reveal .slides section:nth-child(7) .col-side .card {
     min-height: 200px;
   }
+  .reveal .slides section:nth-child(7) .col-side .factory-card {
+    display: flex !important;
+    flex-direction: column;
+    padding: 10px 12px 8px !important;
+    min-height: 0;
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-card .num {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 6px 0 !important;
+    padding-bottom: 4px !important;
+    border-bottom: 1px solid var(--border-standard);
+    font-size: 0.95em !important;
+    line-height: 1.1 !important;
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-card .num .icon {
+    flex: 0 0 auto;
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-card-body {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.5em;
+    line-height: 1.2;
+    color: var(--text-secondary);
+    border-bottom: 1px dashed var(--border-subtle, rgba(0,0,0,0.06));
+    padding-bottom: 1px;
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-stat-label {
+    flex: 0 0 auto;
+    color: var(--text-secondary);
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-stat-value {
+    flex: 1 1 auto;
+    text-align: right;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95em;
+    margin-left: 6px;
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-stat:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .reveal .slides section:nth-child(7) .col-side .factory-card-footer {
+    margin-top: 6px;
+    padding: 3px 8px;
+    text-align: center;
+    font-size: 0.52em;
+    line-height: 1.25;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, rgba(26,115,232,0.08) 0%, rgba(26,115,232,0.16) 100%);
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+  .reveal .slides section:nth-child(7) .col-side .card-green .factory-card-footer {
+    background: linear-gradient(135deg, rgba(34,139,87,0.10) 0%, rgba(34,139,87,0.20) 100%);
+  }
+  .reveal .slides section:nth-child(7) .col-side .card-orange .factory-card-footer {
+    background: linear-gradient(135deg, rgba(232,140,42,0.10) 0%, rgba(232,140,42,0.20) 100%);
+  }
   .reveal .slides section:nth-child(7) .col-side .mt-12 {
     margin-top: 0 !important;
   }
@@ -1566,17 +1636,16 @@
   }
   .competitive-section table {
     align-self: stretch;
-    font-size: 0.66em !important;
+    font-size: 0.62em !important;
   }
   .competitive-section table th,
   .competitive-section table td {
-    padding: 15px 18px !important;
-    line-height: 1.38 !important;
+    padding: 8px 18px !important;
+    line-height: 1.32 !important;
   }
   .competitive-section .competitive-callout {
-    min-height: 104px;
     margin: 0 auto !important;
-    padding: 24px 28px !important;
+    padding: 14px 28px !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2129,43 +2198,46 @@
       </div>
     </div>
     <div class="col-side">
-      <div class="card card-accent">
-        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">
+      <div class="card card-accent factory-card">
+        <div class="num" style="font-size:1.05em;color:var(--accent-bright);font-weight:600;">
           <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
           增长空间
         </div>
-        <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          目标市场：<strong style="color:var(--text-primary);">万亿级</strong><br>
-          佣金比例：<strong style="color:var(--text-primary);">3-5%</strong><br>
-          潜在收入：<strong style="color:var(--text-primary);">¥数亿/年</strong><br>
-          复购率：<strong style="color:var(--text-primary);">高频刚需</strong><br>
-          网络效应：<strong style="color:var(--text-primary);">强</strong>
+        <div class="factory-card-body">
+          <div class="factory-stat"><span class="factory-stat-label">目标市场</span><span class="factory-stat-value">万亿级</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">佣金比例</span><span class="factory-stat-value">3-5%</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">潜在收入</span><span class="factory-stat-value">¥数亿/年</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">复购率</span><span class="factory-stat-value">高频刚需</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">网络效应</span><span class="factory-stat-value">强</span></div>
         </div>
+        <div class="factory-card-footer">万亿赛道 · 高频刚需</div>
       </div>
-      <div class="card card-green mt-12">
-        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">
+      <div class="card card-green mt-12 factory-card">
+        <div class="num" style="font-size:1.05em;color:var(--green);font-weight:600;">
           <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           竞争优势
         </div>
-        <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          已有工厂信任基础<br>
-          了解工厂真实需求<br>
-          低成本获客<br>
-          数据驱动匹配<br>
-          从服务→交易闭环
+        <div class="factory-card-body">
+          <div class="factory-stat"><span class="factory-stat-label">信任基础</span><span class="factory-stat-value">已有</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">真实需求</span><span class="factory-stat-value">已掌握</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">获客成本</span><span class="factory-stat-value">极低</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">数据匹配</span><span class="factory-stat-value">AI驱动</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">业务闭环</span><span class="factory-stat-value">服务→交易</span></div>
         </div>
+        <div class="factory-card-footer">先发优势 = 壁垒</div>
       </div>
-      <div class="card card-orange mt-12">
-        <div class="num" style="font-size:1em;color:var(--orange);font-weight:600;">
+      <div class="card card-orange mt-12 factory-card">
+        <div class="num" style="font-size:1.05em;color:var(--orange);font-weight:600;">
           <span class="icon icon-lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           时间规划
         </div>
-        <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          第12个月：MVP上线<br>
-          第18个月：规模化<br>
-          第24个月：生态成型<br>
-          第36个月：贡献30%+收入
+        <div class="factory-card-body">
+          <div class="factory-stat"><span class="factory-stat-label">第12个月</span><span class="factory-stat-value">MVP上线</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">第18个月</span><span class="factory-stat-value">规模化</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">第24个月</span><span class="factory-stat-value">生态成型</span></div>
+          <div class="factory-stat"><span class="factory-stat-label">第36个月</span><span class="factory-stat-value">贡献 30%+ 收入</span></div>
         </div>
+        <div class="factory-card-footer">3 年 = 主导收入来源</div>
       </div>
     </div>
   </div>
