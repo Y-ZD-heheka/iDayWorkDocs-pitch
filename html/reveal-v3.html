@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
 <style>
   /* ═══════════ Design Tokens (Linear-inspired, refined) ═══════════ */
   :root {
@@ -77,22 +77,27 @@
   }
   body {
     background: var(--bg-deep) !important;
+    overflow: hidden !important;
   }
-  .reveal .slides { text-align: left; }
+  html, body, .reveal {
+    width: 100%;
+    height: 100%;
+  }
+  .reveal {
+    overflow: hidden !important;
+  }
+  .reveal .slides {
+    text-align: left;
+    overflow: hidden !important;
+  }
   .reveal .slides section {
-    padding: clamp(16px, 3vh, 40px) clamp(20px, 4vw, 60px);
+    padding: 28px 46px;
     box-sizing: border-box;
     background: transparent !important;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    max-height: 100% !important;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.15) transparent;
+    overflow: hidden !important;
+    height: 720px !important;
+    max-height: 720px !important;
   }
-  .reveal .slides section::-webkit-scrollbar { width: 4px; }
-  .reveal .slides section::-webkit-scrollbar-track { background: transparent; }
-  .reveal .slides section::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-  .reveal .slides { overflow: visible !important; }
   .reveal .slide-background { background: var(--bg-deep) !important; }
 
   .reveal h1, .reveal h2, .reveal h3 {
@@ -164,6 +169,9 @@
 
   /* ═══════════ Cover Slide ═══════════ */
   .cover-slide {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     text-align: center !important;
     position: relative;
     overflow: hidden;
@@ -201,7 +209,8 @@
   .cover-content {
     position: relative;
     z-index: 1;
-    margin-top: 60px;
+    margin-top: 0;
+    width: 100%;
   }
   .cover-title {
     font-size: clamp(2em, 5vmin, 3.5em) !important;
@@ -229,7 +238,7 @@
     display: flex;
     justify-content: center;
     gap: 16px;
-    margin-top: 32px;
+    margin-top: 24px;
   }
   .cover-tag {
     display: inline-flex;
@@ -243,6 +252,33 @@
     color: var(--text-secondary);
   }
   .cover-tag .icon { width: 14px; height: 14px; }
+  .cover-hook {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 620px;
+    margin-top: 18px;
+  }
+  .cover-hook-item {
+    padding: 12px 14px;
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,0.04);
+  }
+  .cover-hook-item strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.64em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .cover-hook-item span {
+    display: block;
+    color: var(--text-tertiary);
+    font-size: 0.42em;
+    line-height: 1.35;
+    margin-top: 5px;
+  }
 
   /* ═══════════ Stat Grid ═══════════ */
   .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 1.2vw, 16px); margin: clamp(8px, 1.5vh, 16px) 0; }
@@ -277,6 +313,127 @@
   .card-red .num { color: var(--red); }
   .card-orange .num { color: var(--orange); }
   .card-green .num { color: var(--green); }
+
+  /* ═══════════ ROI Slide ═══════════ */
+  .reveal .slides section.roi-section {
+    padding: 28px 54px 30px;
+    font-size: 0.88em;
+    display: grid !important;
+    grid-template-rows: auto auto 1fr auto;
+    align-content: stretch;
+    row-gap: 14px;
+  }
+  .roi-section h2 { margin: 0; padding-bottom: 8px; font-size: 1.24em; line-height: 1.12; }
+  .roi-dashboard { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 16px; }
+  .roi-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-lg);
+    padding: 18px 22px;
+    min-height: 142px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .roi-panel--deal { border-left: 3px solid var(--accent-bright); }
+  .roi-panel--return { border-left: 3px solid var(--green); }
+  .roi-kicker {
+    display: block;
+    color: var(--text-tertiary);
+    font-size: 0.46em;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .roi-value {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 6px;
+    color: var(--text-primary);
+    font-size: 1.48em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .roi-value span { color: var(--text-tertiary); font-size: 0.34em; font-weight: 500; }
+  .roi-panel p { margin: 8px 0 0; color: var(--text-secondary); font-size: 0.52em; line-height: 1.45; }
+  .roi-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .roi-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.04);
+    color: var(--text-secondary);
+    font-size: 0.43em;
+    border: 1px solid var(--border-subtle);
+  }
+  .roi-pill strong { color: var(--text-primary); font-weight: 600; }
+  .roi-scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 0;
+    min-height: 210px;
+  }
+  .roi-scenario {
+    position: relative;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-lg);
+    padding: 18px 22px 16px;
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .roi-scenario::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--accent-bright);
+  }
+  .roi-scenario--base::before { background: var(--orange); }
+  .roi-scenario--upside::before { background: var(--green); }
+  .roi-scenario .scenario-label { color: var(--text-tertiary); font-size: 0.44em; font-weight: 600; }
+  .roi-scenario h3 { margin: 8px 0 8px; color: var(--text-primary); font-size: 0.7em; }
+  .roi-scenario .scenario-return {
+    color: var(--green);
+    font-size: 1.06em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .roi-scenario .scenario-return span { color: var(--text-tertiary); font-size: 0.45em; font-weight: 500; }
+  .scenario-facts { display: grid; gap: 5px; }
+  .scenario-facts div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.46em;
+    line-height: 1.38;
+  }
+  .scenario-facts span { color: var(--text-muted); }
+  .roi-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 0;
+    padding: 13px 16px;
+    border-left: 3px solid var(--orange);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: rgba(245,158,11,0.06);
+    color: var(--text-secondary);
+    font-size: 0.44em;
+    line-height: 1.42;
+  }
+  .roi-note strong { color: var(--text-primary); }
 
   /* Number counter pulse */
   .stat-card.pulse .num {
@@ -341,14 +498,14 @@
 
   /* ═══════════ Chart Container ═══════════ */
   .chart-container {
-    max-width: 650px;
+    max-width: min(650px, 55vw);
     margin: 0 auto;
     background: var(--bg-panel);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     padding: 16px;
     box-shadow: var(--shadow-chart);
-  .chart-container { max-width: min(650px, 55vw); margin: 0 auto; }
+  }
   .chart-container--sm { max-width: min(480px, 42vw); }
   .chart-container--md { max-width: min(520px, 45vw); }
 
@@ -460,6 +617,17 @@
     margin: 0 auto;
   }
   .callout-box p { color: var(--text-secondary); font-size: 0.58em; line-height: 1.6; }
+  .competitive-section .competitive-callout {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    margin: 18px auto 0 !important;
+    padding: 16px 22px;
+  }
+  .competitive-section .competitive-callout p {
+    margin: 0;
+    text-align: center;
+  }
   .callout-gradient {
     background: rgba(94,106,210,0.05);
     border: 1px solid var(--border-accent);
@@ -529,6 +697,1065 @@
   }
   .icon-list li .icon-orange { color: var(--orange); }
 
+  /* ═══════════ Investor Light Theme ═══════════ */
+  :root {
+    --bg-deep: #f5f7f4;
+    --bg-panel: #ffffff;
+    --bg-surface: #ffffff;
+    --bg-elevated: #eef4f1;
+    --text-primary: #18221f;
+    --text-secondary: #46544f;
+    --text-tertiary: #68756f;
+    --text-muted: #89948f;
+    --accent: #0f766e;
+    --accent-bright: #0f8f82;
+    --accent-hover: #0b6f66;
+    --accent-glow: rgba(15, 143, 130, 0.12);
+    --secondary-accent: #315f9d;
+    --green: #14804a;
+    --green-dim: rgba(20, 128, 74, 0.12);
+    --orange: #b96912;
+    --orange-dim: rgba(185, 105, 18, 0.12);
+    --red: #bd4238;
+    --red-dim: rgba(189, 66, 56, 0.12);
+    --border-subtle: #e7ece8;
+    --border-standard: #d8e0dc;
+    --border-accent: rgba(15, 118, 110, 0.28);
+    --shadow-card: 0 14px 34px rgba(31, 41, 35, 0.1);
+    --shadow-glow: 0 18px 46px rgba(15, 118, 110, 0.14);
+    --shadow-chart: 0 16px 42px rgba(31, 41, 35, 0.12);
+  }
+  body { background: #eef3f0 !important; }
+  .reveal { background: #eef3f0 !important; }
+  .reveal .slide-background { background: linear-gradient(180deg, #fbfcfb 0%, #eef3f0 100%) !important; }
+  .reveal .slides section {
+    background:
+      linear-gradient(90deg, rgba(15, 118, 110, 0.05) 0 2px, transparent 2px),
+      linear-gradient(180deg, #fbfcfb 0%, #f3f7f4 100%) !important;
+    color: var(--text-primary);
+  }
+  .reveal h1, .reveal h2, .reveal h3 {
+    color: var(--text-primary);
+    letter-spacing: 0;
+  }
+  .reveal h2 {
+    border-bottom: 2px solid var(--border-standard);
+    position: relative;
+  }
+  .reveal h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 72px;
+    height: 2px;
+    background: var(--accent-bright);
+  }
+  .reveal .highlight,
+  .text-accent { color: var(--accent-bright); }
+  .card,
+  .stat-card,
+  .roi-panel,
+  .roi-scenario,
+  .chart-container,
+  .callout-box,
+  .callout-gradient {
+    background: #ffffff !important;
+    border-color: var(--border-standard) !important;
+    box-shadow: var(--shadow-card);
+  }
+  .stat-card,
+  .roi-panel,
+  .roi-scenario {
+    border-radius: var(--radius-lg);
+  }
+  .stat-card:hover,
+  .card:hover {
+    border-color: var(--border-accent) !important;
+    box-shadow: var(--shadow-glow);
+  }
+  .stat-card .num,
+  .funding-val,
+  .roi-value,
+  .biz-profit-val {
+    color: var(--accent-bright);
+  }
+  .card-red,
+  .card-orange,
+  .card-green,
+  .card-accent,
+  .roi-panel--deal,
+  .roi-panel--return {
+    background: #ffffff !important;
+  }
+  .biz-node {
+    background: #eff8f5 !important;
+    border-color: rgba(15, 118, 110, 0.26) !important;
+  }
+  .biz-node.orange { background: #fff5e8 !important; border-color: rgba(185, 105, 18, 0.28) !important; }
+  .biz-node.green { background: #edf8f1 !important; border-color: rgba(20, 128, 74, 0.28) !important; }
+  .reveal table {
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(31, 41, 35, 0.06);
+  }
+  .reveal table th {
+    background: #eef6f3;
+    color: var(--accent);
+    border-bottom-color: var(--border-standard);
+  }
+  .reveal table td {
+    color: var(--text-secondary);
+    border-bottom-color: var(--border-subtle);
+  }
+  .reveal table tr:nth-child(even) { background: #f8faf8; }
+  .reveal table tr:hover { background: #f2f7f4; }
+  .th-highlight { background: #dff3ed !important; color: var(--text-primary) !important; }
+  .bg-green-row { background: #edf8f1 !important; }
+  .bg-red-row { background: #fff0ee !important; }
+  .bg-accent-row { background: #eef6f3 !important; }
+  .timeline::before { background: var(--border-standard); }
+  .timeline-item::before {
+    background: var(--accent-bright);
+    box-shadow: 0 0 0 3px #dff3ed;
+  }
+  .slide-footer,
+  .reveal .slide-number {
+    color: var(--text-muted) !important;
+  }
+  .reveal .controls { color: var(--accent) !important; }
+  .reveal .progress { color: var(--accent-bright) !important; }
+  .reveal .slides section.cover-slide {
+    justify-content: flex-start;
+    text-align: left !important;
+    background:
+      linear-gradient(90deg, rgba(248, 251, 249, 0.98) 0%, rgba(248, 251, 249, 0.86) 46%, rgba(248, 251, 249, 0.2) 100%),
+      url("assets/factory-hero.jpg") center / cover no-repeat !important;
+  }
+  .cover-slide::before,
+  .cover-slide::after {
+    display: none !important;
+  }
+  .cover-content {
+    max-width: 650px;
+    padding-left: 18px;
+  }
+  .cover-title {
+    color: var(--text-primary) !important;
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    text-shadow: none;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+  }
+  .cover-subtitle {
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0;
+    max-width: 600px;
+    line-height: 1.35;
+  }
+  .cover-meta { color: var(--text-secondary); }
+  .cover-tags {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .cover-tag {
+    background: rgba(255,255,255,0.86);
+    border-color: var(--border-standard);
+    color: var(--text-secondary);
+    box-shadow: 0 8px 20px rgba(31, 41, 35, 0.08);
+  }
+  .cover-hook-item {
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border-standard);
+    box-shadow: 0 10px 24px rgba(31, 41, 35, 0.08);
+  }
+  .cover-hook-item strong { color: var(--accent); }
+  .finance-section {
+    background: linear-gradient(180deg, #fbfcfb 0%, #f3f7f4 100%) !important;
+  }
+  .reveal strong { color: var(--text-primary); }
+
+  /* Fit refinements for 16:9 roadshow projection */
+  .reveal .slides section:nth-child(3),
+  .reveal .slides section:nth-child(4) {
+    padding: 32px 54px !important;
+  }
+  .reveal .slides section:nth-child(3) .stat-grid,
+  .reveal .slides section:nth-child(4) .stat-grid {
+    margin: 14px 0 16px !important;
+  }
+  .reveal .slides section:nth-child(3) .stat-card,
+  .reveal .slides section:nth-child(4) .stat-card {
+    padding: 14px 16px !important;
+  }
+  .reveal .slides section:nth-child(3) .chart-container,
+  .reveal .slides section:nth-child(4) .chart-container {
+    max-width: min(760px, 60vw) !important;
+    padding: 16px !important;
+  }
+  .reveal .slides section:nth-child(3) canvas,
+  .reveal .slides section:nth-child(4) canvas {
+    max-height: 380px !important;
+  }
+  .reveal .slides section:nth-child(3) .source,
+  .reveal .slides section:nth-child(4) .source {
+    margin-top: 5px !important;
+    font-size: 0.4em !important;
+  }
+  .reveal .slides section:nth-child(6),
+  .reveal .slides section:nth-child(7) {
+    padding: 16px 38px !important;
+    font-size: 0.9em !important;
+  }
+  .reveal .slides section:nth-child(6) h2,
+  .reveal .slides section:nth-child(7) h2 {
+    margin-bottom: 8px !important;
+    padding-bottom: 5px !important;
+    font-size: 1.08em !important;
+    line-height: 1.15 !important;
+  }
+  .reveal .slides section:nth-child(6) h3,
+  .reveal .slides section:nth-child(7) h3 {
+    margin: 4px 0 4px !important;
+    font-size: 0.62em !important;
+  }
+  .reveal .slides section:nth-child(6) .split-layout {
+    gap: 12px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-flow {
+    gap: 6px !important;
+    margin: 6px 0 !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node {
+    padding: 7px 10px !important;
+    min-width: 80px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node .val,
+  .reveal .slides section:nth-child(6) .num,
+  .reveal .slides section:nth-child(7) .num {
+    font-size: 0.82em !important;
+  }
+  .reveal .slides section:nth-child(6) .icon,
+  .reveal .slides section:nth-child(7) .icon {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  .reveal .slides section:nth-child(6) table,
+  .reveal .slides section:nth-child(7) table {
+    font-size: 0.42em !important;
+  }
+  .reveal .slides section:nth-child(6) table th,
+  .reveal .slides section:nth-child(6) table td,
+  .reveal .slides section:nth-child(7) table th,
+  .reveal .slides section:nth-child(7) table td {
+    padding: 4px 7px !important;
+    line-height: 1.25 !important;
+  }
+  .reveal .slides section:nth-child(6) .card,
+  .reveal .slides section:nth-child(7) .card,
+  .reveal .slides section:nth-child(6) .glass-card,
+  .reveal .slides section:nth-child(7) .glass-card {
+    padding: 8px 10px !important;
+  }
+  .reveal .slides section:nth-child(6) [style*="line-height:2.2"],
+  .reveal .slides section:nth-child(7) [style*="line-height:2.2"],
+  .reveal .slides section:nth-child(7) [style*="line-height:2"] {
+    line-height: 1.25 !important;
+    margin-top: 3px !important;
+    font-size: 0.38em !important;
+  }
+  .reveal .slides section:nth-child(7) .split-layout {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .reveal .slides section:nth-child(7) .col-main,
+  .reveal .slides section:nth-child(7) .col-side {
+    width: 100% !important;
+    flex: none !important;
+  }
+  .reveal .slides section:nth-child(7) .col-side {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px !important;
+  }
+  .reveal .slides section:nth-child(7) .col-side .mt-12 {
+    margin-top: 0 !important;
+  }
+  .reveal .slides section:nth-child(7) p {
+    margin: 0 0 4px !important;
+    line-height: 1.25 !important;
+    font-size: 0.48em !important;
+  }
+  .reveal .slides section:nth-child(7) .col-side .num {
+    margin-bottom: 4px !important;
+  }
+
+  /* Visual balance for lighter roadshow slides */
+  .reveal .slides section:nth-child(3),
+  .reveal .slides section:nth-child(4),
+  .reveal .slides section:nth-child(5),
+  .reveal .slides section:nth-child(6),
+  .reveal .slides section:nth-child(8),
+  .reveal .slides section:nth-child(12),
+  .reveal .slides section:nth-child(17) {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(5),
+  .reveal .slides section:nth-child(8) {
+    padding: 44px 58px !important;
+  }
+  .reveal .slides section:nth-child(5) h2,
+  .reveal .slides section:nth-child(8) h2 {
+    margin-bottom: 24px !important;
+  }
+  .reveal .slides section:nth-child(5) .split-layout {
+    gap: 26px !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-heading {
+    font-size: 1em !important;
+    margin-bottom: 10px !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-list {
+    font-size: 0.68em !important;
+    line-height: 1.8 !important;
+  }
+  .reveal .slides section:nth-child(5) .card,
+  .reveal .slides section:nth-child(5) .glass-card {
+    padding: 26px 28px !important;
+  }
+  .reveal .slides section:nth-child(8) .stat-grid {
+    gap: 18px !important;
+    margin: 18px 0 !important;
+  }
+  .reveal .slides section:nth-child(8) .card,
+  .reveal .slides section:nth-child(8) .glass-card {
+    padding: 24px !important;
+  }
+  .reveal .slides section:nth-child(8) .callout-gradient {
+    padding: 18px 24px !important;
+    margin-top: 20px !important;
+  }
+  .reveal .slides section:nth-child(6) {
+    padding: 26px 50px !important;
+    font-size: 1em !important;
+  }
+  .reveal .slides section:nth-child(6) h2 {
+    font-size: 1.28em !important;
+    margin-bottom: 14px !important;
+    padding-bottom: 8px !important;
+  }
+  .reveal .slides section:nth-child(6) h3 {
+    font-size: 0.78em !important;
+    margin: 8px 0 !important;
+  }
+  .reveal .slides section:nth-child(6) .split-layout {
+    gap: 20px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-flow {
+    gap: 10px !important;
+    margin: 12px 0 14px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node {
+    padding: 11px 16px !important;
+    min-width: 100px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node .val,
+  .reveal .slides section:nth-child(6) .num {
+    font-size: 1em !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node .desc {
+    font-size: 0.62em !important;
+  }
+  .reveal .slides section:nth-child(6) .icon {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .reveal .slides section:nth-child(6) table {
+    font-size: 0.5em !important;
+  }
+  .reveal .slides section:nth-child(6) table th,
+  .reveal .slides section:nth-child(6) table td {
+    padding: 6px 9px !important;
+    line-height: 1.35 !important;
+  }
+  .reveal .slides section:nth-child(6) .card,
+  .reveal .slides section:nth-child(6) .glass-card {
+    padding: 14px 16px !important;
+  }
+  .reveal .slides section:nth-child(6) [style*="line-height:2.2"] {
+    font-size: 0.46em !important;
+    line-height: 1.55 !important;
+    margin-top: 8px !important;
+  }
+  .reveal .slides section:nth-child(12) {
+    padding: 42px 58px !important;
+  }
+  .reveal .slides section:nth-child(12) h2 {
+    margin-bottom: 30px !important;
+  }
+  .reveal .slides section:nth-child(12) .team-grid {
+    gap: 30px !important;
+  }
+  .reveal .slides section:nth-child(12) .stat-card {
+    min-height: 240px;
+    padding: 26px 24px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(12) .team-avatar,
+  .reveal .slides section:nth-child(12) .team-icon {
+    width: 68px;
+    height: 68px;
+    font-size: 1.15em;
+    margin-bottom: 4px;
+  }
+  .reveal .slides section:nth-child(12) .team-title {
+    font-size: 0.9em;
+    margin: 14px 0 10px;
+  }
+  .reveal .slides section:nth-child(12) .team-desc {
+    font-size: 0.62em;
+    line-height: 1.75;
+  }
+  .reveal .slides section:nth-child(12) .small {
+    margin-top: 24px;
+    font-size: 0.54em;
+  }
+  .reveal .slides section:nth-child(17) {
+    padding: 52px 68px !important;
+  }
+  .reveal .slides section:nth-child(17) h2 {
+    margin-bottom: 16px !important;
+  }
+  .reveal .slides section:nth-child(17) h3 {
+    font-size: 0.95em !important;
+    margin-bottom: 22px !important;
+  }
+  .reveal .slides section:nth-child(17) h3 + div {
+    height: 76px !important;
+    margin: 20px 0 24px !important;
+  }
+  .reveal .slides section:nth-child(17) table {
+    font-size: 0.6em !important;
+  }
+  .reveal .slides section:nth-child(17) table th,
+  .reveal .slides section:nth-child(17) table td {
+    padding: 11px 16px !important;
+  }
+  .reveal .slides section:nth-child(17) p {
+    font-size: 0.62em !important;
+    margin-top: 22px !important;
+  }
+
+  .reveal .slides section.market-section {
+    padding: 28px 54px 30px !important;
+    font-size: 0.9em !important;
+    display: grid !important;
+    grid-template-rows: auto auto minmax(300px, 1fr) auto;
+    align-content: stretch;
+    row-gap: 14px;
+    justify-content: stretch;
+  }
+  .market-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.24em !important;
+    line-height: 1.12 !important;
+  }
+  .market-section .stat-grid {
+    gap: 16px !important;
+    margin: 0 !important;
+  }
+  .market-section .stat-card {
+    min-height: 118px;
+    padding: 18px 22px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .market-section .stat-card .num {
+    font-size: 1.72em;
+  }
+  .market-section .stat-card .label {
+    font-size: 0.68em;
+    line-height: 1.32;
+  }
+  .reveal .slides section.market-section .chart-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none !important;
+    min-height: 300px;
+    height: 100%;
+    padding: 18px 22px !important;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .reveal .slides section.market-section canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+  }
+  .market-section .source {
+    margin: 0 !important;
+    font-size: 0.42em !important;
+    line-height: 1.35;
+  }
+
+  .reveal .slides section.exit-section {
+    padding: 28px 54px 30px !important;
+    font-size: 0.9em !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(292px, 1fr) auto;
+    align-content: stretch;
+    row-gap: 16px;
+  }
+  .exit-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.24em !important;
+    line-height: 1.12 !important;
+  }
+  .exit-section .exit-path-grid {
+    gap: 16px !important;
+    margin: 0 !important;
+    min-height: 292px;
+  }
+  .exit-section .exit-path-card {
+    min-height: 292px;
+    padding: 24px 26px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .exit-section .exit-path-card .num {
+    font-size: 1.24em !important;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .exit-section .exit-path-card .label {
+    color: var(--text-primary);
+    font-size: 0.72em;
+    line-height: 1.25;
+  }
+  .exit-section .exit-card-body {
+    font-size: 0.52em !important;
+    line-height: 1.75 !important;
+    margin-top: 14px !important;
+  }
+  .exit-section .exit-protection {
+    min-height: 148px;
+    margin-top: 0 !important;
+    padding: 20px 26px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .exit-section .exit-protection h4 {
+    margin: 0 0 10px !important;
+    font-size: 0.9em !important;
+    line-height: 1.2;
+  }
+  .exit-section .exit-protection ul {
+    columns: 2;
+    column-gap: 40px;
+    margin: 0 !important;
+    padding-left: 18px !important;
+    font-size: 0.52em !important;
+    line-height: 1.72 !important;
+  }
+  .exit-section .exit-protection li {
+    break-inside: avoid;
+    margin-bottom: 4px;
+  }
+  .reveal .slides section.exit-section .exit-path-grid {
+    gap: 16px !important;
+    margin: 0 !important;
+  }
+  .reveal .slides section.exit-section .exit-path-card {
+    min-height: 292px;
+    padding: 24px 26px !important;
+  }
+  .reveal .slides section.exit-section .exit-card-body {
+    font-size: 0.52em !important;
+    line-height: 1.75 !important;
+    margin-top: 14px !important;
+  }
+  .reveal .slides section.exit-section .exit-protection {
+    min-height: 148px;
+    margin-top: 0 !important;
+    padding: 20px 26px !important;
+  }
+
+  .reveal .slides section.sources-section {
+    padding: 28px 54px 30px !important;
+    font-size: 0.92em !important;
+    display: grid !important;
+    grid-template-rows: auto 1fr;
+    align-content: stretch;
+    row-gap: 16px;
+  }
+  .sources-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.24em !important;
+    line-height: 1.12 !important;
+  }
+  .sources-section .sources-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+    align-content: stretch;
+    font-size: 1em !important;
+    line-height: 1.45 !important;
+    color: var(--text-secondary);
+  }
+  .sources-section .source-card {
+    background: #ffffff;
+    border: 1px solid var(--border-standard);
+    border-left: 3px solid var(--accent-bright);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 16px 18px;
+  }
+  .sources-section .source-card:nth-child(2),
+  .sources-section .source-card:nth-child(5) {
+    border-left-color: var(--green);
+  }
+  .sources-section .source-card:nth-child(3) {
+    border-left-color: var(--orange);
+  }
+  .reveal .slides section.sources-section .sources-body p {
+    margin: 0 0 8px !important;
+    color: var(--text-primary);
+    font-size: 0.62em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .sources-section .sources-body ul {
+    margin: 0 !important;
+    padding-left: 18px;
+  }
+  .reveal .slides section.sources-section .sources-body li {
+    margin-bottom: 5px !important;
+    color: var(--text-secondary);
+    font-size: 0.49em;
+    line-height: 1.42;
+  }
+  .reveal .slides section.sources-section .sources-body {
+    font-size: 1em !important;
+    line-height: 1.45 !important;
+  }
+  .reveal .slides section.sources-section .sources-body p {
+    font-size: 0.62em !important;
+  }
+  .reveal .slides section.sources-section .sources-body li {
+    font-size: 0.49em !important;
+    line-height: 1.42 !important;
+  }
+  .sources-section .sources-body li:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Visual fill harmonization for 1920x1080 roadshow projection */
+  .reveal .slides section.cover-slide {
+    padding: 42px 70px !important;
+  }
+  .cover-slide > div,
+  .cover-content {
+    box-sizing: border-box;
+    max-width: 760px !important;
+    min-height: 574px;
+    padding-left: 28px !important;
+    border-left: 4px solid var(--accent-bright);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cover-title {
+    font-size: 3.55em !important;
+    line-height: 1.05;
+    margin-bottom: 16px !important;
+  }
+  .cover-subtitle {
+    font-size: 1.46em !important;
+    margin-bottom: 18px !important;
+  }
+  .cover-meta {
+    font-size: 0.96em !important;
+    line-height: 1.45;
+  }
+  .cover-tags {
+    margin-top: 30px !important;
+    gap: 12px !important;
+  }
+  .cover-tag {
+    padding: 9px 18px !important;
+    font-size: 0.82em !important;
+  }
+  .cover-hook {
+    max-width: 740px !important;
+    gap: 14px !important;
+    margin-top: 28px !important;
+  }
+  .cover-hook-item {
+    min-height: 96px;
+    padding: 18px 20px !important;
+  }
+  .cover-hook-item strong {
+    font-size: 0.74em !important;
+  }
+  .cover-hook-item span {
+    font-size: 0.48em !important;
+    line-height: 1.45 !important;
+    margin-top: 8px !important;
+  }
+
+  .reveal .slides section:nth-child(2) {
+    padding: 42px 62px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(2) h2 {
+    margin-bottom: 30px !important;
+  }
+  .reveal .slides section:nth-child(2) .stat-grid {
+    gap: 24px !important;
+    margin: 0 !important;
+  }
+  .reveal .slides section:nth-child(2) .stat-card {
+    min-height: 286px;
+    padding: 30px 34px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(2) .stat-body {
+    font-size: 0.66em !important;
+    line-height: 1.82 !important;
+  }
+  .reveal .slides section:nth-child(2) .callout-box {
+    width: 100%;
+    max-width: none;
+    min-height: 106px;
+    margin-top: 28px !important;
+    padding: 24px 32px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(2) .callout-box p {
+    font-size: 0.64em !important;
+    line-height: 1.6 !important;
+    margin: 0;
+  }
+
+  .reveal .slides section:nth-child(5) {
+    padding: 36px 58px !important;
+  }
+  .reveal .slides section:nth-child(5) h2 {
+    margin-bottom: 26px !important;
+  }
+  .reveal .slides section:nth-child(5) .split-layout {
+    align-items: stretch;
+    gap: 24px !important;
+  }
+  .reveal .slides section:nth-child(5) .col-main {
+    background: #ffffff;
+    border: 1px solid var(--border-standard);
+    border-left: 3px solid var(--accent-bright);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 26px 30px;
+  }
+  .reveal .slides section:nth-child(5) .col-side {
+    display: flex;
+  }
+  .reveal .slides section:nth-child(5) .card,
+  .reveal .slides section:nth-child(5) .glass-card {
+    width: 100%;
+    min-height: 392px;
+    padding: 30px 32px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(5) .compact-heading {
+    font-size: 1.05em !important;
+    margin-bottom: 12px !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-list {
+    font-size: 0.68em !important;
+    line-height: 1.86 !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-list li {
+    margin-bottom: 8px !important;
+  }
+  .reveal .slides section:nth-child(5) .source {
+    margin-top: 16px !important;
+    font-size: 0.46em !important;
+  }
+
+  .reveal .slides section:nth-child(9) {
+    padding: 40px 62px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(9) h2 {
+    margin-bottom: 24px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-flow {
+    gap: 18px !important;
+    margin: 0 0 22px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-node {
+    min-width: 152px;
+    min-height: 94px;
+    padding: 20px 24px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit {
+    margin: 0 0 22px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-val {
+    font-size: 1.22em !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-note {
+    font-size: 0.54em !important;
+    margin-top: 8px !important;
+  }
+  .reveal .slides section:nth-child(9) table {
+    font-size: 0.66em !important;
+  }
+  .reveal .slides section:nth-child(9) table th,
+  .reveal .slides section:nth-child(9) table td {
+    padding: 14px 18px !important;
+    line-height: 1.42 !important;
+  }
+  .reveal .slides section:nth-child(9) .small {
+    font-size: 0.64em !important;
+    margin-top: 20px !important;
+  }
+
+  .reveal .slides section.competitive-section {
+    padding: 40px 58px 44px !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(365px, 1fr) auto;
+    align-content: stretch;
+    row-gap: 24px;
+  }
+  .competitive-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.3em !important;
+    line-height: 1.12 !important;
+  }
+  .competitive-section table {
+    align-self: stretch;
+    font-size: 0.66em !important;
+  }
+  .competitive-section table th,
+  .competitive-section table td {
+    padding: 15px 18px !important;
+    line-height: 1.38 !important;
+  }
+  .competitive-section .competitive-callout {
+    min-height: 104px;
+    margin: 0 auto !important;
+    padding: 24px 28px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .competitive-section .competitive-callout p {
+    font-size: 0.66em !important;
+    line-height: 1.45 !important;
+  }
+
+  .reveal .slides section:nth-child(12) {
+    padding: 36px 58px !important;
+  }
+  .reveal .slides section:nth-child(12) h2 {
+    margin-bottom: 34px !important;
+  }
+  .reveal .slides section:nth-child(12) .team-grid {
+    gap: 32px !important;
+  }
+  .reveal .slides section:nth-child(12) .stat-card {
+    min-height: 306px;
+    padding: 32px 28px !important;
+  }
+  .reveal .slides section:nth-child(12) .team-avatar,
+  .reveal .slides section:nth-child(12) .team-icon {
+    width: 78px;
+    height: 78px;
+    font-size: 1.28em;
+  }
+  .reveal .slides section:nth-child(12) .team-title {
+    font-size: 0.96em;
+    margin: 16px 0 12px;
+  }
+  .reveal .slides section:nth-child(12) .team-desc {
+    font-size: 0.66em;
+    line-height: 1.82;
+  }
+  .reveal .slides section:nth-child(12) .small {
+    margin-top: 28px;
+    font-size: 0.58em;
+  }
+
+  .reveal .slides section:nth-child(18) {
+    padding: 40px 62px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(18) h2 {
+    margin-bottom: 24px !important;
+  }
+  .reveal .slides section:nth-child(18) .stat-grid {
+    gap: 18px !important;
+    margin: 0 0 24px !important;
+  }
+  .reveal .slides section:nth-child(18) .card,
+  .reveal .slides section:nth-child(18) .glass-card {
+    min-height: 176px;
+    padding: 24px 26px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(18) .label {
+    font-size: 0.72em !important;
+    line-height: 1.35;
+  }
+  .reveal .slides section:nth-child(18) p {
+    font-size: 0.58em !important;
+    line-height: 1.55 !important;
+  }
+  .reveal .slides section:nth-child(18) table {
+    font-size: 0.64em !important;
+  }
+  .reveal .slides section:nth-child(18) table th,
+  .reveal .slides section:nth-child(18) table td {
+    padding: 14px 18px !important;
+    line-height: 1.42 !important;
+  }
+
+  /* Overflow guards after visual fill harmonization */
+  .cover-slide > div,
+  .cover-content {
+    max-width: 860px !important;
+    min-height: 520px;
+    padding-left: 24px !important;
+  }
+  .cover-title {
+    font-size: 3em !important;
+    margin-bottom: 12px !important;
+  }
+  .cover-subtitle {
+    max-width: 760px;
+    font-size: 1.16em !important;
+    line-height: 1.28 !important;
+    margin-bottom: 12px !important;
+  }
+  .cover-meta {
+    font-size: 0.82em !important;
+    line-height: 1.35;
+  }
+  .cover-tags {
+    margin-top: 22px !important;
+  }
+  .cover-tag {
+    padding: 7px 15px !important;
+    font-size: 0.74em !important;
+  }
+  .cover-hook {
+    margin-top: 22px !important;
+    gap: 12px !important;
+  }
+  .cover-hook-item {
+    min-height: 76px;
+    padding: 13px 16px !important;
+  }
+  .cover-hook-item strong {
+    font-size: 0.66em !important;
+  }
+  .cover-hook-item span {
+    font-size: 0.43em !important;
+    line-height: 1.36 !important;
+    margin-top: 5px !important;
+  }
+  .reveal .slides section:nth-child(2) .callout-box {
+    box-sizing: border-box;
+  }
+
+  .reveal .slides section:nth-child(9) {
+    padding: 36px 62px !important;
+  }
+  .reveal .slides section:nth-child(9) h2 {
+    margin-bottom: 18px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-flow {
+    gap: 16px !important;
+    margin: 0 0 16px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-node {
+    min-height: 82px;
+    padding: 15px 22px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit {
+    margin: 0 0 16px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-val {
+    font-size: 1.12em !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-note {
+    font-size: 0.5em !important;
+    margin-top: 6px !important;
+  }
+  .reveal .slides section:nth-child(9) table {
+    font-size: 0.61em !important;
+  }
+  .reveal .slides section:nth-child(9) table th,
+  .reveal .slides section:nth-child(9) table td {
+    padding: 11px 16px !important;
+    line-height: 1.36 !important;
+  }
+  .reveal .slides section:nth-child(9) .small {
+    font-size: 0.58em !important;
+    margin-top: 14px !important;
+  }
+
+  .reveal .slides section:nth-child(18) h2 {
+    margin-bottom: 18px !important;
+  }
+  .reveal .slides section:nth-child(18) .stat-grid {
+    margin: 0 0 18px !important;
+  }
+  .reveal .slides section:nth-child(18) .card,
+  .reveal .slides section:nth-child(18) .glass-card {
+    min-height: 156px;
+    padding: 20px 24px !important;
+  }
+  .reveal .slides section:nth-child(18) table {
+    font-size: 0.6em !important;
+  }
+  .reveal .slides section:nth-child(18) table th,
+  .reveal .slides section:nth-child(18) table td {
+    padding: 11px 16px !important;
+    line-height: 1.36 !important;
+  }
+
   /* ═══════════ Responsive ═══════════ */
   @media (max-width: 1024px) {
     .reveal h1 { font-size: 2.2em; }
@@ -557,7 +1784,9 @@
     .reveal table { font-size: 0.5em; }
     .fund-bar { height: 28px; }
     .cover-title { font-size: 2em !important; }
-    .cover-tags { flex-direction: column; align-items: center; }
+    .cover-tags { flex-wrap: wrap; align-items: center; }
+    .cover-hook { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cover-hook-item { padding: 10px 12px; }
   }
 
   /* ═══════════ Print ═══════════ */
@@ -590,8 +1819,8 @@
 <section class="cover-slide">
   <div class="cover-content">
     <h1 class="cover-title">捷派优选</h1>
-    <p class="cover-subtitle">人力资源灵活用工平台</p>
-    <p class="cover-meta">天使轮融资商业计划书 · 深圳</p>
+    <p class="cover-subtitle">中国制造业日结用工履约平台</p>
+    <p class="cover-meta">聚焦深圳及大湾区工厂 · 天使轮融资商业计划书</p>
     <div class="cover-tags">
       <span class="cover-tag">
         <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
@@ -605,6 +1834,20 @@
         <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
         融资 ¥120万
       </span>
+    </div>
+    <div class="cover-hook">
+      <div class="cover-hook-item">
+        <strong>工厂刚需</strong>
+        <span>旺季短工与日结岗位稳定存在</span>
+      </div>
+      <div class="cover-hook-item">
+        <strong>履约抓手</strong>
+        <span>招聘、到岗、结算全链路闭环</span>
+      </div>
+      <div class="cover-hook-item">
+        <strong>盈利清晰</strong>
+        <span>¥7/小时价差驱动单点毛利</span>
+      </div>
     </div>
   </div>
 </section>
@@ -647,7 +1890,7 @@
 </section>
 
 <!-- ═══════════ Slide 03: Market Size ═══════════ -->
-<section>
+<section class="market-section">
   <h2>万亿级市场</h2>
   <div class="stat-grid">
     <div class="stat-card pulse fade-up">
@@ -670,7 +1913,7 @@
 </section>
 
 <!-- ═══════════ Slide 04: Flexible Workforce ═══════════ -->
-<section>
+<section class="market-section">
   <h2>2亿灵活就业大军</h2>
   <div class="stat-grid">
     <div class="stat-card fade-up">
@@ -994,7 +2237,7 @@
 </section>
 
 <!-- ═══════════ Slide 11: Competitive Advantage ═══════════ -->
-<section>
+<section class="competitive-section">
   <h2>竞争优势</h2>
   <table>
     <caption class="sr-only">竞争优势对比表</caption>
@@ -1006,7 +2249,7 @@
     <tr><th scope="row">后期生态</th><td>无</td><td>单一招聘</td><td style="color:var(--text-primary);font-weight:500;">招工→商城→工厂服务生态</td></tr>
     <tr><th scope="row">AI能力</th><td>无</td><td>基础匹配</td><td style="color:var(--text-primary);font-weight:500;">AI推荐岗位+需求预测</td></tr>
   </table>
-  <div class="callout-box mt-12">
+  <div class="callout-box mt-12 competitive-callout">
     <p>
       <span class="icon icon-lg" style="color:var(--accent-bright);vertical-align:middle;margin-right:4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
       <strong style="color:var(--text-primary);">核心壁垒：</strong>线下工厂资源是护城河，线上平台是放大器
@@ -1138,57 +2381,73 @@
 </section>
 
 <!-- ═══════════ Slide 15: ROI Analysis ═══════════ -->
-<section>
+<section class="roi-section">
   <h2>投资回报分析</h2>
-  <div class="stat-grid">
-    <div class="stat-card fade-up">
-      <div class="num">¥120万</div>
-      <div class="label">天使轮融资额 · 占股10%</div>
-      <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">投前估值¥1,080万 · 投后¥1,200万</p>
+  <div class="roi-dashboard">
+    <div class="roi-panel roi-panel--deal fade-up">
+      <span class="roi-kicker">Angel Round</span>
+      <div class="roi-value">¥120万 <span>融资额</span></div>
+      <p>对应投后估值 ¥1,200 万，投资人取得 10% 股权。资金主要用于工资垫资、工厂拓展和小程序履约系统。</p>
+      <div class="roi-pill-row">
+        <span class="roi-pill"><strong>投前</strong> ¥1,080万</span>
+        <span class="roi-pill"><strong>投后</strong> ¥1,200万</span>
+        <span class="roi-pill"><strong>股权</strong> 10%</span>
+      </div>
     </div>
-    <div class="stat-card fade-up delay-1" style="border-left:3px solid var(--orange);">
-      <div class="num" style="color:var(--orange);">5-10x</div>
-      <div class="label">预期回报倍数</div>
-      <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">3年退出 · ¥600万-1,200万回报</p>
-    </div>
-    <div class="stat-card fade-up delay-2" style="border-left:3px solid var(--green);">
-      <div class="num" style="color:var(--green);">6个月</div>
-      <div class="label">预计回本周期</div>
-      <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">15人即达盈亏平衡</p>
+    <div class="roi-panel roi-panel--return fade-up delay-1">
+      <span class="roi-kicker">Base Case Return</span>
+      <div class="roi-value" style="color:var(--green);">5-10x <span>3年退出目标</span></div>
+      <p>核心假设是把深圳工厂日结场景做到 500-1000 人稳定履约，再通过 A 轮、并购或老股转让实现退出。</p>
+      <div class="roi-pill-row">
+        <span class="roi-pill"><strong>回本</strong> 6个月</span>
+        <span class="roi-pill"><strong>盈亏平衡</strong> 15人</span>
+        <span class="roi-pill"><strong>估值口径</strong> 年净利 x 5PE</span>
+      </div>
     </div>
   </div>
-  <table>
-    <caption style="display:none;">投资回报分析表</caption>
-    <tr>
-      <th>场景</th><th>时间</th><th>工人数</th><th>月净利</th><th>年净利</th><th>公司估值</th>
-      <th class="th-highlight">投资人回报</th>
-    </tr>
-    <tr>
-      <td>保守</td><td>1年后</td><td>200人</td><td>¥33.8万</td><td>¥393.6万</td><td>¥2,000万</td>
-      <td class="text-green fw-600">1.67x（¥200万）</td>
-    </tr>
-    <tr>
-      <td>基准</td><td>2年后</td><td>500人</td><td>¥87.5万</td><td>¥1,050万</td><td>¥5,000万</td>
-      <td class="text-green fw-600">4.17x（¥500万）</td>
-    </tr>
-    <tr style="background:rgba(94,106,210,0.08);font-weight:600;">
-      <td>乐观</td><td>3年后</td><td>1000人</td><td>¥175万</td><td>¥2,100万</td><td>¥1.2亿</td>
-      <td class="text-green" style="font-weight:700;font-size:1.05em;">10x（¥1,200万）</td>
-    </tr>
-  </table>
-  <div style="background:rgba(245,158,11,0.06);border-left:3px solid var(--orange);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:10px 16px;margin:10px 0;">
-    <ul style="font-size:0.5em;margin:0;padding-left:14px;color:var(--text-secondary);">
-      <li><strong style="color:var(--text-primary);">估值逻辑：</strong>年净利 × 5倍PE + 成长溢价</li>
-      <li><strong style="color:var(--text-primary);">投资人占股10%：</strong>对应估值¥200万→¥500万→¥1,200万</li>
-    </ul>
+  <div class="roi-scenarios">
+    <div class="roi-scenario fade-up delay-2">
+      <span class="scenario-label">保守 · 1年后</span>
+      <h3>先验证现金流</h3>
+      <div class="scenario-return">1.67x <span>¥200万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>200人</strong></div>
+        <div><span>月净利</span><strong>¥33.8万</strong></div>
+        <div><span>公司估值</span><strong>¥2,000万</strong></div>
+      </div>
+    </div>
+    <div class="roi-scenario roi-scenario--base fade-up delay-3">
+      <span class="scenario-label">基准 · 2年后</span>
+      <h3>500人稳定履约</h3>
+      <div class="scenario-return">4.17x <span>¥500万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>500人</strong></div>
+        <div><span>月净利</span><strong>¥87.5万</strong></div>
+        <div><span>公司估值</span><strong>¥5,000万</strong></div>
+      </div>
+    </div>
+    <div class="roi-scenario roi-scenario--upside fade-up delay-4">
+      <span class="scenario-label">乐观 · 3年后</span>
+      <h3>复制到周边城市</h3>
+      <div class="scenario-return">10x <span>¥1,200万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>1000人</strong></div>
+        <div><span>月净利</span><strong>¥175万</strong></div>
+        <div><span>公司估值</span><strong>¥1.2亿</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="roi-note fade-up delay-5">
+    <div><strong>估值逻辑：</strong>年净利 x 5倍PE + 成长溢价。</div>
+    <div><strong>投资人权益：</strong>10% 股权对应退出价值约 ¥200万 / ¥500万 / ¥1,200万。</div>
   </div>
 </section>
 
 <!-- ═══════════ Slide 16: Exit Paths ═══════════ -->
-<section>
+<section class="exit-section">
   <h2>退出路径</h2>
-  <div class="stat-grid">
-    <div class="card card-accent fade-up">
+  <div class="stat-grid exit-path-grid">
+    <div class="card card-accent fade-up exit-path-card">
       <div class="num" style="font-size:1.1em;color:var(--accent-bright);font-weight:600;">路径一</div>
       <div class="label">A轮融资退出</div>
       <div class="exit-card-body">
@@ -1198,7 +2457,7 @@
         <strong>方式：</strong>老股转让10-20%
       </div>
     </div>
-    <div class="card card-orange fade-up delay-1">
+    <div class="card card-orange fade-up delay-1 exit-path-card">
       <div class="num" style="font-size:1.1em;color:var(--orange);font-weight:600;">路径二</div>
       <div class="label">并购退出</div>
       <div class="exit-card-body">
@@ -1208,7 +2467,7 @@
         <strong>投资人回报：</strong>8-25x
       </div>
     </div>
-    <div class="card card-green fade-up delay-2">
+    <div class="card card-green fade-up delay-2 exit-path-card">
       <div class="num" style="font-size:1.1em;color:var(--green);font-weight:600;">路径三</div>
       <div class="label">IPO上市</div>
       <div class="exit-card-body">
@@ -1219,7 +2478,7 @@
       </div>
     </div>
   </div>
-  <div class="card mt-12 fade-up delay-3" style="padding:14px 20px;">
+  <div class="card mt-12 fade-up delay-3 exit-protection" style="padding:14px 20px;">
     <h4 style="color:var(--accent-bright);margin:0 0 8px;font-size:0.85em;">
       <span class="icon icon-lg" style="vertical-align:middle;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
       退出保障条款
@@ -1293,36 +2552,46 @@
 </section>
 
 <!-- ═══════════ Slide 19: Data Sources ═══════════ -->
-<section>
+<section class="sources-section">
   <h2>数据来源</h2>
   <div class="sources-body">
-    <p>市场规模</p>
-    <ul>
-      <li>人社部统计公报 2023 · 亿欧智库 2025.12（2028年预测5万亿）</li>
-      <li>《2024中国蓝领就业调研报告》（蓝领4.25亿人）</li>
-      <li>吴晓波频道 2025.9.17（鱼泡网1.1亿用户、求人倍率1.5）</li>
-    </ul>
-    <p>灵活就业</p>
-    <ul>
-      <li>人社部 2024.10 via 新华社（灵活就业2亿人，占27%）</li>
-      <li>暨南大学《2024中国新型灵活就业报告》（招聘占比15.2%）</li>
-    </ul>
-    <p>AI与自动化</p>
-    <ul>
-      <li>IFR《World Robotics 2025》2025.9（中国2024年新增机器人41.1万台）</li>
-      <li>Metaintro 2026.3（制造业流失3000万岗位）</li>
-      <li>高盛 2025.9 · 微软 2025 · RAND 2025.12</li>
-    </ul>
-    <p>青年就业</p>
-    <ul>
-      <li>国家统计局 2025.8（16-24岁失业率18.9%）</li>
-      <li>前程无忧 2025 · 智联招聘（00后蓝领意愿61.5%）</li>
-    </ul>
-    <p>行业竞争与工价</p>
-    <ul>
-      <li>鱼泡网 2024.12 · 斗米 2024.7 · 快马日结 2025.2</li>
-      <li>艾瑞咨询 2025.3 · 人瑞人才 2025.1 · IT桔子 2025.5</li>
-    </ul>
+    <div class="source-card">
+      <p>市场规模</p>
+      <ul>
+        <li>人社部统计公报 2023 · 亿欧智库 2025.12（2028年预测5万亿）</li>
+        <li>《2024中国蓝领就业调研报告》（蓝领4.25亿人）</li>
+        <li>吴晓波频道 2025.9.17（鱼泡网1.1亿用户、求人倍率1.5）</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>灵活就业</p>
+      <ul>
+        <li>人社部 2024.10 via 新华社（灵活就业2亿人，占27%）</li>
+        <li>暨南大学《2024中国新型灵活就业报告》（招聘占比15.2%）</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>AI与自动化</p>
+      <ul>
+        <li>IFR《World Robotics 2025》2025.9（中国2024年新增机器人41.1万台）</li>
+        <li>Metaintro 2026.3（制造业流失3000万岗位）</li>
+        <li>高盛 2025.9 · 微软 2025 · RAND 2025.12</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>青年就业</p>
+      <ul>
+        <li>国家统计局 2025.8（16-24岁失业率18.9%）</li>
+        <li>前程无忧 2025 · 智联招聘（00后蓝领意愿61.5%）</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>行业竞争与工价</p>
+      <ul>
+        <li>鱼泡网 2024.12 · 斗米 2024.7 · 快马日结 2025.2</li>
+        <li>艾瑞咨询 2025.3 · 人瑞人才 2025.1 · IT桔子 2025.5</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -1332,21 +2601,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
-// ── Dynamic viewport sizing ──
-function getViewportSize() {
-  return { w: window.innerWidth, h: window.innerHeight };
-}
-const vp = getViewportSize();
-
 Reveal.initialize({
   hash: true,
   transition: 'fade',
   transitionSpeed: 'default',
   backgroundTransition: 'fade',
-  width: vp.w,
-  height: vp.h,
-  margin: 0.03,
-  center: true,
+  width: 1280,
+  height: 720,
+  margin: 0.02,
+  center: false,
   slideNumber: 'c/t',
   controls: true,
   progress: true,
@@ -1355,21 +2618,15 @@ Reveal.initialize({
   maxScale: 2.0,
 });
 
-// ── Resize handler: recalculate layout on zoom/resize ──
-let resizeTimer;
-window.addEventListener('resize', function() {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(function() {
-    const newSize = getViewportSize();
-    Reveal.configure({ width: newSize.w, height: newSize.h });
-    Reveal.layout();
-  }, 150);
-});
-
-// ── Chart.js Dark Theme Defaults ──
-Chart.defaults.color = '#8a8f98';
-Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+// ── Chart.js Light Theme Defaults ──
+Chart.defaults.color = '#68756f';
+Chart.defaults.borderColor = '#e2e8e4';
 Chart.defaults.font.family = "'Inter', 'Noto Sans SC', sans-serif";
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(255,255,255,0.96)';
+Chart.defaults.plugins.tooltip.titleColor = '#18221f';
+Chart.defaults.plugins.tooltip.bodyColor = '#46544f';
+Chart.defaults.plugins.tooltip.borderColor = '#d8e0dc';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
 
 // Helper: create gradient
 function createGradient(ctx, color1, color2) {
@@ -1390,11 +2647,11 @@ function createGradient(ctx, color1, color2) {
         label: '人力资源服务市场（万亿元）',
         data: [2.0, 2.7, 3.2],
         backgroundColor: [
-          createGradient(ctx, 'rgba(94,106,210,0.5)', 'rgba(94,106,210,0.2)'),
-          createGradient(ctx, 'rgba(94,106,210,0.65)', 'rgba(94,106,210,0.3)'),
-          createGradient(ctx, 'rgba(113,112,255,0.85)', 'rgba(113,112,255,0.4)')
+          createGradient(ctx, 'rgba(49,95,157,0.52)', 'rgba(49,95,157,0.16)'),
+          createGradient(ctx, 'rgba(15,118,110,0.62)', 'rgba(15,118,110,0.2)'),
+          createGradient(ctx, 'rgba(15,143,130,0.82)', 'rgba(15,143,130,0.3)')
         ],
-        borderColor: ['rgba(94,106,210,0.6)','rgba(94,106,210,0.8)','rgba(113,112,255,1)'],
+        borderColor: ['rgba(49,95,157,0.72)','rgba(15,118,110,0.82)','rgba(15,143,130,1)'],
         borderWidth: 1,
         borderRadius: 8,
         barThickness: 44,
@@ -1402,22 +2659,23 @@ function createGradient(ctx, color1, color2) {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        title: { display: true, text: '中国人力资源服务市场规模', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
+        title: { display: true, text: '中国人力资源服务市场规模', font: { size: 15, weight: '500' }, color: '#46544f' },
         tooltip: {
-          backgroundColor: 'rgba(15,16,17,0.95)',
-          titleColor: '#f7f8f8',
-          bodyColor: '#d0d6e0',
-          borderColor: 'rgba(255,255,255,0.1)',
+          backgroundColor: 'rgba(255,255,255,0.96)',
+          titleColor: '#18221f',
+          bodyColor: '#46544f',
+          borderColor: '#d8e0dc',
           borderWidth: 1,
           cornerRadius: 8,
           padding: 12,
         }
       },
       scales: {
-        y: { beginAtZero: true, ticks: { callback: v => v + '万亿' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-        x: { grid: { display: false } }
+        y: { beginAtZero: true, ticks: { callback: v => v + '万亿', font: { size: 12 } }, grid: { color: '#e7ece8' } },
+        x: { ticks: { font: { size: 12 } }, grid: { display: false } }
       }
     }
   });
@@ -1427,8 +2685,8 @@ function createGradient(ctx, color1, color2) {
 (function() {
   const ctx = document.getElementById('workerChart').getContext('2d');
   const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-  gradient.addColorStop(0, 'rgba(113,112,255,0.2)');
-  gradient.addColorStop(1, 'rgba(113,112,255,0.01)');
+  gradient.addColorStop(0, 'rgba(15,143,130,0.2)');
+  gradient.addColorStop(1, 'rgba(15,143,130,0.02)');
   new Chart(ctx, {
     type: 'line',
     data: {
@@ -1436,35 +2694,36 @@ function createGradient(ctx, color1, color2) {
       datasets: [{
         label: '灵活就业招聘职位占比',
         data: [8.4, 10.5, 13.0, 15.2],
-        borderColor: '#7170ff',
+        borderColor: '#0f8f82',
         backgroundColor: gradient,
         fill: true,
         tension: 0.4,
         pointRadius: 5,
-        pointBackgroundColor: '#7170ff',
-        pointBorderColor: '#08090a',
+        pointBackgroundColor: '#0f8f82',
+        pointBorderColor: '#ffffff',
         pointBorderWidth: 2,
         borderWidth: 2.5,
       }]
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        title: { display: true, text: '灵活就业招聘职位数占比（%）', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
+        title: { display: true, text: '灵活就业招聘职位数占比（%）', font: { size: 15, weight: '500' }, color: '#46544f' },
         tooltip: {
-          backgroundColor: 'rgba(15,16,17,0.95)',
-          titleColor: '#f7f8f8',
-          bodyColor: '#d0d6e0',
-          borderColor: 'rgba(255,255,255,0.1)',
+          backgroundColor: 'rgba(255,255,255,0.96)',
+          titleColor: '#18221f',
+          bodyColor: '#46544f',
+          borderColor: '#d8e0dc',
           borderWidth: 1,
           cornerRadius: 8,
           padding: 12,
         }
       },
       scales: {
-        y: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-        x: { grid: { display: false } }
+        y: { beginAtZero: true, ticks: { callback: v => v + '%', font: { size: 12 } }, grid: { color: '#e7ece8' } },
+        x: { ticks: { font: { size: 12 } }, grid: { display: false } }
       }
     }
   });
@@ -1481,16 +2740,16 @@ function createGradient(ctx, color1, color2) {
         {
           label: '月毛利（万元）',
           data: [10.2, 41.0, 102.5],
-          backgroundColor: createGradient(ctx, 'rgba(94,106,210,0.7)', 'rgba(94,106,210,0.3)'),
-          borderColor: 'rgba(113,112,255,0.8)',
+          backgroundColor: createGradient(ctx, 'rgba(49,95,157,0.72)', 'rgba(49,95,157,0.28)'),
+          borderColor: 'rgba(49,95,157,0.86)',
           borderWidth: 1,
           borderRadius: 8,
         },
         {
           label: '月净利（万元）',
           data: [5.8, 32.8, 87.5],
-          backgroundColor: createGradient(ctx, 'rgba(16,185,129,0.7)', 'rgba(16,185,129,0.3)'),
-          borderColor: 'rgba(16,185,129,0.8)',
+          backgroundColor: createGradient(ctx, 'rgba(20,128,74,0.72)', 'rgba(20,128,74,0.28)'),
+          borderColor: 'rgba(20,128,74,0.86)',
           borderWidth: 1,
           borderRadius: 8,
         }
@@ -1500,20 +2759,20 @@ function createGradient(ctx, color1, color2) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        title: { display: true, text: '不同工人数下的月度利润（含全部成本）', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
+        title: { display: true, text: '不同工人数下的月度利润（含全部成本）', font: { size: 13, weight: '500' }, color: '#46544f' },
         legend: { labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 16 } },
         tooltip: {
-          backgroundColor: 'rgba(15,16,17,0.95)',
-          titleColor: '#f7f8f8',
-          bodyColor: '#d0d6e0',
-          borderColor: 'rgba(255,255,255,0.1)',
+          backgroundColor: 'rgba(255,255,255,0.96)',
+          titleColor: '#18221f',
+          bodyColor: '#46544f',
+          borderColor: '#d8e0dc',
           borderWidth: 1,
           cornerRadius: 8,
           padding: 12,
         }
       },
       scales: {
-        y: { beginAtZero: true, ticks: { callback: v => '¥' + v + '万' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        y: { beginAtZero: true, ticks: { callback: v => '¥' + v + '万' }, grid: { color: '#e7ece8' } },
         x: { grid: { display: false } }
       }
     }

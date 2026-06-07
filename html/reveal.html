@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
 <style>
   /* ═══════════ Design Tokens (Linear-inspired) ═══════════ */
   :root {
@@ -55,12 +55,26 @@
   }
   body {
     background: var(--bg-deep) !important;
+    overflow: hidden !important;
   }
-  .reveal .slides { text-align: left; }
+  html, body, .reveal {
+    width: 100%;
+    height: 100%;
+  }
+  .reveal {
+    overflow: hidden !important;
+  }
+  .reveal .slides {
+    text-align: left;
+    overflow: hidden !important;
+  }
   .reveal .slides section {
     padding: 40px 60px;
     box-sizing: border-box;
     background: transparent !important;
+    overflow: hidden !important;
+    height: 720px !important;
+    max-height: 720px !important;
   }
   .reveal .slide-background { background: var(--bg-deep) !important; }
 
@@ -177,6 +191,33 @@
     color: var(--text-secondary);
   }
   .cover-tag svg { width: 14px; height: 14px; }
+  .cover-hook {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 620px;
+    margin-top: 18px;
+  }
+  .cover-hook-item {
+    padding: 12px 14px;
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-md);
+    background: rgba(255,255,255,0.04);
+  }
+  .cover-hook-item strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.64em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .cover-hook-item span {
+    display: block;
+    color: var(--text-tertiary);
+    font-size: 0.42em;
+    line-height: 1.35;
+    margin-top: 5px;
+  }
 
   /* ═══════════ Stat Grid ═══════════ */
   .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0; }
@@ -212,6 +253,127 @@
   .card-red .num { color: var(--red); }
   .card-orange .num { color: var(--orange); }
   .card-green .num { color: var(--green); }
+
+  /* ═══════════ ROI Slide ═══════════ */
+  .reveal .slides section.roi-section {
+    padding: 28px 54px 30px;
+    font-size: 0.88em;
+    display: grid !important;
+    grid-template-rows: auto auto 1fr auto;
+    align-content: stretch;
+    row-gap: 14px;
+  }
+  .roi-section h2 { margin: 0; padding-bottom: 8px; font-size: 1.24em; line-height: 1.12; }
+  .roi-dashboard { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 16px; }
+  .roi-panel {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-lg);
+    padding: 18px 22px;
+    min-height: 142px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .roi-panel--deal { border-left: 3px solid var(--accent-bright); }
+  .roi-panel--return { border-left: 3px solid var(--green); }
+  .roi-kicker {
+    display: block;
+    color: var(--text-tertiary);
+    font-size: 0.46em;
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+  .roi-value {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 6px;
+    color: var(--text-primary);
+    font-size: 1.48em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .roi-value span { color: var(--text-tertiary); font-size: 0.34em; font-weight: 500; }
+  .roi-panel p { margin: 8px 0 0; color: var(--text-secondary); font-size: 0.52em; line-height: 1.45; }
+  .roi-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .roi-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.04);
+    color: var(--text-secondary);
+    font-size: 0.43em;
+    border: 1px solid var(--border-subtle);
+  }
+  .roi-pill strong { color: var(--text-primary); font-weight: 600; }
+  .roi-scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 0;
+    min-height: 210px;
+  }
+  .roi-scenario {
+    position: relative;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-lg);
+    padding: 18px 22px 16px;
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .roi-scenario::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--accent-bright);
+  }
+  .roi-scenario--base::before { background: var(--orange); }
+  .roi-scenario--upside::before { background: var(--green); }
+  .roi-scenario .scenario-label { color: var(--text-tertiary); font-size: 0.44em; font-weight: 600; }
+  .roi-scenario h3 { margin: 8px 0 8px; color: var(--text-primary); font-size: 0.7em; }
+  .roi-scenario .scenario-return {
+    color: var(--green);
+    font-size: 1.06em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .roi-scenario .scenario-return span { color: var(--text-tertiary); font-size: 0.45em; font-weight: 500; }
+  .scenario-facts { display: grid; gap: 5px; }
+  .scenario-facts div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.46em;
+    line-height: 1.38;
+  }
+  .scenario-facts span { color: var(--text-muted); }
+  .roi-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 0;
+    padding: 13px 16px;
+    border-left: 3px solid var(--orange);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background: rgba(245,158,11,0.06);
+    color: var(--text-secondary);
+    font-size: 0.44em;
+    line-height: 1.42;
+  }
+  .roi-note strong { color: var(--text-primary); }
 
   /* ═══════════ Business Flow ═══════════ */
   .biz-flow { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
@@ -349,6 +511,17 @@
     margin: 0 auto;
   }
   .callout-box p { color: var(--text-secondary); font-size: 0.58em; line-height: 1.6; }
+  .competitive-section .competitive-callout {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    margin: 18px auto 0 !important;
+    padding: 16px 22px;
+  }
+  .competitive-section .competitive-callout p {
+    margin: 0;
+    text-align: center;
+  }
   .callout-gradient {
     background: linear-gradient(135deg, rgba(94,106,210,0.08) 0%, rgba(113,112,255,0.04) 100%);
     border: 1px solid var(--border-accent);
@@ -375,6 +548,1134 @@
   .reveal .fade-up.delay-1 { transition-delay: 0.1s; }
   .reveal .fade-up.delay-2 { transition-delay: 0.2s; }
   .reveal .fade-up.delay-3 { transition-delay: 0.3s; }
+
+  /* ═══════════ Investor Light Theme ═══════════ */
+  :root {
+    --bg-deep: #f5f7f4;
+    --bg-panel: #ffffff;
+    --bg-surface: #ffffff;
+    --bg-elevated: #eef4f1;
+    --text-primary: #18221f;
+    --text-secondary: #46544f;
+    --text-tertiary: #68756f;
+    --text-muted: #89948f;
+    --accent: #0f766e;
+    --accent-bright: #0f8f82;
+    --accent-hover: #0b6f66;
+    --accent-glow: rgba(15, 143, 130, 0.12);
+    --green: #14804a;
+    --green-dim: rgba(20, 128, 74, 0.12);
+    --orange: #b96912;
+    --orange-dim: rgba(185, 105, 18, 0.12);
+    --red: #bd4238;
+    --red-dim: rgba(189, 66, 56, 0.12);
+    --border-subtle: #e7ece8;
+    --border-standard: #d8e0dc;
+    --border-accent: rgba(15, 118, 110, 0.28);
+    --shadow-card: 0 14px 34px rgba(31, 41, 35, 0.1);
+    --shadow-glow: 0 18px 46px rgba(15, 118, 110, 0.14);
+  }
+  body { background: #eef3f0 !important; }
+  .reveal { background: #eef3f0 !important; }
+  .reveal .slide-background { background: linear-gradient(180deg, #fbfcfb 0%, #eef3f0 100%) !important; }
+  .reveal .slides section {
+    background:
+      linear-gradient(90deg, rgba(15, 118, 110, 0.05) 0 2px, transparent 2px),
+      linear-gradient(180deg, #fbfcfb 0%, #f3f7f4 100%) !important;
+    color: var(--text-primary);
+  }
+  .reveal h1,
+  .reveal h2,
+  .reveal h3 {
+    color: var(--text-primary);
+    letter-spacing: 0;
+  }
+  .reveal h2 {
+    border-bottom: 2px solid var(--border-standard);
+    position: relative;
+  }
+  .reveal h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 72px;
+    height: 2px;
+    background: var(--accent-bright);
+  }
+  .reveal .highlight,
+  .text-accent { color: var(--accent-bright); }
+  .glass-card,
+  .stat-card,
+  .roi-panel,
+  .roi-scenario,
+  .chart-container,
+  .callout-box,
+  .callout-gradient {
+    background: #ffffff !important;
+    border-color: var(--border-standard) !important;
+    box-shadow: var(--shadow-card);
+  }
+  .glass-card {
+    backdrop-filter: none !important;
+  }
+  .glass-card:hover,
+  .stat-card:hover {
+    background: #ffffff !important;
+    border-color: var(--border-accent) !important;
+    box-shadow: var(--shadow-glow);
+  }
+  .chart-container {
+    border: 1px solid var(--border-standard);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+  }
+  .stat-card .num,
+  .funding-val,
+  .roi-value,
+  .biz-profit-val {
+    color: var(--accent-bright);
+  }
+  .card-red,
+  .card-orange,
+  .card-green,
+  .glass-card-red,
+  .glass-card-orange,
+  .glass-card-green,
+  .glass-card-accent,
+  .roi-panel--deal,
+  .roi-panel--return {
+    background: #ffffff !important;
+  }
+  .biz-node {
+    background: #eff8f5 !important;
+    border-color: rgba(15, 118, 110, 0.26) !important;
+  }
+  .biz-node.orange { background: #fff5e8 !important; border-color: rgba(185, 105, 18, 0.28) !important; }
+  .biz-node.green { background: #edf8f1 !important; border-color: rgba(20, 128, 74, 0.28) !important; }
+  .reveal table {
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(31, 41, 35, 0.06);
+  }
+  .reveal table th {
+    background: #eef6f3;
+    color: var(--accent);
+    border-bottom-color: var(--border-standard);
+  }
+  .reveal table td {
+    color: var(--text-secondary);
+    border-bottom-color: var(--border-subtle);
+  }
+  .reveal table tr:nth-child(even) { background: #f8faf8; }
+  .reveal table tr:hover { background: #f2f7f4; }
+  .th-highlight { background: #dff3ed !important; color: var(--text-primary) !important; }
+  .bg-green-row { background: #edf8f1 !important; }
+  .bg-red-row { background: #fff0ee !important; }
+  .bg-accent-row { background: #eef6f3 !important; }
+  .timeline::before { background: var(--border-standard); }
+  .timeline-item::before {
+    background: var(--accent-bright);
+    border-color: #ffffff;
+    box-shadow: 0 0 0 3px #dff3ed;
+  }
+  .slide-footer,
+  .reveal .slide-number {
+    color: var(--text-muted) !important;
+  }
+  .reveal .controls { color: var(--accent) !important; }
+  .reveal .progress { color: var(--accent-bright) !important; }
+  .reveal .slides section.cover-slide {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left !important;
+    background:
+      linear-gradient(90deg, rgba(248, 251, 249, 0.98) 0%, rgba(248, 251, 249, 0.86) 46%, rgba(248, 251, 249, 0.2) 100%),
+      url("assets/factory-hero.jpg") center / cover no-repeat !important;
+  }
+  .cover-slide > div {
+    max-width: 650px;
+    margin-top: 0 !important;
+    padding-left: 18px;
+  }
+  .cover-title {
+    color: var(--text-primary) !important;
+    background: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    text-shadow: none;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+  }
+  .cover-subtitle {
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0;
+    max-width: 600px;
+    line-height: 1.35;
+  }
+  .cover-meta { color: var(--text-secondary); }
+  .cover-tags {
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .cover-tag {
+    background: rgba(255,255,255,0.86);
+    border-color: var(--border-standard);
+    color: var(--text-secondary);
+    box-shadow: 0 8px 20px rgba(31, 41, 35, 0.08);
+  }
+  .cover-hook-item {
+    background: rgba(255,255,255,0.9);
+    border-color: var(--border-standard);
+    box-shadow: 0 10px 24px rgba(31, 41, 35, 0.08);
+  }
+  .cover-hook-item strong { color: var(--accent); }
+  .finance-section {
+    background: linear-gradient(180deg, #fbfcfb 0%, #f3f7f4 100%) !important;
+  }
+  .reveal strong { color: var(--text-primary); }
+
+  /* Fit refinements for 16:9 roadshow projection */
+  .reveal .slides section:nth-child(3),
+  .reveal .slides section:nth-child(4) {
+    padding: 32px 54px !important;
+  }
+  .reveal .slides section:nth-child(3) .stat-grid,
+  .reveal .slides section:nth-child(4) .stat-grid {
+    margin: 14px 0 16px !important;
+  }
+  .reveal .slides section:nth-child(3) .stat-card,
+  .reveal .slides section:nth-child(4) .stat-card {
+    padding: 14px 16px !important;
+  }
+  .reveal .slides section:nth-child(3) .chart-container,
+  .reveal .slides section:nth-child(4) .chart-container {
+    max-width: min(720px, 58vw) !important;
+    padding: 14px !important;
+  }
+  .reveal .slides section:nth-child(3) canvas,
+  .reveal .slides section:nth-child(4) canvas {
+    max-height: 360px !important;
+  }
+  .reveal .slides section:nth-child(3) .source,
+  .reveal .slides section:nth-child(4) .source {
+    margin-top: 5px !important;
+    font-size: 0.4em !important;
+  }
+  .reveal .slides section:nth-child(6),
+  .reveal .slides section:nth-child(7) {
+    padding: 16px 38px !important;
+    font-size: 0.9em !important;
+  }
+  .reveal .slides section:nth-child(6) h2,
+  .reveal .slides section:nth-child(7) h2 {
+    margin-bottom: 8px !important;
+    padding-bottom: 5px !important;
+    font-size: 1.08em !important;
+    line-height: 1.15 !important;
+  }
+  .reveal .slides section:nth-child(6) h3,
+  .reveal .slides section:nth-child(7) h3 {
+    margin: 4px 0 4px !important;
+    font-size: 0.62em !important;
+  }
+  .reveal .slides section:nth-child(6) .split-layout {
+    gap: 12px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-flow {
+    gap: 6px !important;
+    margin: 6px 0 !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node {
+    padding: 7px 10px !important;
+    min-width: 80px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node .val,
+  .reveal .slides section:nth-child(6) .num,
+  .reveal .slides section:nth-child(7) .num {
+    font-size: 0.82em !important;
+  }
+  .reveal .slides section:nth-child(6) table,
+  .reveal .slides section:nth-child(7) table {
+    font-size: 0.42em !important;
+  }
+  .reveal .slides section:nth-child(6) table th,
+  .reveal .slides section:nth-child(6) table td,
+  .reveal .slides section:nth-child(7) table th,
+  .reveal .slides section:nth-child(7) table td {
+    padding: 4px 7px !important;
+    line-height: 1.25 !important;
+  }
+  .reveal .slides section:nth-child(6) .card,
+  .reveal .slides section:nth-child(7) .card,
+  .reveal .slides section:nth-child(6) .glass-card,
+  .reveal .slides section:nth-child(7) .glass-card {
+    padding: 8px 10px !important;
+  }
+  .reveal .slides section:nth-child(6) [style*="line-height:2.2"],
+  .reveal .slides section:nth-child(7) [style*="line-height:2.2"],
+  .reveal .slides section:nth-child(7) [style*="line-height:2"] {
+    line-height: 1.25 !important;
+    margin-top: 3px !important;
+    font-size: 0.38em !important;
+  }
+  .reveal .slides section:nth-child(7) .split-layout {
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .reveal .slides section:nth-child(7) .col-main,
+  .reveal .slides section:nth-child(7) .col-side {
+    width: 100% !important;
+    flex: none !important;
+  }
+  .reveal .slides section:nth-child(7) .col-side {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px !important;
+  }
+  .reveal .slides section:nth-child(7) .col-side .mt-12 {
+    margin-top: 0 !important;
+  }
+  .reveal .slides section:nth-child(7) p {
+    margin: 0 0 4px !important;
+    line-height: 1.25 !important;
+    font-size: 0.48em !important;
+  }
+  .reveal .slides section:nth-child(7) .col-side .num {
+    margin-bottom: 4px !important;
+  }
+  .reveal .slides section:nth-child(16),
+  .reveal .slides section:nth-child(19) {
+    padding: 16px 38px !important;
+  }
+  .reveal .slides section:nth-child(16) h2,
+  .reveal .slides section:nth-child(19) h2 {
+    font-size: 1.18em !important;
+    margin-bottom: 8px !important;
+    padding-bottom: 6px !important;
+  }
+  .reveal .slides section:nth-child(16) .stat-grid {
+    gap: 10px !important;
+    margin: 8px 0 !important;
+  }
+  .reveal .slides section:nth-child(16) .glass-card,
+  .reveal .slides section:nth-child(16) .card {
+    padding: 12px 14px !important;
+  }
+  .reveal .slides section:nth-child(16) .exit-card-body {
+    font-size: 0.43em !important;
+    line-height: 1.55 !important;
+    margin-top: 6px !important;
+  }
+  .reveal .slides section:nth-child(19) .sources-body {
+    font-size: 0.4em !important;
+    line-height: 1.35 !important;
+  }
+  .reveal .slides section:nth-child(19) .sources-body p {
+    margin-top: 5px !important;
+  }
+  .reveal .slides section:nth-child(19) .sources-body li {
+    margin-bottom: 1px !important;
+  }
+
+  /* Visual balance for lighter roadshow slides */
+  .reveal .slides section:nth-child(3),
+  .reveal .slides section:nth-child(4),
+  .reveal .slides section:nth-child(5),
+  .reveal .slides section:nth-child(6),
+  .reveal .slides section:nth-child(8),
+  .reveal .slides section:nth-child(12),
+  .reveal .slides section:nth-child(17) {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(5),
+  .reveal .slides section:nth-child(8) {
+    padding: 44px 58px !important;
+  }
+  .reveal .slides section:nth-child(5) h2,
+  .reveal .slides section:nth-child(8) h2 {
+    margin-bottom: 24px !important;
+  }
+  .reveal .slides section:nth-child(5) .split-layout {
+    gap: 26px !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-heading {
+    font-size: 1em !important;
+    margin-bottom: 10px !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-list {
+    font-size: 0.64em !important;
+    line-height: 1.75 !important;
+  }
+  .reveal .slides section:nth-child(5) .card,
+  .reveal .slides section:nth-child(5) .glass-card {
+    padding: 22px 24px !important;
+  }
+  .reveal .slides section:nth-child(8) .stat-grid {
+    gap: 18px !important;
+    margin: 18px 0 !important;
+  }
+  .reveal .slides section:nth-child(8) .card,
+  .reveal .slides section:nth-child(8) .glass-card {
+    padding: 24px !important;
+  }
+  .reveal .slides section:nth-child(8) .callout-gradient {
+    padding: 18px 24px !important;
+    margin-top: 20px !important;
+  }
+  .reveal .slides section:nth-child(6) {
+    padding: 26px 50px !important;
+    font-size: 1em !important;
+  }
+  .reveal .slides section:nth-child(6) h2 {
+    font-size: 1.28em !important;
+    margin-bottom: 14px !important;
+    padding-bottom: 8px !important;
+  }
+  .reveal .slides section:nth-child(6) h3 {
+    font-size: 0.78em !important;
+    margin: 8px 0 !important;
+  }
+  .reveal .slides section:nth-child(6) .split-layout {
+    gap: 20px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-flow {
+    gap: 10px !important;
+    margin: 12px 0 14px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node {
+    padding: 11px 16px !important;
+    min-width: 100px !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node .val,
+  .reveal .slides section:nth-child(6) .num {
+    font-size: 1em !important;
+  }
+  .reveal .slides section:nth-child(6) .biz-node .desc {
+    font-size: 0.62em !important;
+  }
+  .reveal .slides section:nth-child(6) table {
+    font-size: 0.5em !important;
+  }
+  .reveal .slides section:nth-child(6) table th,
+  .reveal .slides section:nth-child(6) table td {
+    padding: 6px 9px !important;
+    line-height: 1.35 !important;
+  }
+  .reveal .slides section:nth-child(6) .card,
+  .reveal .slides section:nth-child(6) .glass-card {
+    padding: 14px 16px !important;
+  }
+  .reveal .slides section:nth-child(6) [style*="line-height:2.2"] {
+    font-size: 0.46em !important;
+    line-height: 1.55 !important;
+    margin-top: 8px !important;
+  }
+  .reveal .slides section:nth-child(12) {
+    padding: 42px 58px !important;
+  }
+  .reveal .slides section:nth-child(12) h2 {
+    margin-bottom: 30px !important;
+  }
+  .reveal .slides section:nth-child(12) .team-grid {
+    gap: 30px !important;
+  }
+  .reveal .slides section:nth-child(12) .stat-card {
+    min-height: 240px;
+    padding: 26px 24px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(12) .team-icon,
+  .reveal .slides section:nth-child(12) .team-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 999px;
+    background: #eef6f3;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .reveal .slides section:nth-child(12) .team-title {
+    font-size: 0.9em;
+    margin: 14px 0 10px;
+  }
+  .reveal .slides section:nth-child(12) .team-desc {
+    font-size: 0.62em;
+    line-height: 1.75;
+  }
+  .reveal .slides section:nth-child(12) .small {
+    margin-top: 24px;
+    font-size: 0.54em;
+  }
+  .reveal .slides section:nth-child(17) {
+    padding: 52px 68px !important;
+  }
+  .reveal .slides section:nth-child(17) h2 {
+    margin-bottom: 16px !important;
+  }
+  .reveal .slides section:nth-child(17) h3 {
+    font-size: 0.95em !important;
+    margin-bottom: 22px !important;
+  }
+  .reveal .slides section:nth-child(17) h3 + div {
+    height: 76px !important;
+    margin: 20px 0 24px !important;
+  }
+  .reveal .slides section:nth-child(17) table {
+    font-size: 0.6em !important;
+  }
+  .reveal .slides section:nth-child(17) table th,
+  .reveal .slides section:nth-child(17) table td {
+    padding: 11px 16px !important;
+  }
+  .reveal .slides section:nth-child(17) p {
+    font-size: 0.62em !important;
+    margin-top: 22px !important;
+  }
+
+  .reveal .slides section.market-section {
+    padding: 28px 54px 30px !important;
+    font-size: 0.9em !important;
+    display: grid !important;
+    grid-template-rows: auto auto minmax(300px, 1fr) auto;
+    align-content: stretch;
+    row-gap: 14px;
+    justify-content: stretch;
+  }
+  .market-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.24em !important;
+    line-height: 1.12 !important;
+  }
+  .market-section .stat-grid {
+    gap: 16px !important;
+    margin: 0 !important;
+  }
+  .market-section .stat-card {
+    min-height: 118px;
+    padding: 18px 22px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .market-section .stat-card .num {
+    font-size: 1.72em;
+  }
+  .market-section .stat-card .label {
+    font-size: 0.68em;
+    line-height: 1.32;
+  }
+  .reveal .slides section.market-section .chart-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none !important;
+    min-height: 300px;
+    height: 100%;
+    padding: 18px 22px !important;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .reveal .slides section.market-section canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+  }
+  .market-section .source {
+    margin: 0 !important;
+    font-size: 0.42em !important;
+    line-height: 1.35;
+  }
+
+  .reveal .slides section.exit-section {
+    padding: 28px 54px 30px !important;
+    font-size: 0.9em !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(292px, 1fr) auto;
+    align-content: stretch;
+    row-gap: 16px;
+  }
+  .exit-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.24em !important;
+    line-height: 1.12 !important;
+  }
+  .exit-section .exit-path-grid {
+    gap: 16px !important;
+    margin: 0 !important;
+    min-height: 292px;
+  }
+  .exit-section .exit-path-card {
+    min-height: 292px;
+    padding: 24px 26px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .exit-section .exit-path-card .num {
+    font-size: 1.24em !important;
+    line-height: 1.05;
+    margin-bottom: 8px;
+  }
+  .exit-section .exit-path-card .label {
+    color: var(--text-primary);
+    font-size: 0.72em;
+    line-height: 1.25;
+  }
+  .exit-section .exit-card-body {
+    font-size: 0.52em !important;
+    line-height: 1.75 !important;
+    margin-top: 14px !important;
+  }
+  .exit-section .exit-protection {
+    min-height: 148px;
+    margin-top: 0 !important;
+    padding: 20px 26px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .exit-section .exit-protection h4 {
+    margin: 0 0 10px !important;
+    font-size: 0.9em !important;
+    line-height: 1.2;
+  }
+  .exit-section .exit-protection ul {
+    columns: 2;
+    column-gap: 40px;
+    margin: 0 !important;
+    padding-left: 18px !important;
+    font-size: 0.52em !important;
+    line-height: 1.72 !important;
+  }
+  .exit-section .exit-protection li {
+    break-inside: avoid;
+    margin-bottom: 4px;
+  }
+  .reveal .slides section.exit-section .exit-path-grid {
+    gap: 16px !important;
+    margin: 0 !important;
+  }
+  .reveal .slides section.exit-section .exit-path-card {
+    min-height: 292px;
+    padding: 24px 26px !important;
+  }
+  .reveal .slides section.exit-section .exit-card-body {
+    font-size: 0.52em !important;
+    line-height: 1.75 !important;
+    margin-top: 14px !important;
+  }
+  .reveal .slides section.exit-section .exit-protection {
+    min-height: 148px;
+    margin-top: 0 !important;
+    padding: 20px 26px !important;
+  }
+
+  .reveal .slides section.sources-section {
+    padding: 28px 54px 30px !important;
+    font-size: 0.92em !important;
+    display: grid !important;
+    grid-template-rows: auto 1fr;
+    align-content: stretch;
+    row-gap: 16px;
+  }
+  .sources-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.24em !important;
+    line-height: 1.12 !important;
+  }
+  .sources-section .sources-body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+    align-content: stretch;
+    font-size: 1em !important;
+    line-height: 1.45 !important;
+    color: var(--text-secondary);
+  }
+  .sources-section .source-card {
+    background: #ffffff;
+    border: 1px solid var(--border-standard);
+    border-left: 3px solid var(--accent-bright);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 16px 18px;
+  }
+  .sources-section .source-card:nth-child(2),
+  .sources-section .source-card:nth-child(5) {
+    border-left-color: var(--green);
+  }
+  .sources-section .source-card:nth-child(3) {
+    border-left-color: var(--orange);
+  }
+  .reveal .slides section.sources-section .sources-body p {
+    margin: 0 0 8px !important;
+    color: var(--text-primary);
+    font-size: 0.62em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .sources-section .sources-body ul {
+    margin: 0 !important;
+    padding-left: 18px;
+  }
+  .reveal .slides section.sources-section .sources-body li {
+    margin-bottom: 5px !important;
+    color: var(--text-secondary);
+    font-size: 0.49em;
+    line-height: 1.42;
+  }
+  .reveal .slides section.sources-section .sources-body {
+    font-size: 1em !important;
+    line-height: 1.45 !important;
+  }
+  .reveal .slides section.sources-section .sources-body p {
+    font-size: 0.62em !important;
+  }
+  .reveal .slides section.sources-section .sources-body li {
+    font-size: 0.49em !important;
+    line-height: 1.42 !important;
+  }
+  .sources-section .sources-body li:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Visual fill harmonization for 1920x1080 roadshow projection */
+  .reveal .slides section.cover-slide {
+    padding: 42px 70px !important;
+  }
+  .cover-slide > div,
+  .cover-content {
+    box-sizing: border-box;
+    max-width: 760px !important;
+    min-height: 574px;
+    padding-left: 28px !important;
+    border-left: 4px solid var(--accent-bright);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cover-title {
+    font-size: 3.55em !important;
+    line-height: 1.05;
+    margin-bottom: 16px !important;
+  }
+  .cover-subtitle {
+    font-size: 1.46em !important;
+    margin-bottom: 18px !important;
+  }
+  .cover-meta {
+    font-size: 0.96em !important;
+    line-height: 1.45;
+  }
+  .cover-tags {
+    margin-top: 30px !important;
+    gap: 12px !important;
+  }
+  .cover-tag {
+    padding: 9px 18px !important;
+    font-size: 0.82em !important;
+  }
+  .cover-hook {
+    max-width: 740px !important;
+    gap: 14px !important;
+    margin-top: 28px !important;
+  }
+  .cover-hook-item {
+    min-height: 96px;
+    padding: 18px 20px !important;
+  }
+  .cover-hook-item strong {
+    font-size: 0.74em !important;
+  }
+  .cover-hook-item span {
+    font-size: 0.48em !important;
+    line-height: 1.45 !important;
+    margin-top: 8px !important;
+  }
+
+  .reveal .slides section:nth-child(2) {
+    padding: 42px 62px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(2) h2 {
+    margin-bottom: 30px !important;
+  }
+  .reveal .slides section:nth-child(2) .stat-grid {
+    gap: 24px !important;
+    margin: 0 !important;
+  }
+  .reveal .slides section:nth-child(2) .stat-card {
+    min-height: 286px;
+    padding: 30px 34px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(2) .stat-body {
+    font-size: 0.66em !important;
+    line-height: 1.82 !important;
+  }
+  .reveal .slides section:nth-child(2) .callout-box {
+    width: 100%;
+    max-width: none;
+    min-height: 106px;
+    margin-top: 28px !important;
+    padding: 24px 32px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(2) .callout-box p {
+    font-size: 0.64em !important;
+    line-height: 1.6 !important;
+    margin: 0;
+  }
+
+  .reveal .slides section:nth-child(5) {
+    padding: 36px 58px !important;
+  }
+  .reveal .slides section:nth-child(5) h2 {
+    margin-bottom: 26px !important;
+  }
+  .reveal .slides section:nth-child(5) .split-layout {
+    align-items: stretch;
+    gap: 24px !important;
+  }
+  .reveal .slides section:nth-child(5) .col-main {
+    background: #ffffff;
+    border: 1px solid var(--border-standard);
+    border-left: 3px solid var(--accent-bright);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 26px 30px;
+  }
+  .reveal .slides section:nth-child(5) .col-side {
+    display: flex;
+  }
+  .reveal .slides section:nth-child(5) .card,
+  .reveal .slides section:nth-child(5) .glass-card {
+    width: 100%;
+    min-height: 392px;
+    padding: 30px 32px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(5) .compact-heading {
+    font-size: 1.05em !important;
+    margin-bottom: 12px !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-list {
+    font-size: 0.68em !important;
+    line-height: 1.86 !important;
+  }
+  .reveal .slides section:nth-child(5) .compact-list li {
+    margin-bottom: 8px !important;
+  }
+  .reveal .slides section:nth-child(5) .source {
+    margin-top: 16px !important;
+    font-size: 0.46em !important;
+  }
+
+  .reveal .slides section:nth-child(9) {
+    padding: 40px 62px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(9) h2 {
+    margin-bottom: 24px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-flow {
+    gap: 18px !important;
+    margin: 0 0 22px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-node {
+    min-width: 152px;
+    min-height: 94px;
+    padding: 20px 24px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit {
+    margin: 0 0 22px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-val {
+    font-size: 1.22em !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-note {
+    font-size: 0.54em !important;
+    margin-top: 8px !important;
+  }
+  .reveal .slides section:nth-child(9) table {
+    font-size: 0.66em !important;
+  }
+  .reveal .slides section:nth-child(9) table th,
+  .reveal .slides section:nth-child(9) table td {
+    padding: 14px 18px !important;
+    line-height: 1.42 !important;
+  }
+  .reveal .slides section:nth-child(9) .small {
+    font-size: 0.64em !important;
+    margin-top: 20px !important;
+  }
+
+  .reveal .slides section.competitive-section {
+    padding: 40px 58px 44px !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(365px, 1fr) auto;
+    align-content: stretch;
+    row-gap: 24px;
+  }
+  .competitive-section h2 {
+    margin: 0 !important;
+    padding-bottom: 8px !important;
+    font-size: 1.3em !important;
+    line-height: 1.12 !important;
+  }
+  .competitive-section table {
+    align-self: stretch;
+    font-size: 0.66em !important;
+  }
+  .competitive-section table th,
+  .competitive-section table td {
+    padding: 15px 18px !important;
+    line-height: 1.38 !important;
+  }
+  .competitive-section .competitive-callout {
+    min-height: 104px;
+    margin: 0 auto !important;
+    padding: 24px 28px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .competitive-section .competitive-callout p {
+    font-size: 0.66em !important;
+    line-height: 1.45 !important;
+  }
+
+  .reveal .slides section:nth-child(12) {
+    padding: 36px 58px !important;
+  }
+  .reveal .slides section:nth-child(12) h2 {
+    margin-bottom: 34px !important;
+  }
+  .reveal .slides section:nth-child(12) .team-grid {
+    gap: 32px !important;
+  }
+  .reveal .slides section:nth-child(12) .stat-card {
+    min-height: 306px;
+    padding: 32px 28px !important;
+  }
+  .reveal .slides section:nth-child(12) .team-avatar,
+  .reveal .slides section:nth-child(12) .team-icon {
+    width: 78px;
+    height: 78px;
+    font-size: 1.28em;
+  }
+  .reveal .slides section:nth-child(12) .team-title {
+    font-size: 0.96em;
+    margin: 16px 0 12px;
+  }
+  .reveal .slides section:nth-child(12) .team-desc {
+    font-size: 0.66em;
+    line-height: 1.82;
+  }
+  .reveal .slides section:nth-child(12) .small {
+    margin-top: 28px;
+    font-size: 0.58em;
+  }
+
+  .reveal .slides section:nth-child(18) {
+    padding: 40px 62px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(18) h2 {
+    margin-bottom: 24px !important;
+  }
+  .reveal .slides section:nth-child(18) .stat-grid {
+    gap: 18px !important;
+    margin: 0 0 24px !important;
+  }
+  .reveal .slides section:nth-child(18) .card,
+  .reveal .slides section:nth-child(18) .glass-card {
+    min-height: 176px;
+    padding: 24px 26px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(18) .label {
+    font-size: 0.72em !important;
+    line-height: 1.35;
+  }
+  .reveal .slides section:nth-child(18) p {
+    font-size: 0.58em !important;
+    line-height: 1.55 !important;
+  }
+  .reveal .slides section:nth-child(18) table {
+    font-size: 0.64em !important;
+  }
+  .reveal .slides section:nth-child(18) table th,
+  .reveal .slides section:nth-child(18) table td {
+    padding: 14px 18px !important;
+    line-height: 1.42 !important;
+  }
+
+  /* Overflow guards after visual fill harmonization */
+  .cover-slide > div,
+  .cover-content {
+    max-width: 860px !important;
+    min-height: 520px;
+    padding-left: 24px !important;
+  }
+  .cover-title {
+    font-size: 3em !important;
+    margin-bottom: 12px !important;
+  }
+  .cover-subtitle {
+    max-width: 760px;
+    font-size: 1.16em !important;
+    line-height: 1.28 !important;
+    margin-bottom: 12px !important;
+  }
+  .cover-meta {
+    font-size: 0.82em !important;
+    line-height: 1.35;
+  }
+  .cover-tags {
+    margin-top: 22px !important;
+  }
+  .cover-tag {
+    padding: 7px 15px !important;
+    font-size: 0.74em !important;
+  }
+  .cover-hook {
+    margin-top: 22px !important;
+    gap: 12px !important;
+  }
+  .cover-hook-item {
+    min-height: 76px;
+    padding: 13px 16px !important;
+  }
+  .cover-hook-item strong {
+    font-size: 0.66em !important;
+  }
+  .cover-hook-item span {
+    font-size: 0.43em !important;
+    line-height: 1.36 !important;
+    margin-top: 5px !important;
+  }
+  .reveal .slides section:nth-child(2) .callout-box {
+    box-sizing: border-box;
+  }
+
+  .reveal .slides section:nth-child(9) {
+    padding: 36px 62px !important;
+  }
+  .reveal .slides section:nth-child(9) h2 {
+    margin-bottom: 18px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-flow {
+    gap: 16px !important;
+    margin: 0 0 16px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-node {
+    min-height: 82px;
+    padding: 15px 22px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit {
+    margin: 0 0 16px !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-val {
+    font-size: 1.12em !important;
+  }
+  .reveal .slides section:nth-child(9) .biz-profit-note {
+    font-size: 0.5em !important;
+    margin-top: 6px !important;
+  }
+  .reveal .slides section:nth-child(9) table {
+    font-size: 0.61em !important;
+  }
+  .reveal .slides section:nth-child(9) table th,
+  .reveal .slides section:nth-child(9) table td {
+    padding: 11px 16px !important;
+    line-height: 1.36 !important;
+  }
+  .reveal .slides section:nth-child(9) .small {
+    font-size: 0.58em !important;
+    margin-top: 14px !important;
+  }
+
+  .reveal .slides section:nth-child(18) h2 {
+    margin-bottom: 18px !important;
+  }
+  .reveal .slides section:nth-child(18) .stat-grid {
+    margin: 0 0 18px !important;
+  }
+  .reveal .slides section:nth-child(18) .card,
+  .reveal .slides section:nth-child(18) .glass-card {
+    min-height: 156px;
+    padding: 20px 24px !important;
+  }
+  .reveal .slides section:nth-child(18) table {
+    font-size: 0.6em !important;
+  }
+  .reveal .slides section:nth-child(18) table th,
+  .reveal .slides section:nth-child(18) table td {
+    padding: 11px 16px !important;
+    line-height: 1.36 !important;
+  }
+
+  .reveal .slides section.competitive-section {
+    padding: 36px 58px 38px !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  .competitive-section h2 {
+    flex: 0 0 auto;
+    margin: 0 !important;
+  }
+  .competitive-section table {
+    flex: 0 0 auto;
+    font-size: 0.59em !important;
+  }
+  .competitive-section table th,
+  .competitive-section table td {
+    padding: 10px 14px !important;
+    line-height: 1.3 !important;
+  }
+  .competitive-section .competitive-callout {
+    flex: 0 0 auto;
+    min-height: 88px;
+    margin: 0 auto !important;
+    padding: 16px 24px !important;
+  }
+  .competitive-section .competitive-callout p {
+    font-size: 0.6em !important;
+    line-height: 1.35 !important;
+  }
 
   /* ═══════════ Responsive ═══════════ */
   @media (max-width: 1024px) {
@@ -404,7 +1705,9 @@
     .reveal table { font-size: 0.5em; }
     .fund-bar { height: 28px; }
     .cover-title { font-size: 2em !important; }
-    .cover-tags { flex-direction: column; align-items: center; }
+    .cover-tags { flex-wrap: wrap; align-items: center; }
+    .cover-hook { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cover-hook-item { padding: 10px 12px; }
   }
 
   /* ═══════════ Print ═══════════ */
@@ -431,8 +1734,8 @@
 <section class="cover-slide">
   <div style="margin-top: 60px;">
     <h1 class="cover-title">捷派优选</h1>
-    <p class="cover-subtitle">人力资源灵活用工平台</p>
-    <p class="cover-meta">天使轮融资商业计划书 · 深圳</p>
+    <p class="cover-subtitle">中国制造业日结用工履约平台</p>
+    <p class="cover-meta">聚焦深圳及大湾区工厂 · 天使轮融资商业计划书</p>
     <div class="cover-tags">
       <span class="cover-tag">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -447,6 +1750,20 @@
         融资 ¥120万
       </span>
     </div>
+    <div class="cover-hook">
+      <div class="cover-hook-item">
+        <strong>工厂刚需</strong>
+        <span>旺季短工与日结岗位稳定存在</span>
+      </div>
+      <div class="cover-hook-item">
+        <strong>履约抓手</strong>
+        <span>招聘、到岗、结算全链路闭环</span>
+      </div>
+      <div class="cover-hook-item">
+        <strong>盈利清晰</strong>
+        <span>¥7/小时价差驱动单点毛利</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -460,10 +1777,10 @@
         工厂端
       </div>
       <p class="stat-body">
-        ❌ 招工难、留人难<br>
-        ❌ 旺季临时用工找不到人<br>
-        ❌ 传统中介费高、效率低<br>
-        ❌ 工人质量参差不齐
+        招工难、留人难<br>
+        旺季临时用工找不到人<br>
+        传统中介费高、效率低<br>
+        工人质量参差不齐
       </p>
     </div>
     <div class="stat-card card-orange" style="text-align:left;">
@@ -472,20 +1789,20 @@
         工人端
       </div>
       <p class="stat-body">
-        ❌ 找日结工作靠熟人、靠蹲点<br>
-        ❌ 被黑中介克扣工资<br>
-        ❌ 工作不稳定、收入没保障<br>
-        ❌ 工伤维权难
+        找日结工作靠熟人、靠蹲点<br>
+        被黑中介克扣工资<br>
+        工作不稳定、收入没保障<br>
+        工伤维权难
       </p>
     </div>
   </div>
   <div class="callout-box mt-12">
-    <p>💡 核心矛盾：<span class="highlight">工厂需要弹性用工，工人需要稳定收入</span>，但中间缺乏高效、可信的连接平台</p>
+    <p><strong style="color:var(--text-primary);">核心矛盾：</strong><span class="highlight">工厂需要弹性用工，工人需要稳定收入</span>，但中间缺乏高效、可信的连接平台</p>
   </div>
 </section>
 
 <!-- ═══════════ Slide 03: 市场规模 ═══════════ -->
-<section>
+<section class="market-section">
   <h2>万亿级市场</h2>
   <div class="stat-grid">
     <div class="stat-card">
@@ -508,7 +1825,7 @@
 </section>
 
 <!-- ═══════════ Slide 04: 灵活就业人群 ═══════════ -->
-<section>
+<section class="market-section">
   <h2>2亿灵活就业大军</h2>
   <div class="stat-grid">
     <div class="stat-card">
@@ -535,14 +1852,14 @@
   <h2>AI 时代的就业变局</h2>
   <div class="split-layout">
     <div class="col-main">
-      <h3 class="compact-heading">🤖 机器换人加速</h3>
+      <h3 class="compact-heading">机器换人加速</h3>
       <ul class="compact-list">
         <li>2024年中国新增工业机器人 <span class="highlight">41.1万台</span>，占全球76%</li>
         <li>制造业就业从1.15亿峰值降至 <span class="highlight">&lt;8,500万</span>，流失超3000万岗</li>
         <li>中国运行机器人存量突破 <span class="highlight">200万台</span>，全球第一</li>
         <li>每年减少约 <span class="highlight">1,000万</span>适龄劳动人口</li>
       </ul>
-      <h3 class="compact-heading mt-16">📈 日结需求反向增长</h3>
+      <h3 class="compact-heading mt-16">日结需求反向增长</h3>
       <ul class="compact-list">
         <li>蓝领求人倍率 <span class="highlight2">&gt;1.5</span>，高级技工求人倍率 <span class="highlight2">&gt;3</span></li>
         <li>蓝领日结均薪 <span class="highlight2">200-250元/天</span></li>
@@ -571,17 +1888,17 @@
       <h3 style="font-size:0.85em;">业务流程</h3>
       <div class="biz-flow" style="margin:10px 0;">
         <div class="biz-node" style="padding:10px 14px;">
-          <div class="val" style="font-size:0.9em;">🏭 工厂</div>
+          <div class="val" style="font-size:0.9em;">工厂</div>
           <div class="desc" style="font-size:0.55em;">发布用工需求</div>
         </div>
         <div class="biz-arrow">→</div>
         <div class="biz-node orange" style="padding:10px 14px;">
-          <div class="val" style="font-size:0.9em;">📋 平台</div>
+          <div class="val" style="font-size:0.9em;">平台</div>
           <div class="desc" style="font-size:0.55em;">智能匹配</div>
         </div>
         <div class="biz-arrow">→</div>
         <div class="biz-node green" style="padding:10px 14px;">
-          <div class="val" style="font-size:0.9em;">👷 工人</div>
+          <div class="val" style="font-size:0.9em;">工人</div>
           <div class="desc" style="font-size:0.55em;">接单上工</div>
         </div>
       </div>
@@ -598,17 +1915,17 @@
     </div>
     <div class="col-side">
       <div class="glass-card glass-card-green">
-        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">📊 关键数据</div>
+        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">关键数据</div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          ✅ 毛利率：<strong style="color:var(--text-primary);">28%</strong><br>
-          ✅ 净利率：<strong style="color:var(--text-primary);">85.5%</strong>（500人时）<br>
-          ✅ 盈亏平衡：<strong style="color:var(--text-primary);">15人</strong><br>
-          ✅ 回本周期：<strong style="color:var(--text-primary);">6个月</strong><br>
-          ✅ 月净利（500人）：<strong style="color:var(--text-primary);">¥87.5万</strong>
+          毛利率：<strong style="color:var(--text-primary);">28%</strong><br>
+          净利率：<strong style="color:var(--text-primary);">85.5%</strong>（500人时）<br>
+          盈亏平衡：<strong style="color:var(--text-primary);">15人</strong><br>
+          回本周期：<strong style="color:var(--text-primary);">6个月</strong><br>
+          月净利（500人）：<strong style="color:var(--text-primary);">¥87.5万</strong>
         </div>
       </div>
       <div class="glass-card glass-card-accent mt-12">
-        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">🔒 核心壁垒</div>
+        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">核心壁垒</div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
           • 工资公司统一发放<br>
           • 防止工厂跑单<br>
@@ -649,17 +1966,17 @@
     </div>
     <div class="col-side">
       <div class="glass-card glass-card-accent">
-        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">📈 增长空间</div>
+        <div class="num" style="font-size:1em;color:var(--accent-bright);font-weight:600;">增长空间</div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
-          🎯 目标市场：<strong style="color:var(--text-primary);">万亿级</strong><br>
-          📊 佣金比例：<strong style="color:var(--text-primary);">3-5%</strong><br>
-          💰 潜在收入：<strong style="color:var(--text-primary);">¥数亿/年</strong><br>
-          🔄 复购率：<strong style="color:var(--text-primary);">高频刚需</strong><br>
-          🌐 网络效应：<strong style="color:var(--text-primary);">强</strong>
+          目标市场：<strong style="color:var(--text-primary);">万亿级</strong><br>
+          佣金比例：<strong style="color:var(--text-primary);">3-5%</strong><br>
+          潜在收入：<strong style="color:var(--text-primary);">¥数亿/年</strong><br>
+          复购率：<strong style="color:var(--text-primary);">高频刚需</strong><br>
+          网络效应：<strong style="color:var(--text-primary);">强</strong>
         </div>
       </div>
       <div class="glass-card glass-card-green mt-12">
-        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">🎯 竞争优势</div>
+        <div class="num" style="font-size:1em;color:var(--green);font-weight:600;">竞争优势</div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
           • 已有工厂信任基础<br>
           • 了解工厂真实需求<br>
@@ -669,7 +1986,7 @@
         </div>
       </div>
       <div class="glass-card glass-card-orange mt-12">
-        <div class="num" style="font-size:1em;color:var(--orange);font-weight:600;">⏰ 时间规划</div>
+        <div class="num" style="font-size:1em;color:var(--orange);font-weight:600;">时间规划</div>
         <div style="font-size:0.55em;text-align:left;margin-top:10px;line-height:2.2;color:var(--text-secondary);">
           • 第12个月：MVP上线<br>
           • 第18个月：规模化<br>
@@ -715,7 +2032,7 @@
   </div>
   <div class="callout-gradient mt-8">
     <p style="font-size:0.6em;color:var(--text-secondary);line-height:1.5;text-align:center;">
-      🚀 <strong style="color:var(--text-primary);">飞轮效应：</strong><strong style="color:var(--accent-bright);">招工</strong> → 建立工厂关系 → 了解需求 → <strong style="color:var(--orange);">商城</strong> → 佣金收入 → 更多资源 → <strong style="color:var(--accent-bright);">招工扩张</strong> → ...　每一圈都让壁垒更深、增长更快
+      <strong style="color:var(--text-primary);">飞轮效应：</strong><strong style="color:var(--accent-bright);">招工</strong> → 建立工厂关系 → 了解需求 → <strong style="color:var(--orange);">商城</strong> → 佣金收入 → 更多资源 → <strong style="color:var(--accent-bright);">招工扩张</strong>。每一圈都让壁垒更深、增长更快
     </p>
   </div>
 </section>
@@ -725,33 +2042,33 @@
   <h2>盈利模式</h2>
   <div class="biz-flow">
     <div class="biz-node">
-      <div class="val">🏭 工厂</div>
+      <div class="val">工厂</div>
       <div class="desc">支付 ¥25/小时/人</div>
     </div>
     <div class="biz-arrow">→</div>
     <div class="biz-node orange">
-      <div class="val">📋 平台</div>
+      <div class="val">平台</div>
       <div class="desc">捷派优选撮合</div>
     </div>
     <div class="biz-arrow">→</div>
     <div class="biz-node green">
-      <div class="val">👷 工人</div>
+      <div class="val">工人</div>
       <div class="desc">获得 ¥18/小时/人</div>
     </div>
   </div>
   <div class="biz-profit">
-    <span class="biz-profit-val">💰 每人每小时赚 ¥7 · 早班¥77/天 · 晚班¥80.5/天</span>
+    <span class="biz-profit-val">每人每小时赚 ¥7 · 早班¥77/天 · 晚班¥80.5/天</span>
     <div class="biz-profit-note">早班11h / 晚班11.5h（均为实际工时，不含吃饭休息）</div>
   </div>
   <table>
     <caption class="sr-only">收入来源明细表</caption>
     <tr><th scope="col">收入来源</th><th scope="col">模式</th><th scope="col">说明</th></tr>
-    <tr><td style="color:var(--text-primary);">🥇 劳务差价</td><td>25-18= ¥7/小时</td><td>核心收入，月结由工厂支付</td></tr>
-    <tr><td style="color:var(--text-primary);">🥈 商城佣金</td><td>3%-5%</td><td>后期：工厂原材料/产品交易撮合</td></tr>
-    <tr><td style="color:var(--text-primary);">🥉 广告位</td><td>按位收费</td><td>后期：工厂推广、岗位置顶</td></tr>
+    <tr><td style="color:var(--text-primary);">劳务差价</td><td>25-18= ¥7/小时</td><td>核心收入，月结由工厂支付</td></tr>
+    <tr><td style="color:var(--text-primary);">商城佣金</td><td>3%-5%</td><td>后期：工厂原材料/产品交易撮合</td></tr>
+    <tr><td style="color:var(--text-primary);">广告位</td><td>按位收费</td><td>后期：工厂推广、岗位置顶</td></tr>
   </table>
   <p class="small text-center mt-8">
-    🔒 工资由公司统一发放 → 防止跑单 → 掌握现金流
+    工资由公司统一发放 → 防止跑单 → 掌握现金流
   </p>
 </section>
 
@@ -766,11 +2083,11 @@
       <h3>500人满载 · 月度收支明细</h3>
       <table>
         <caption class="sr-only">500人满载月度收支明细</caption>
-        <tr><th colspan="2" class="bg-green-row" scope="colgroup" style="color:var(--green);background:rgba(16,185,129,0.1);">📈 收入</th><th></th></tr>
+        <tr><th colspan="2" class="bg-green-row" scope="colgroup" style="color:var(--green);background:rgba(16,185,129,0.1);">收入</th><th></th></tr>
         <tr><td>早班差价收入</td><td>250人×11h×26天×¥7</td><td class="text-green">¥500,500</td></tr>
         <tr><td>晚班差价收入</td><td>250人×11.5h×26天×¥7</td><td class="text-green">¥523,250</td></tr>
         <tr><td class="fw-600">差价收入合计</td><td></td><td class="fw-600 text-green">¥1,023,750</td></tr>
-        <tr><th colspan="2" class="bg-red-row" scope="colgroup" style="color:var(--red);background:rgba(239,68,68,0.08);">📉 成本支出</th><th></th></tr>
+        <tr><th colspan="2" class="bg-red-row" scope="colgroup" style="color:var(--red);background:rgba(239,68,68,0.08);">成本支出</th><th></th></tr>
         <tr><td>管理+对接+招募</td><td>底薪+提成·4人×¥15k封顶</td><td>¥60,000</td></tr>
         <tr><td>办公+行政</td><td>场地¥5k+杂费¥1.2k</td><td>¥11,200</td></tr>
         <tr><td>资金垫付成本</td><td>垫资¥263万×6%÷12月</td><td>¥13,150</td></tr>
@@ -779,17 +2096,17 @@
         <tr><td>技术成本分摊</td><td>小程序+服务器+维护</td><td>¥15,000</td></tr>
         <tr><td>其他运营</td><td>交通/差旅/招待等</td><td>¥10,000</td></tr>
         <tr><td class="fw-600">成本合计</td><td></td><td class="fw-600 text-red">¥148,395</td></tr>
-        <tr><th colspan="2" class="bg-accent-row" scope="colgroup" style="color:var(--accent-bright);background:rgba(94,106,210,0.1);">💰 利润</th><th></th></tr>
+        <tr><th colspan="2" class="bg-accent-row" scope="colgroup" style="color:var(--accent-bright);background:rgba(94,106,210,0.1);">利润</th><th></th></tr>
         <tr><td class="fw-600" style="color:var(--text-primary);">月净利润</td><td></td><td class="fw-600 text-green" style="font-size:1.1em;">¥875,355</td></tr>
         <tr><td class="text-muted">毛利率 28%</td><td class="text-muted">净利率 85.5%</td><td></td></tr>
       </table>
-      <p class="note">📌 工资工厂月结，公司垫资约30天 · 意外险¥3/人/天工人自担</p>
+      <p class="note">工资工厂月结，公司垫资约30天 · 意外险¥3/人/天工人自担</p>
     </div>
   </div>
 </section>
 
 <!-- ═══════════ Slide 11: 竞争优势 ═══════════ -->
-<section>
+<section class="competitive-section">
   <h2>竞争优势</h2>
   <table>
     <caption class="sr-only">竞争优势对比表</caption>
@@ -801,8 +2118,8 @@
     <tr><th scope="row">后期生态</th><td>无</td><td>单一招聘</td><td style="color:var(--text-primary);font-weight:500;">招工→商城→工厂服务生态</td></tr>
     <tr><th scope="row">AI能力</th><td>无</td><td>基础匹配</td><td style="color:var(--text-primary);font-weight:500;">AI推荐岗位+需求预测</td></tr>
   </table>
-  <div class="callout-box mt-12">
-    <p>💡 <strong style="color:var(--text-primary);">核心壁垒：</strong>线下工厂资源是护城河，线上平台是放大器</p>
+  <div class="callout-box mt-12 competitive-callout">
+    <p><strong style="color:var(--text-primary);">核心壁垒：</strong>线下工厂资源是护城河，线上平台是放大器</p>
   </div>
 </section>
 
@@ -811,7 +2128,7 @@
   <h2>团队</h2>
   <div class="team-grid">
     <div class="stat-card" style="border-left:3px solid var(--accent-bright);">
-      <div class="team-icon">👤</div>
+      <div class="team-icon">CEO</div>
       <div class="team-title">创始人 / CEO</div>
       <p class="team-desc">
         深圳本地 · 深耕工厂资源<br>
@@ -820,7 +2137,7 @@
       </p>
     </div>
     <div class="stat-card" style="border-left:3px solid var(--accent-bright);">
-      <div class="team-icon">👤</div>
+      <div class="team-icon">CTO</div>
       <div class="team-title">联合创始人 / CTO</div>
       <p class="team-desc">
         小程序开发 · 后端架构<br>
@@ -829,7 +2146,7 @@
       </p>
     </div>
     <div class="stat-card" style="border-left:3px solid var(--red);">
-      <div class="team-icon">👥</div>
+      <div class="team-icon">OPS</div>
       <div class="team-title">执行团队</div>
       <p class="team-desc">
         招工专员 · 工厂对接<br>
@@ -839,7 +2156,7 @@
     </div>
   </div>
   <p class="small text-center mt-16">
-    🎯 两人核心 + 弹性执行团队，轻资产起步
+    两人核心 + 弹性执行团队，轻资产起步
   </p>
 </section>
 
@@ -896,108 +2213,124 @@
   <h2>发展路线图</h2>
   <div class="timeline">
     <div class="timeline-item">
-      <h4>🔥 冷启动（0-3个月）</h4>
+      <h4>冷启动（0-3个月）</h4>
       <p>线下跑通已有工厂资源 · 招募首批 50-100 名日结工人 · 建立微信群管理 · 验证利润模型 · <span class="text-green fw-600">目标：月净利¥5-10万</span></p>
     </div>
     <div class="timeline-item">
-      <h4>📱 小程序上线（3-6个月）</h4>
+      <h4>小程序上线（3-6个月）</h4>
       <p>微信小程序开发上线 · 工人自主接单 · AI 推荐岗位匹配 · 目标 300 名活跃工人 · 实现盈亏平衡 · <span class="text-green fw-600">目标：月净利¥10-30万</span></p>
     </div>
     <div class="timeline-item">
-      <h4>🚀 规模化（6-12个月）</h4>
+      <h4>规模化（6-12个月）</h4>
       <p>拓展至 500+ 工人 · 覆盖深圳多个工业区 · 引入更多工厂客户 · 标准化运营体系 · <span class="text-accent fw-600">目标：月净利¥30-50万</span></p>
     </div>
     <div class="timeline-item">
-      <h4>🛒 生态化（12-36个月）</h4>
+      <h4>生态化（12-36个月）</h4>
       <p>上线工厂商城 · 原材料/产品交易撮合 · 拓展至东莞、惠州 · 工人突破1000人 · 准备A轮融资 · <span class="highlight2 fw-600">目标：月净利¥100万+，估值¥5,000万+</span></p>
     </div>
   </div>
 </section>
 
 <!-- ═══════════ Slide 15: 投资回报分析 ═══════════ -->
-<section>
+<section class="roi-section">
   <h2>投资回报分析</h2>
-  <div class="stat-grid">
-    <div class="stat-card">
-      <div class="num">¥120万</div>
-      <div class="label">天使轮融资额 · 占股10%</div>
-      <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">投前估值¥1,080万 · 投后¥1,200万</p>
+  <div class="roi-dashboard">
+    <div class="roi-panel roi-panel--deal">
+      <span class="roi-kicker">Angel Round</span>
+      <div class="roi-value">¥120万 <span>融资额</span></div>
+      <p>对应投后估值 ¥1,200 万，投资人取得 10% 股权。资金主要用于工资垫资、工厂拓展和小程序履约系统。</p>
+      <div class="roi-pill-row">
+        <span class="roi-pill"><strong>投前</strong> ¥1,080万</span>
+        <span class="roi-pill"><strong>投后</strong> ¥1,200万</span>
+        <span class="roi-pill"><strong>股权</strong> 10%</span>
+      </div>
     </div>
-    <div class="stat-card" style="border-left:3px solid var(--orange);">
-      <div class="num" style="color:var(--orange);">5-10x</div>
-      <div class="label">预期回报倍数</div>
-      <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">3年退出 · ¥600万-1,200万回报</p>
-    </div>
-    <div class="stat-card" style="border-left:3px solid var(--green);">
-      <div class="num" style="color:var(--green);">6个月</div>
-      <div class="label">预计回本周期</div>
-      <p style="font-size:0.55em;color:var(--text-muted);margin-top:6px;">15人即达盈亏平衡</p>
+    <div class="roi-panel roi-panel--return">
+      <span class="roi-kicker">Base Case Return</span>
+      <div class="roi-value" style="color:var(--green);">5-10x <span>3年退出目标</span></div>
+      <p>核心假设是把深圳工厂日结场景做到 500-1000 人稳定履约，再通过 A 轮、并购或老股转让实现退出。</p>
+      <div class="roi-pill-row">
+        <span class="roi-pill"><strong>回本</strong> 6个月</span>
+        <span class="roi-pill"><strong>盈亏平衡</strong> 15人</span>
+        <span class="roi-pill"><strong>估值口径</strong> 年净利 x 5PE</span>
+      </div>
     </div>
   </div>
-  <table>
-    <caption style="display:none;">投资回报分析表</caption>
-    <tr>
-      <th>场景</th><th>时间</th><th>工人数</th><th>月净利</th><th>年净利</th><th>公司估值</th>
-      <th class="th-highlight">投资人回报</th>
-    </tr>
-    <tr>
-      <td>保守</td><td>1年后</td><td>200人</td><td>¥33.8万</td><td>¥393.6万</td><td>¥2,000万</td>
-      <td class="text-green fw-600">1.67x（¥200万）</td>
-    </tr>
-    <tr>
-      <td>基准</td><td>2年后</td><td>500人</td><td>¥87.5万</td><td>¥1,050万</td><td>¥5,000万</td>
-      <td class="text-green fw-600">4.17x（¥500万）</td>
-    </tr>
-    <tr style="background:rgba(94,106,210,0.08);font-weight:600;">
-      <td>乐观</td><td>3年后</td><td>1000人</td><td>¥175万</td><td>¥2,100万</td><td>¥1.2亿</td>
-      <td class="text-green" style="font-weight:700;font-size:1.05em;">10x（¥1,200万）</td>
-    </tr>
-  </table>
-  <div style="background:rgba(245,158,11,0.08);border-left:3px solid var(--orange);border-radius:0 var(--radius-md) var(--radius-md) 0;padding:10px 16px;margin:10px 0;">
-    <ul style="font-size:0.5em;margin:0;padding-left:14px;color:var(--text-secondary);">
-      <li><strong style="color:var(--text-primary);">估值逻辑：</strong>年净利 × 5倍PE + 成长溢价</li>
-      <li><strong style="color:var(--text-primary);">投资人占股10%：</strong>对应估值¥200万→¥500万→¥1,200万</li>
-    </ul>
+  <div class="roi-scenarios">
+    <div class="roi-scenario">
+      <span class="scenario-label">保守 · 1年后</span>
+      <h3>先验证现金流</h3>
+      <div class="scenario-return">1.67x <span>¥200万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>200人</strong></div>
+        <div><span>月净利</span><strong>¥33.8万</strong></div>
+        <div><span>公司估值</span><strong>¥2,000万</strong></div>
+      </div>
+    </div>
+    <div class="roi-scenario roi-scenario--base">
+      <span class="scenario-label">基准 · 2年后</span>
+      <h3>500人稳定履约</h3>
+      <div class="scenario-return">4.17x <span>¥500万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>500人</strong></div>
+        <div><span>月净利</span><strong>¥87.5万</strong></div>
+        <div><span>公司估值</span><strong>¥5,000万</strong></div>
+      </div>
+    </div>
+    <div class="roi-scenario roi-scenario--upside">
+      <span class="scenario-label">乐观 · 3年后</span>
+      <h3>复制到周边城市</h3>
+      <div class="scenario-return">10x <span>¥1,200万</span></div>
+      <div class="scenario-facts">
+        <div><span>工人规模</span><strong>1000人</strong></div>
+        <div><span>月净利</span><strong>¥175万</strong></div>
+        <div><span>公司估值</span><strong>¥1.2亿</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="roi-note">
+    <div><strong>估值逻辑：</strong>年净利 x 5倍PE + 成长溢价。</div>
+    <div><strong>投资人权益：</strong>10% 股权对应退出价值约 ¥200万 / ¥500万 / ¥1,200万。</div>
   </div>
 </section>
 
 <!-- ═══════════ Slide 16: 退出路径 ═══════════ -->
-<section>
+<section class="exit-section">
   <h2>退出路径</h2>
-  <div class="stat-grid">
-    <div class="glass-card glass-card-accent">
+  <div class="stat-grid exit-path-grid">
+    <div class="glass-card glass-card-accent exit-path-card">
       <div class="num" style="font-size:1.1em;color:var(--accent-bright);font-weight:600;">路径一</div>
       <div class="label">A轮融资退出</div>
       <div class="exit-card-body">
-        ⏱️ 时间：18-24个月后<br>
-        💰 估值：¥5,000万-1亿<br>
-        📈 投资人回报：4-8x<br>
-        🔄 方式：老股转让10-20%
+        时间：18-24个月后<br>
+        估值：¥5,000万-1亿<br>
+        投资人回报：4-8x<br>
+        方式：老股转让10-20%
       </div>
     </div>
-    <div class="glass-card glass-card-orange">
+    <div class="glass-card glass-card-orange exit-path-card">
       <div class="num" style="font-size:1.1em;color:var(--orange);font-weight:600;">路径二</div>
       <div class="label">并购退出</div>
       <div class="exit-card-body">
-        ⏱️ 时间：2-3年后<br>
-        🏢 买家：人力资源巨头/互联网平台<br>
-        💰 估值：¥1-3亿<br>
-        📈 投资人回报：8-25x
+        时间：2-3年后<br>
+        买家：人力资源巨头/互联网平台<br>
+        估值：¥1-3亿<br>
+        投资人回报：8-25x
       </div>
     </div>
-    <div class="glass-card glass-card-green">
+    <div class="glass-card glass-card-green exit-path-card">
       <div class="num" style="font-size:1.1em;color:var(--green);font-weight:600;">路径三</div>
       <div class="label">IPO上市</div>
       <div class="exit-card-body">
-        ⏱️ 时间：5年后<br>
-        🏛️ 市场：港股/科创板<br>
-        💰 估值：¥10亿+<br>
-        📈 投资人回报：80x+
+        时间：5年后<br>
+        市场：港股/科创板<br>
+        估值：¥10亿+<br>
+        投资人回报：80x+
       </div>
     </div>
   </div>
-  <div class="glass-card mt-12" style="padding:14px 20px;">
-    <h4 style="color:var(--accent-bright);margin:0 0 8px;font-size:0.85em;">🔒 退出保障条款</h4>
+  <div class="glass-card mt-12 exit-protection" style="padding:14px 20px;">
+    <h4 style="color:var(--accent-bright);margin:0 0 8px;font-size:0.85em;">退出保障条款</h4>
     <ul style="font-size:0.52em;margin:0;padding-left:14px;color:var(--text-secondary);line-height:1.8;">
       <li><strong style="color:var(--text-primary);">优先清算权：</strong>投资人优先于普通股股东获得回报</li>
       <li><strong style="color:var(--text-primary);">反稀释保护：</strong>后续融资估值下降时保护投资人权益</li>
@@ -1025,7 +2358,7 @@
     <tr style="background:rgba(94,106,210,0.06);font-weight:600;"><td style="color:var(--text-primary);">合计</td><td>100%</td><td>¥1,200万</td><td>投后估值</td></tr>
   </table>
   <p style="font-size:0.55em;color:var(--text-muted);text-align:center;margin-top:12px;">
-    💡 后续融资稀释：A轮预计稀释15-20%，投资人股权仍具高价值
+    后续融资稀释：A轮预计稀释15-20%，投资人股权仍具高价值
   </p>
 </section>
 
@@ -1034,17 +2367,17 @@
   <h2>为什么值得投资？</h2>
   <div class="stat-grid">
     <div class="glass-card glass-card-accent" style="text-align:center;">
-      <div style="font-size:1.6em;margin-bottom:6px;">✅</div>
+      <div style="font-size:1.2em;margin-bottom:6px;color:var(--green);font-weight:700;">验证</div>
       <div class="label" style="color:var(--text-primary);font-weight:500;">已验证的需求</div>
       <p style="font-size:0.52em;color:var(--text-tertiary);margin-top:6px;">线下已跑通一家工厂<br>需求真实存在</p>
     </div>
     <div class="glass-card glass-card-orange" style="text-align:center;">
-      <div style="font-size:1.6em;margin-bottom:6px;color:var(--orange);">✅</div>
+      <div style="font-size:1.2em;margin-bottom:6px;color:var(--orange);font-weight:700;">模型</div>
       <div class="label" style="color:var(--text-primary);font-weight:500;">清晰的商业模式</div>
       <p style="font-size:0.52em;color:var(--text-tertiary);margin-top:6px;">¥7/h差价，毛利28%<br>单位经济健康</p>
     </div>
     <div class="glass-card glass-card-green" style="text-align:center;">
-      <div style="font-size:1.6em;margin-bottom:6px;color:var(--green);">✅</div>
+      <div style="font-size:1.2em;margin-bottom:6px;color:var(--green);font-weight:700;">市场</div>
       <div class="label" style="color:var(--text-primary);font-weight:500;">巨大的市场空间</div>
       <p style="font-size:0.52em;color:var(--text-tertiary);margin-top:6px;">2亿灵活就业人口<br>万亿级市场规模</p>
     </div>
@@ -1060,36 +2393,46 @@
 </section>
 
 <!-- ═══════════ Slide 19: 数据来源 ═══════════ -->
-<section>
+<section class="sources-section">
   <h2>数据来源</h2>
   <div class="sources-body">
-    <p>市场规模</p>
-    <ul>
-      <li>人社部统计公报 2023 · 亿欧智库 2025.12（2028年预测5万亿）</li>
-      <li>《2024中国蓝领就业调研报告》（蓝领4.25亿人）</li>
-      <li>吴晓波频道 2025.9.17（鱼泡网1.1亿用户、求人倍率1.5）</li>
-    </ul>
-    <p>灵活就业</p>
-    <ul>
-      <li>人社部 2024.10 via 新华社（灵活就业2亿人，占27%）</li>
-      <li>暨南大学《2024中国新型灵活就业报告》（招聘占比15.2%）</li>
-    </ul>
-    <p>AI与自动化</p>
-    <ul>
-      <li>IFR《World Robotics 2025》2025.9（中国2024年新增机器人41.1万台）</li>
-      <li>Metaintro 2026.3（制造业流失3000万岗位）</li>
-      <li>高盛 2025.9 · 微软 2025 · RAND 2025.12</li>
-    </ul>
-    <p>青年就业</p>
-    <ul>
-      <li>国家统计局 2025.8（16-24岁失业率18.9%）</li>
-      <li>前程无忧 2025 · 智联招聘（00后蓝领意愿61.5%）</li>
-    </ul>
-    <p>行业竞争与工价</p>
-    <ul>
-      <li>鱼泡网 2024.12 · 斗米 2024.7 · 快马日结 2025.2</li>
-      <li>艾瑞咨询 2025.3 · 人瑞人才 2025.1 · IT桔子 2025.5</li>
-    </ul>
+    <div class="source-card">
+      <p>市场规模</p>
+      <ul>
+        <li>人社部统计公报 2023 · 亿欧智库 2025.12（2028年预测5万亿）</li>
+        <li>《2024中国蓝领就业调研报告》（蓝领4.25亿人）</li>
+        <li>吴晓波频道 2025.9.17（鱼泡网1.1亿用户、求人倍率1.5）</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>灵活就业</p>
+      <ul>
+        <li>人社部 2024.10 via 新华社（灵活就业2亿人，占27%）</li>
+        <li>暨南大学《2024中国新型灵活就业报告》（招聘占比15.2%）</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>AI与自动化</p>
+      <ul>
+        <li>IFR《World Robotics 2025》2025.9（中国2024年新增机器人41.1万台）</li>
+        <li>Metaintro 2026.3（制造业流失3000万岗位）</li>
+        <li>高盛 2025.9 · 微软 2025 · RAND 2025.12</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>青年就业</p>
+      <ul>
+        <li>国家统计局 2025.8（16-24岁失业率18.9%）</li>
+        <li>前程无忧 2025 · 智联招聘（00后蓝领意愿61.5%）</li>
+      </ul>
+    </div>
+    <div class="source-card">
+      <p>行业竞争与工价</p>
+      <ul>
+        <li>鱼泡网 2024.12 · 斗米 2024.7 · 快马日结 2025.2</li>
+        <li>艾瑞咨询 2025.3 · 人瑞人才 2025.1 · IT桔子 2025.5</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -1104,10 +2447,10 @@ Reveal.initialize({
   transition: 'fade',
   transitionSpeed: 'default',
   backgroundTransition: 'fade',
-  width: 1200,
-  height: 700,
-  margin: 0.06,
-  center: true,
+  width: 1280,
+  height: 720,
+  margin: 0.02,
+  center: false,
   slideNumber: 'c/t',
   controls: true,
   progress: true,
@@ -1116,10 +2459,15 @@ Reveal.initialize({
   maxScale: 1.5,
 });
 
-// ── Chart.js Dark Theme Defaults ──
-Chart.defaults.color = '#8a8f98';
-Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+// ── Chart.js Light Theme Defaults ──
+Chart.defaults.color = '#68756f';
+Chart.defaults.borderColor = '#e2e8e4';
 Chart.defaults.font.family = "'Inter', 'Noto Sans SC', sans-serif";
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(255,255,255,0.96)';
+Chart.defaults.plugins.tooltip.titleColor = '#18221f';
+Chart.defaults.plugins.tooltip.bodyColor = '#46544f';
+Chart.defaults.plugins.tooltip.borderColor = '#d8e0dc';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
 
 // ── 市场规模图表 ──
 new Chart(document.getElementById('marketChart'), {
@@ -1129,8 +2477,8 @@ new Chart(document.getElementById('marketChart'), {
     datasets: [{
       label: '人力资源服务市场（万亿元）',
       data: [2.0, 2.7, 3.2],
-      backgroundColor: ['rgba(94,106,210,0.4)','rgba(94,106,210,0.6)','rgba(113,112,255,0.8)'],
-      borderColor: ['rgba(94,106,210,0.6)','rgba(94,106,210,0.8)','rgba(113,112,255,1)'],
+      backgroundColor: ['rgba(49,95,157,0.48)','rgba(15,118,110,0.58)','rgba(15,143,130,0.78)'],
+      borderColor: ['rgba(49,95,157,0.72)','rgba(15,118,110,0.82)','rgba(15,143,130,1)'],
       borderWidth: 1,
       borderRadius: 6,
       barThickness: 44,
@@ -1138,13 +2486,14 @@ new Chart(document.getElementById('marketChart'), {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      title: { display: true, text: '中国人力资源服务市场规模', font: { size: 13, weight: '500' }, color: '#d0d6e0' }
+      title: { display: true, text: '中国人力资源服务市场规模', font: { size: 15, weight: '500' }, color: '#46544f' }
     },
     scales: {
-      y: { beginAtZero: true, ticks: { callback: v => v + '万亿' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-      x: { grid: { display: false } }
+      y: { beginAtZero: true, ticks: { callback: v => v + '万亿', font: { size: 12 } }, grid: { color: '#e7ece8' } },
+      x: { ticks: { font: { size: 12 } }, grid: { display: false } }
     }
   }
 });
@@ -1157,26 +2506,27 @@ new Chart(document.getElementById('workerChart'), {
     datasets: [{
       label: '灵活就业招聘职位占比',
       data: [8.4, 10.5, 13.0, 15.2],
-      borderColor: '#7170ff',
-      backgroundColor: 'rgba(113,112,255,0.08)',
+      borderColor: '#0f8f82',
+      backgroundColor: 'rgba(15,143,130,0.12)',
       fill: true,
       tension: 0.4,
       pointRadius: 5,
-      pointBackgroundColor: '#7170ff',
-      pointBorderColor: '#08090a',
+      pointBackgroundColor: '#0f8f82',
+      pointBorderColor: '#ffffff',
       pointBorderWidth: 2,
       borderWidth: 2,
     }]
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      title: { display: true, text: '灵活就业招聘职位数占比（%）', font: { size: 13, weight: '500' }, color: '#d0d6e0' }
+      title: { display: true, text: '灵活就业招聘职位数占比（%）', font: { size: 15, weight: '500' }, color: '#46544f' }
     },
     scales: {
-      y: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(255,255,255,0.04)' } },
-      x: { grid: { display: false } }
+      y: { beginAtZero: true, ticks: { callback: v => v + '%', font: { size: 12 } }, grid: { color: '#e7ece8' } },
+      x: { ticks: { font: { size: 12 } }, grid: { display: false } }
     }
   }
 });
@@ -1190,16 +2540,16 @@ new Chart(document.getElementById('financeChart'), {
       {
         label: '月毛利（万元）',
         data: [10.2, 41.0, 102.5],
-        backgroundColor: 'rgba(94,106,210,0.6)',
-        borderColor: 'rgba(113,112,255,0.8)',
+        backgroundColor: 'rgba(49,95,157,0.68)',
+        borderColor: 'rgba(49,95,157,0.86)',
         borderWidth: 1,
         borderRadius: 4,
       },
       {
         label: '月净利（万元）',
         data: [5.8, 32.8, 87.5],
-        backgroundColor: 'rgba(16,185,129,0.6)',
-        borderColor: 'rgba(16,185,129,0.8)',
+        backgroundColor: 'rgba(20,128,74,0.68)',
+        borderColor: 'rgba(20,128,74,0.86)',
         borderWidth: 1,
         borderRadius: 4,
       }
@@ -1209,11 +2559,11 @@ new Chart(document.getElementById('financeChart'), {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      title: { display: true, text: '不同工人数下的月度利润（含全部成本）', font: { size: 13, weight: '500' }, color: '#d0d6e0' },
+      title: { display: true, text: '不同工人数下的月度利润（含全部成本）', font: { size: 13, weight: '500' }, color: '#46544f' },
       legend: { labels: { usePointStyle: true, pointStyle: 'rectRounded', padding: 16 } }
     },
     scales: {
-      y: { beginAtZero: true, ticks: { callback: v => '¥' + v + '万' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      y: { beginAtZero: true, ticks: { callback: v => '¥' + v + '万' }, grid: { color: '#e7ece8' } },
       x: { grid: { display: false } }
     }
   }
