@@ -967,7 +967,10 @@
   }
   .reveal .slides section:nth-child(7) .split-layout {
     flex-direction: column !important;
-    gap: 6px !important;
+    gap: 4px !important;
+    height: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
   }
   .reveal .slides section:nth-child(7) .col-main,
   .reveal .slides section:nth-child(7) .col-side {
@@ -978,7 +981,7 @@
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px !important;
-    align-self: stretch;
+    min-height: 0;
   }
   .reveal .slides section:nth-child(7) .col-side .card {
     min-height: 200px;
@@ -988,6 +991,7 @@
     flex-direction: column;
     padding: 10px 12px 8px !important;
     min-height: 0;
+    align-self: start;
   }
   .reveal .slides section:nth-child(7) .col-side .factory-card .num {
     display: flex !important;
@@ -1056,10 +1060,91 @@
   .reveal .slides section:nth-child(7) .col-side .mt-12 {
     margin-top: 0 !important;
   }
-  .reveal .slides section:nth-child(7) p {
+  .reveal .slides section:nth-child(7) .col-main > p {
     margin: 0 0 4px !important;
+    line-height: 1.4 !important;
+    font-size: 0.55em !important;
+  }
+  .reveal .slides section:nth-child(7) .mall-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 4px 0 2px 0;
+  }
+  .reveal .slides section:nth-child(7) .mall-tag {
+    display: inline-block;
+    font-size: 0.46em;
+    font-weight: 600;
+    line-height: 1.2;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.2px;
+  }
+  .reveal .slides section:nth-child(7) .mall-tag-blue {
+    color: #1a73e8;
+    background: linear-gradient(135deg, rgba(26,115,232,0.08) 0%, rgba(26,115,232,0.18) 100%);
+    border: 1px solid rgba(26,115,232,0.25);
+  }
+  .reveal .slides section:nth-child(7) .mall-tag-green {
+    color: #228b57;
+    background: linear-gradient(135deg, rgba(34,139,87,0.10) 0%, rgba(34,139,87,0.20) 100%);
+    border: 1px solid rgba(34,139,87,0.30);
+  }
+  .reveal .slides section:nth-child(7) .mall-tag-orange {
+    color: #e88c2a;
+    background: linear-gradient(135deg, rgba(232,140,42,0.10) 0%, rgba(232,140,42,0.20) 100%);
+    border: 1px solid rgba(232,140,42,0.30);
+  }
+  .reveal .slides section:nth-child(7) .mall-logic-flow {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-standard);
+    padding: 6px 8px;
+    border-radius: var(--radius-md);
+    font-size: 0.5em;
+    line-height: 1.2;
+    color: var(--text-primary);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .reveal .slides section:nth-child(7) .mall-flow-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-secondary);
+  }
+  .reveal .slides section:nth-child(7) .mall-flow-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a73e8 0%, #0c4ea0 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9em;
+    flex: 0 0 auto;
+  }
+  .reveal .slides section:nth-child(7) .mall-flow-arrow {
+    color: var(--accent-bright);
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .reveal .slides section:nth-child(7) .col-main > h3 {
+    margin: 0 0 4px 0 !important;
+    font-size: 0.72em !important;
+    line-height: 1.1 !important;
+  }
+  .reveal .slides section:nth-child(7) .col-main > table {
+    font-size: 0.46em !important;
+  }
+  .reveal .slides section:nth-child(7) .col-main > table th,
+  .reveal .slides section:nth-child(7) .col-main > table td {
+    padding: 4px 10px !important;
     line-height: 1.25 !important;
-    font-size: 0.48em !important;
   }
   .reveal .slides section:nth-child(7) .col-side .num {
     margin-bottom: 4px !important;
@@ -2180,7 +2265,12 @@
       <p style="font-size:0.6em;color:var(--text-secondary);line-height:1.6;">
         从招工平台升级为<strong style="color:var(--text-primary);">工厂服务生态</strong>，连接工厂的<strong style="color:var(--text-primary);">原材料采购</strong>和<strong style="color:var(--text-primary);">产品销售</strong>需求，打造制造业版"拼多多"。
       </p>
-      <h3 style="font-size:0.85em;margin-top:14px;">业务模式</h3>
+      <div class="mall-tags">
+        <span class="mall-tag mall-tag-blue">对标拼多多</span>
+        <span class="mall-tag mall-tag-green">万亿赛道</span>
+        <span class="mall-tag mall-tag-orange">高频刚需</span>
+      </div>
+      <h3 style="font-size:0.85em;margin-top:10px;">业务模式</h3>
       <table style="font-size:0.55em;">
         <caption style="display:none;">工厂商城业务模式</caption>
         <tr><th>业务</th><th>模式</th><th>佣金</th><th>说明</th></tr>
@@ -2189,12 +2279,15 @@
         <tr><td style="color:var(--text-primary);font-weight:500;">设备租赁</td><td>撮合</td><td>5-8%</td><td>闲置设备共享</td></tr>
         <tr><td style="color:var(--text-primary);font-weight:500;">广告推广</td><td>CPC/CPM</td><td>-</td><td>工厂品牌曝光</td></tr>
       </table>
-      <h3 style="font-size:0.85em;margin-top:14px;">商业逻辑</h3>
-      <div style="font-size:0.55em;background:var(--bg-surface);border:1px solid var(--border-standard);padding:12px;border-radius:var(--radius-md);line-height:2;color:var(--text-secondary);">
-        <strong style="color:var(--text-primary);">第一步：</strong>通过招工建立工厂信任关系<br>
-        <strong style="color:var(--text-primary);">第二步：</strong>了解工厂采购和销售需求<br>
-        <strong style="color:var(--text-primary);">第三步：</strong>搭建商城撮合交易<br>
-        <strong style="color:var(--text-primary);">第四步：</strong>从佣金→广告→金融，逐步深入
+      <h3 style="font-size:0.85em;margin-top:8px;">商业逻辑</h3>
+      <div class="mall-logic-flow">
+        <span class="mall-flow-step"><span class="mall-flow-num">1</span>建立信任</span>
+        <span class="mall-flow-arrow">→</span>
+        <span class="mall-flow-step"><span class="mall-flow-num">2</span>挖掘需求</span>
+        <span class="mall-flow-arrow">→</span>
+        <span class="mall-flow-step"><span class="mall-flow-num">3</span>撮合交易</span>
+        <span class="mall-flow-arrow">→</span>
+        <span class="mall-flow-step"><span class="mall-flow-num">4</span>深度变现</span>
       </div>
     </div>
     <div class="col-side">
